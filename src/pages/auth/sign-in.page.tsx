@@ -1,3 +1,5 @@
+import React from "react";
+import { Link as RouterLink } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -74,9 +76,9 @@ const SignIn = () => {
           </Button>
           <Grid container>
             <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign up"}
-              </Link>
+              <RouterLink to="/sign-up">
+                <Link variant="body2">{"Don't have an account? Sign up"}</Link>
+              </RouterLink>
             </Grid>
           </Grid>
         </Box>

@@ -1,13 +1,19 @@
-import "./App.css";
-import Map from "./components/Map";
+import { Box } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
 
-function App() {
+import defaultTheme from "./theme/theme";
+import SignUp from "./pages/auth/sign-up.page";
+import SignIn from "./pages/auth/sign-in.page";
+
+
+const App = () => {
   return (
-    <div className="App">
-      This is my map App
-      <Map />
-    </div>
+    <ThemeProvider theme={defaultTheme}>
+      <Box>
+        <SignUp />
+      </Box>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;

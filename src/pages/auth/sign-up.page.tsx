@@ -1,5 +1,5 @@
 import React from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import {
   Avatar,
   Button,
@@ -13,9 +13,25 @@ import {
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Copyright from "../../components/auth/copyright";
-import { handleSubmit } from "../../utils/auth-utils";
+import { HandleSubmitResponse, handleSubmit } from "../../utils/auth-utils";
+import { useDispatch } from "react-redux";
+import { setUserData } from "../../redux/user/user-slice";
 
 const SignUp = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const onSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const response: HandleSubmitResponse = await handleSubmit(event);
+    const { user } = response;
+    if (response.success) {
+      dispatch(setUserData(user));
+      // TODO: Redirect to the proper page
+      navigate("/test");
+    }
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -33,7 +49,12 @@ const SignUp = () => {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        <Box
+          component="form"
+          noValidate
+          onSubmit={onSubmitHandler}
+          sx={{ mt: 3 }}
+        >
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField

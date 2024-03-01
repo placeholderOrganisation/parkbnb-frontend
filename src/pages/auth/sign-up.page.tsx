@@ -1,7 +1,6 @@
 import React from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import {
-  Avatar,
   Button,
   CssBaseline,
   TextField,
@@ -11,11 +10,11 @@ import {
   Typography,
   Container,
 } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Copyright from "../../components/auth/copyright";
 import { HandleSignUpResponse, handleSignUp } from "../../utils/auth-utils";
 import { useDispatch } from "react-redux";
 import { setUserData } from "../../redux/user/user-slice";
+import SocialAuth from "./social-auth";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -37,23 +36,48 @@ const SignUp = () => {
       <CssBaseline />
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: 20,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign up
-        </Typography>
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "start",
+            flexDirection: "column",
+          }}
+        >
+          <Typography component="h1" variant="h4">
+            Sign in to Your Website
+          </Typography>
+          <Typography
+            variant="body2"
+            sx={{
+              mt: 2,
+            }}
+          >
+            Already have an account?{" "}
+            <RouterLink to="/sign-in">
+              <Link variant="body2">{"Sign in"}</Link>
+            </RouterLink>
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            mt: 4,
+            width: "100%",
+          }}
+        >
+          <SocialAuth />
+        </Box>
         <Box
           component="form"
           noValidate
           onSubmit={onSubmitHandler}
-          sx={{ mt: 3 }}
+          sx={{ mt: 1 }}
         >
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
@@ -107,16 +131,9 @@ const SignUp = () => {
           >
             Sign Up
           </Button>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <RouterLink to="/sign-in">
-                <Link variant="body2">Already have an account? Sign in</Link>
-              </RouterLink>
-            </Grid>
-          </Grid>
         </Box>
       </Box>
-      <Copyright sx={{ mt: 5 }} />
+      <Copyright sx={{ my: 4 }} />
     </Container>
   );
 };

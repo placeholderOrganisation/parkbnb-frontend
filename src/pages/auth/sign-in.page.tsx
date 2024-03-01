@@ -1,22 +1,20 @@
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import {
-  Avatar,
   Button,
   CssBaseline,
   TextField,
   FormControlLabel,
   Checkbox,
   Link,
-  Grid,
   Box,
   Typography,
   Container,
 } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Copyright from "../../components/auth/copyright";
 import { useDispatch } from "react-redux";
 import { setUserData } from "../../redux/user/user-slice";
 import { HandleSignInResponse, handleSignIn } from "../../utils/auth-utils";
+import SocialAuth from "./social-auth";
+import Copyright from "../../components/auth/copyright";
 
 const SignIn = () => {
   const dispatch = useDispatch();
@@ -32,30 +30,50 @@ const SignIn = () => {
       navigate("/test");
     }
   };
-  
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: 20,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
         <Box
-          component="form"
-          onSubmit={onSubmitHandler}
-          noValidate
-          sx={{ mt: 1 }}
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "start",
+            flexDirection: "column",
+          }}
         >
+          <Typography component="h1" variant="h4">
+            Sign in to Your Website
+          </Typography>
+          <Typography
+            variant="body2"
+            sx={{
+              mt: 2,
+            }}
+          >
+            Don't have an account?{" "}
+            <RouterLink to="/sign-up">
+              <Link variant="body2">{"Get started"}</Link>
+            </RouterLink>
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            mt: 4,
+            width: "100%",
+          }}
+        >
+          <SocialAuth />
+        </Box>
+        <Box component="form" onSubmit={onSubmitHandler} noValidate>
           <TextField
             margin="normal"
             required
@@ -88,16 +106,9 @@ const SignIn = () => {
           >
             Sign in
           </Button>
-          <Grid container>
-            <Grid item>
-              <RouterLink to="/sign-up">
-                <Link variant="body2">{"Don't have an account? Sign up"}</Link>
-              </RouterLink>
-            </Grid>
-          </Grid>
         </Box>
       </Box>
-      <Copyright sx={{ mt: 8, mb: 4 }} />
+      <Copyright sx={{ my: 4 }} />
     </Container>
   );
 };

@@ -1,17 +1,37 @@
-import { userClient } from "../api-config";
-import { UserSignupRequestObject } from "../../types/user-types";
+import { authClient, userClient } from "../api-config";
+import {
+  UserSigninRequestObject,
+  UserSignupRequestObject,
+} from "../../types/user-types";
 
 export const signUp = async (userData: UserSignupRequestObject) => {
   try {
     const response = await userClient.post("/sign-up", userData);
     if (response.status === 201) {
       console.log("User signed up successfully");
-      return response.data;
+      const user = response.data;
+      return user;
     } else {
       throw new Error("Error signing up");
     }
   } catch (error) {
     console.error("Error signing up", error);
-    return error;
+    throw error;
+  }
+};
+
+export const signIn = async (userData: UserSigninRequestObject) => {
+  try {
+    const response = await authClient.post("/local", userData);
+    if (response.status === 200) {
+      console.log("User signed in successfully");
+      const user = response.data.user;
+      return user;
+    } else {
+      throw new Error("Error signing in locally");
+    }
+  } catch (error) {
+    console.error("Error signing in locally", error);
+    throw error;
   }
 };

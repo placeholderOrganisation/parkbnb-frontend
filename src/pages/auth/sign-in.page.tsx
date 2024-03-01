@@ -1,4 +1,4 @@
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import {
   Avatar,
   Button,
@@ -14,9 +14,25 @@ import {
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Copyright from "../../components/auth/copyright";
-import { handleSubmit } from "../../utils/auth-utils";
+import { useDispatch } from "react-redux";
+import { setUserData } from "../../redux/user/user-slice";
+import { HandleSignInResponse, handleSignIn } from "../../utils/auth-utils";
 
 const SignIn = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const onSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const response: HandleSignInResponse = await handleSignIn(event);
+    const { user } = response;
+    if (response.success) {
+      dispatch(setUserData(user));
+      // TODO: Redirect to the proper page
+      navigate("/test");
+    }
+  };
+  
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -34,7 +50,12 @@ const SignIn = () => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box
+          component="form"
+          onSubmit={onSubmitHandler}
+          noValidate
+          sx={{ mt: 1 }}
+        >
           <TextField
             margin="normal"
             required

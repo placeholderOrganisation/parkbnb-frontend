@@ -4,23 +4,21 @@ import { UserObject } from "../../types/user-types";
 export const userSlice = createSlice({
   name: "user",
   initialState: {
-    user: {
-      id: "",
-      name: "",
-      images: [],
-      verified: false,
-      contactNumber: null,
-    },
+    id: "",
+    name: "",
+    images: [],
+    verified: false,
+    contactNumber: null,
   },
   reducers: {
-    setUserData: (state: { user: UserObject }, action) => {
+    setUserData: (state: UserObject, action) => {
       const user: UserObject = action.payload;
 
-      state.user.id = user.id;
-      state.user.name = user.name;
-      state.user.images = user.images;
-      state.user.verified = user.verified;
-      state.user.contactNumber = user.contactNumber ? user.contactNumber : null;
+      state.id = user.id;
+      state.name = user.name;
+      state.images = user.images;
+      state.verified = user.verified;
+      state.contactNumber = user.contactNumber ? user.contactNumber : null;
     },
   },
 });

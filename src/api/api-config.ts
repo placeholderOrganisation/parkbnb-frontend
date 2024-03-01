@@ -10,6 +10,7 @@ if (process.env.NODE_ENV === "development") {
 
 export const authClient = axios.create({
   baseURL: `${baseURL}/v1/auth`,
+  withCredentials: true,
 });
 
 export const userClient = axios.create({

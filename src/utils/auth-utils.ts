@@ -1,16 +1,16 @@
 import { signUp } from "../api/auth/auth-api";
 import { UserObject } from "../types/user-types";
 
-export interface HandleSubmitResponse {
+export interface HandleSignUpResponse {
   user?: UserObject;
   success: boolean;
   error?: any;
 }
 
 // set standard to send info to tsx file
-export const handleSubmit = async (
+export const handleSignUp = async (
   event: React.FormEvent<HTMLFormElement>
-): Promise<HandleSubmitResponse> => {
+): Promise<HandleSignUpResponse> => {
   try {
     event.preventDefault();
     const data = new FormData(event.currentTarget);

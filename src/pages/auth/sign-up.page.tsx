@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Copyright from "../../components/auth/copyright";
-import { HandleSubmitResponse, handleSubmit } from "../../utils/auth-utils";
+import { HandleSignUpResponse, handleSignUp } from "../../utils/auth-utils";
 import { useDispatch } from "react-redux";
 import { setUserData } from "../../redux/user/user-slice";
 
@@ -23,7 +23,7 @@ const SignUp = () => {
 
   const onSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const response: HandleSubmitResponse = await handleSubmit(event);
+    const response: HandleSignUpResponse = await handleSignUp(event);
     const { user } = response;
     if (response.success) {
       dispatch(setUserData(user));

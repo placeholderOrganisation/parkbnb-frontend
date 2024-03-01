@@ -1,5 +1,5 @@
 import { signUp } from "../api/auth/auth-api";
-import { UserObject } from "./user-utils";
+import { UserObject } from "../types/user-types";
 
 export interface HandleSubmitResponse {
   user?: UserObject;

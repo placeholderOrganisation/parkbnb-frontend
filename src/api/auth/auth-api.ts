@@ -1,5 +1,5 @@
 import { userClient } from "../api-config";
-import { UserSignupRequestObject } from "../../utils/user-utils";
+import { UserSignupRequestObject } from "../../types/user-types";
 
 export const signUp = async (userData: UserSignupRequestObject) => {
   try {

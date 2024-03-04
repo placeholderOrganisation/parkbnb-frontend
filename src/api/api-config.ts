@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // TODO: fix process.env
-let baseURL = process.env.REACT_APP_CLIENT_URL;
+export let baseURL = process.env.REACT_APP_CLIENT_URL;
 if (process.env.NODE_ENV === "development") {
   baseURL = "http://localhost:3001";
 }

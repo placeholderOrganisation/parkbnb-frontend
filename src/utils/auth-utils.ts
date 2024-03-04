@@ -1,3 +1,4 @@
+import { baseURL } from "../api/api-config";
 import { signIn, signUp } from "../api/auth/auth-api";
 import { UserObject } from "../types/user-types";
 
@@ -59,4 +60,8 @@ export const handleSignIn = async (
     console.error("An error occurred during form submission:", error);
     return { error, success: false };
   }
+};
+
+export const handleSocialSignIn = async (provider: String) => {
+  window.open(`${baseURL}/v1/auth/${provider}`, "_self");
 };

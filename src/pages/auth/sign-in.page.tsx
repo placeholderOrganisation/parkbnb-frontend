@@ -13,7 +13,7 @@ import {
 import { useDispatch } from "react-redux";
 import { setUserData } from "../../redux/user/user-slice";
 import { HandleSignInResponse, handleSignIn } from "../../utils/auth-utils";
-import SocialAuth from "./social-auth";
+import SocialAuth from "../../components/auth/social-auth";
 import Copyright from "../../components/auth/copyright";
 
 const SignIn = () => {

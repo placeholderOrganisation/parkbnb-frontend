@@ -2,6 +2,17 @@ export interface CreateListingFormState {
   activeStep: number;
 }
 
+export interface StepOneState {
+  street: string;
+  city: string;
+  province: string;
+  postal: string;
+  country: string;
+  dailyRate: number;
+  monthlyRate: number;
+  isValid: boolean;
+}
+
 export interface AddressFormTextFieldProps {
   id: string;
   name: string;
@@ -18,4 +29,4 @@ export interface PriceFormTextFields {
 
 export interface CustomImageProps {
   src: string;
-};
+}

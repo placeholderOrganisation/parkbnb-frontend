@@ -1,5 +1,5 @@
 import { baseURL } from "../api/api-config";
-import { signIn, signUp } from "../api/auth/auth-api";
+import { signIn, signUp } from "../api/auth-api";
 import { UserObject } from "../types/user-types";
 
 export interface HandleSignUpResponse {

@@ -1,8 +1,8 @@
-import { authClient, userClient } from "../api-config";
+import { authClient, userClient } from "./api-config";
 import {
   UserSigninRequestObject,
   UserSignupRequestObject,
-} from "../../types/user-types";
+} from "../types/user-types";
 
 export const signUp = async (userData: UserSignupRequestObject) => {
   try {

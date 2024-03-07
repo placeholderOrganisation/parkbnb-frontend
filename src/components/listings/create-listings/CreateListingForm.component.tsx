@@ -13,6 +13,8 @@ import FiltersForm from "./FiltersForm";
 import OptionalDetailsForm from "./OptionalDetailsForm";
 import Copyright from "../../auth/copyright";
 import { steps } from "../../../utils/create-listing-form.utils";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/global-store";
 
 const getStepContent = (step: number) => {
   switch (step) {
@@ -31,8 +33,21 @@ const getStepContent = (step: number) => {
 
 const CreateListingForm = () => {
   const [activeStep, setActiveStep] = useState(0);
+  const state: RootState = useSelector((state: RootState) => state);
+
+  const isCurrentStepValid = () => {
+    switch (activeStep) {
+      case 0:
+        return state.stepOneForm.isValid;
+      default:
+        return true;
+    }
+  };
 
   const handleNext = () => {
+    if (!isCurrentStepValid()) {
+      return;
+    }
     setActiveStep(activeStep + 1);
   };
 

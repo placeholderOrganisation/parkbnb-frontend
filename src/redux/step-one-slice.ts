@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { StepOneState } from "../../types/create-listing-form.types";
+import { StepOneState } from "../types/create-listing-form.types";
 
 export const stepOneSlice = createSlice({
   name: "step-one",

@@ -11,7 +11,7 @@ import {
   Container,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { setUserData } from "../../redux/user/user-slice";
+import { setUserData } from "../../redux/user-slice";
 import { HandleSignInResponse, handleSignIn } from "../../utils/auth-utils";
 import SocialAuth from "../../components/auth/social-auth";
 import Copyright from "../../components/auth/copyright";

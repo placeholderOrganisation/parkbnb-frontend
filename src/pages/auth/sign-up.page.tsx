@@ -13,7 +13,7 @@ import {
 import Copyright from "../../components/auth/copyright";
 import { HandleSignUpResponse, handleSignUp } from "../../utils/auth-utils";
 import { useDispatch } from "react-redux";
-import { setUserData } from "../../redux/user/user-slice";
+import { setUserData } from "../../redux/user-slice";
 import SocialAuth from "../../components/auth/social-auth";
 
 const SignUp = () => {

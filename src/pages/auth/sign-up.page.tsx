@@ -51,7 +51,7 @@ const SignUp = () => {
           }}
         >
           <Typography component="h1" variant="h4">
-            Sign in to Your Website
+            Sign up
           </Typography>
           <Typography
             variant="body2"

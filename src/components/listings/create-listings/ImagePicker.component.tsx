@@ -41,6 +41,7 @@ export default function ImagePicker() {
     const reader = new FileReader();
     if (file) {
       reader.readAsDataURL(file);
+      // @ts-ignore
       reader.onloadend = function (e) {
         // @ts-ignore
         setImage(reader.result);

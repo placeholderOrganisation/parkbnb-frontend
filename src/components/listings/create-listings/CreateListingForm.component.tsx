@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState } from "react";
 import {
   Box,
   Container,
@@ -12,8 +12,7 @@ import AddressForm from "./AddressForm";
 import FiltersForm from "./FiltersForm";
 import OptionalDetailsForm from "./OptionalDetailsForm";
 import Copyright from "../../auth/copyright";
-
-const steps = ["Address", "Filters", "Optional details", "Review"];
+import { steps } from "../../../utils/create-listing-form.utils";
 
 const getStepContent = (step: number) => {
   switch (step) {
@@ -31,7 +30,7 @@ const getStepContent = (step: number) => {
 };
 
 const CreateListingForm = () => {
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = useState(0);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);

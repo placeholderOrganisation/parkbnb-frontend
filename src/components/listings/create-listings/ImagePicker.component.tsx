@@ -11,8 +11,9 @@ import {
 
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import { isDesktop } from "../../../utils/display-utils";
+import { CustomImageProps } from "../../../types/create-listing-form.types";
 
-const CustomImage = (props: any) => {
+const CustomImage = (props: CustomImageProps) => {
   const { src } = props;
   const isDesktopView = isDesktop();
   const _width = isDesktopView ? "250px" : "100px";

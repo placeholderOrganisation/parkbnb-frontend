@@ -7,20 +7,7 @@ import {
   FormHelperText,
   InputAdornment,
 } from "@mui/material";
-
-interface AddressFormTextFieldProps {
-  id: string;
-  name: string;
-  label: string;
-  autoComplete?: string;
-}
-
-interface PriceFormTextFields {
-  id: string;
-  term: string;
-  helperText: string;
-  helperTextLabelId: string;
-}
+import { AddressFormTextFieldProps, PriceFormTextFields } from "../../../types/create-listing-form.types";
 
 const AddressFormTextField = (props: AddressFormTextFieldProps) => {
   const { id, name, label, autoComplete } = props;
@@ -59,7 +46,49 @@ const PriceFormTextField = (props: PriceFormTextFields) => {
   );
 };
 
-export default function AddressForm() {
+const addressFields = [
+  {
+    id: "city",
+    name: "city",
+    label: "City",
+    autoComplete: "shipping address-level2",
+  },
+  {
+    id: "state",
+    name: "state",
+    label: "Province",
+    autoComplete: "",
+  },
+  {
+    id: "zip",
+    name: "zip",
+    label: "Postal code",
+    autoComplete: "shipping postal-code",
+  },
+  {
+    id: "country",
+    name: "country",
+    label: "Country",
+    autoComplete: "shipping country",
+  },
+];
+
+const pricingFields = [
+  {
+    id: "per-day-price",
+    term: "day",
+    helperText: "Daily price",
+    helperTextLabelId: "daily-price-input",
+  },
+  {
+    id: "per-month-price",
+    term: "month",
+    helperText: "Monthly price",
+    helperTextLabelId: "montly-price-input",
+  },
+];
+
+const AddressForm = () => {
   return (
     <>
       {/* Address Section */}
@@ -76,37 +105,16 @@ export default function AddressForm() {
               autoComplete="shipping address-line1"
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <AddressFormTextField
-              id="city"
-              name="city"
-              label="City"
-              autoComplete="shipping address-level2"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <AddressFormTextField
-              id="state"
-              name="state"
-              label="Province"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <AddressFormTextField
-              id="zip"
-              name="zip"
-              label="Postal code"
-              autoComplete="shipping postal-code"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <AddressFormTextField
-              id="country"
-              name="country"
-              label="Country"
-              autoComplete="shipping country"
-            />
-          </Grid>
+          {addressFields.map((field) => (
+            <Grid item xs={12} sm={6} key={field.id}>
+              <AddressFormTextField
+                id={field.id}
+                name={field.name}
+                label={field.label}
+                autoComplete={field.autoComplete}
+              />
+            </Grid>
+          ))}
         </Grid>
       </Box>
       {/* Pricing Section */}
@@ -115,24 +123,21 @@ export default function AddressForm() {
           Pricing
         </Typography>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
-            <PriceFormTextField
-              id="per-day-price"
-              term="day"
-              helperTextLabelId="daily-price-input"
-              helperText="Daily price"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <PriceFormTextField
-              id="per-month-price"
-              term="month"
-              helperTextLabelId="montly-price-input"
-              helperText="Monthly price"
-            />
-          </Grid>
+          {pricingFields.map((field) => (
+            <Grid item xs={12} sm={6}>
+              <PriceFormTextField
+                id={field.id}
+                term={field.term}
+                helperText={field.helperText}
+                helperTextLabelId={field.helperTextLabelId}
+                key={field.id}
+              />
+            </Grid>
+          ))}
         </Grid>
       </Box>
     </>
   );
-}
+};
+
+export default AddressForm;

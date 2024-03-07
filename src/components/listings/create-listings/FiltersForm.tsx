@@ -13,14 +13,7 @@ import {
   Checkbox,
 } from "@mui/material";
 import { useState } from "react";
-
-const names = [
-  "bike",
-  "sedan / suv",
-  "pickup truck",
-  "boat / RV",
-  "commercial truck / trailer",
-];
+import { vehicleTypes } from "../../../utils/create-listing-form.utils";
 
 export default function FiltersForm() {
   const [storageType, setStorageType] = useState("");
@@ -62,16 +55,18 @@ export default function FiltersForm() {
           <Grid item xs={6}>
             <FormControlLabel
               control={
-                <Checkbox color="secondary" name="security-cameras" value="yes" />
+                <Checkbox
+                  color="secondary"
+                  name="security-cameras"
+                  value="yes"
+                />
               }
               label="Security cameras"
             />
           </Grid>
           <Grid item xs={6}>
             <FormControlLabel
-              control={
-                <Checkbox color="secondary" name="access" value="yes" />
-              }
+              control={<Checkbox color="secondary" name="access" value="yes" />}
               label="24/7 access"
             />
           </Grid>
@@ -86,7 +81,11 @@ export default function FiltersForm() {
           <Grid item xs={6}>
             <FormControlLabel
               control={
-                <Checkbox color="secondary" name="handicap-accessible" value="yes" />
+                <Checkbox
+                  color="secondary"
+                  name="handicap-accessible"
+                  value="yes"
+                />
               }
               label="Handicap accessible"
             />
@@ -151,7 +150,7 @@ export default function FiltersForm() {
               Array.isArray(selected) ? selected.join(", ") : selected
             }
           >
-            {names.map((name) => (
+            {vehicleTypes.map((name) => (
               <MenuItem key={name} value={name}>
                 <Checkbox checked={vehicleType.indexOf(name) > -1} />
                 <ListItemText primary={name} />

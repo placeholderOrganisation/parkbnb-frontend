@@ -6,7 +6,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import SignUp from "./pages/auth/sign-up.page";
 import SignIn from "./pages/auth/sign-in.page";
 import { Test } from "./pages/test";
-import NewListingForm from "./pages/listings/create-listing.page";
+import NewListingForm from "./pages/create-listing/create-listing.page";
 
 const App = () => {
   return (

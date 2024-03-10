@@ -8,10 +8,12 @@ import SignUp from "./pages/auth/sign-up.page";
 import SignIn from "./pages/auth/sign-in.page";
 import NewListingForm from "./pages/create-listing/create-listing.page";
 import GetListing from "./pages/get-listings/get-listing.page";
+import NavbarHeader from "./components/navbar/navbar-header.component";
 
 const App = () => {
   return (
     <ThemeProvider theme={defaultTheme}>
+      <NavbarHeader />
       <Router>
         <Routes>
           <Route path="/sign-up" element={<SignUp />} />

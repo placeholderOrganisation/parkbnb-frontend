@@ -1,7 +1,8 @@
 import { useRef, useEffect, useState } from "react";
 
-import mapboxgl from "mapbox-gl";
 import { Box } from "@mui/material";
+import mapboxgl, { PointLike } from "mapbox-gl";
+import { NAVBAR_HEIGHT_MOBILE } from "../../navbar/navbar-header.component";
 
 // Mapbox access token
 // mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
@@ -53,12 +54,14 @@ const MapComponent = (props: MapComponentProps) => {
         },
       });
 
-      map.on("mouseenter", "places", (e) => {
+      map!.on("mouseenter", "places", (e) => {
         // Change the cursor style as a UI indicator.
-        map.getCanvas().style.cursor = "pointer";
+        map!.getCanvas().style.cursor = "pointer";
 
         // Copy coordinates array.
+        // @ts-ignore
         const coordinates = e.features[0].geometry.coordinates.slice();
+        // @ts-ignore
         const description = e.features[0].properties.description;
 
         // Ensure that if the map is zoomed out such that multiple
@@ -70,30 +73,31 @@ const MapComponent = (props: MapComponentProps) => {
 
         // Populate the popup and set its coordinates
         // based on the feature found.
-        popup.setLngLat(coordinates).setHTML(description).addTo(map);
+        popup.setLngLat(coordinates).setHTML(description).addTo(map!);
       });
 
-      map.on("moveend", () => {
-        const features = map.queryRenderedFeatures({ layers: ["places"] });
+      map!.on("moveend", () => {
+        // @ts-ignore
+        const features = map!.queryRenderedFeatures({ layers: ["places"] });
 
         if (features) {
           console.log("features", features);
         }
       });
 
-      map.on("mouseleave", "places", () => {
-        map.getCanvas().style.cursor = "";
+      map!.on("mouseleave", "places", () => {
+        map!.getCanvas().style.cursor = "";
         popup.remove();
       });
 
-      map.on("click", (e) => {
+      map!.on("click", (e) => {
         // Set `bbox` as 5px reactangle area around clicked point.
-        const bbox = [
+        const bbox: [PointLike, PointLike] = [
           [e.point.x - 1, e.point.y - 1],
           [e.point.x + 1, e.point.y + 1],
         ];
         // Find features intersecting the bounding box.
-        const selectedFeatures = map.queryRenderedFeatures(bbox, {
+        const selectedFeatures = map!.queryRenderedFeatures(bbox, {
           layers: ["places"],
         });
         selectedFeatures.map((feature) => {
@@ -115,7 +119,7 @@ const MapComponent = (props: MapComponentProps) => {
         ref={mapContainer}
         className="map-container"
         sx={{
-          height: "100vh",
+          height: `calc(100vh - ${NAVBAR_HEIGHT_MOBILE}px)`,
           width: "100%",
         }}
       />

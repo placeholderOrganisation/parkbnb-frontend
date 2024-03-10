@@ -1,6 +1,6 @@
 import { Drawer } from "@mui/material";
 
-const NavbarRightFullPageDrawer = (props: any) => {
+const RightFullPageDrawer = (props: any) => {
   const { drawerOpen, drawerClose, children, ...otherprops } = props;
 
   return (
@@ -20,4 +20,4 @@ const NavbarRightFullPageDrawer = (props: any) => {
   );
 };
 
-export default NavbarRightFullPageDrawer;
+export default RightFullPageDrawer;

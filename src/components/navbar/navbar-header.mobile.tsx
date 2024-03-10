@@ -3,7 +3,7 @@ import { AppBar, Box, Toolbar, IconButton } from "@mui/material";
 
 import logo from "/vite.svg";
 import MenuIcon from "@mui/icons-material/Menu";
-import NavbarRightFullPageDrawer from "../drawers/navbar-right-drawer.component";
+import RightFullPageDrawer from "../drawers/full-page-right-drawer.component";
 import { NavbarHeaderProps } from "../../types/global.types";
 
 const NavbarHeadersMobileLayout = (props: NavbarHeaderProps) => {
@@ -36,14 +36,14 @@ const NavbarHeadersMobileLayout = (props: NavbarHeaderProps) => {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <NavbarRightFullPageDrawer
+      <RightFullPageDrawer
         anchor="right"
         open={drawerOpen}
         drawerClose={() => setDrawerOpen(false)}
         drawerOpen={() => setDrawerOpen(true)}
       >
         settings
-      </NavbarRightFullPageDrawer>
+      </RightFullPageDrawer>
     </Box>
   );
 };

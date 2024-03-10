@@ -7,6 +7,10 @@ interface Listing {
   location: string;
 }
 
-interface GetListingsMobilePageProps {
+export interface GetListingsMobilePageProps {
   listings: any[];
+}
+
+export interface NavbarHeaderProps {
+  signInPageUrl: string;
 }

@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { AppBar, Box, Toolbar, Button, IconButton } from "@mui/material";
+import { AppBar, Box, Toolbar, IconButton } from "@mui/material";
 
 import logo from "/vite.svg";
+import MenuIcon from "@mui/icons-material/Menu";
 import NavbarRightFullPageDrawer from "../drawers/navbar-right-drawer.component";
+import { NavbarHeaderProps } from "../../types/global.types";
 
-const NavbarHeadersMobileLayout = () => {
+const NavbarHeadersMobileLayout = (props: NavbarHeaderProps) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const openRightDrawer = () => {
@@ -29,9 +31,9 @@ const NavbarHeadersMobileLayout = () => {
           >
             <img src={logo} alt="" />
           </IconButton>
-          <Button color="inherit" onClick={openRightDrawer}>
-            Login
-          </Button>
+          <IconButton color="inherit" onClick={openRightDrawer}>
+            <MenuIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
       <NavbarRightFullPageDrawer

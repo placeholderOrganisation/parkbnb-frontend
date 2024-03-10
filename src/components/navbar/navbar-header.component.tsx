@@ -8,13 +8,18 @@ const NavbarHeader = () => {
   const Layout = isDesktopView
     ? NavbarHeadersDesktopLayout
     : NavbarHeadersMobileLayout;
+
+  const signInPageUrl = "/sign-in";
+
   return (
     // height of mobile navbar
-    <Box sx={{
-      width: '100%',
-      height: '55px',
-    }}>
-      <Layout />
+    <Box
+      sx={{
+        width: "100%",
+        height: "55px",
+      }}
+    >
+      <Layout signInPageUrl={signInPageUrl} />
     </Box>
   );
 };

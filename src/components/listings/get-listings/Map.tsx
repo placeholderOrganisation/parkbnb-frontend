@@ -3,6 +3,7 @@ import { useRef, useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import mapboxgl, { PointLike } from "mapbox-gl";
 import { NAVBAR_HEIGHT_MOBILE } from "../../navbar/navbar-header.component";
+import { Listing } from "../../../types/global.types";
 
 // Mapbox access token
 // mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
@@ -11,11 +12,12 @@ mapboxgl.accessToken =
 
 interface MapComponentProps {
   listings: any;
-  handleListingClick: (listing: any) => void;
+  handleListingClick: (listing: Listing) => void;
+  handleMoveEnd: (listings: Listing[]) => void;
 }
 
 const MapComponent = (props: MapComponentProps) => {
-  const { listings, handleListingClick } = props;
+  const { listings, handleListingClick, handleMoveEnd } = props;
   const mapContainer = useRef(null);
   let map: mapboxgl.Map | null = null;
   const [lng, setLng] = useState(-79.731989);
@@ -60,7 +62,8 @@ const MapComponent = (props: MapComponentProps) => {
         const features = map!.queryRenderedFeatures({ layers: ["places"] });
 
         if (features) {
-          console.log("features in Map.tsx", features);
+          const listings = features.map((feature) => feature.properties);
+          handleMoveEnd(listings);
         }
       });
 
@@ -75,11 +78,10 @@ const MapComponent = (props: MapComponentProps) => {
           layers: ["places"],
         });
         selectedFeatures.map((feature) => {
-          handleListingClick(feature.properties)
+          handleListingClick(feature.properties);
         });
       });
     });
-
   });
 
   return (

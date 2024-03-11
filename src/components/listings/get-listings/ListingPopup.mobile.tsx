@@ -9,10 +9,8 @@ export interface ListingPopupProps {
 }
 
 const ListingPopup = () => {
-  const state = useSelector((state: RootState) => state);
-  const userSelectedListing = state.search.userSelectedListing;
-
-  console.log("userSelectedListing inside parking-card", userSelectedListing);
+  const searchState = useSelector((state: RootState) => state.search);
+  const userSelectedListing = searchState.userSelectedListing;
 
   if (!userSelectedListing) {
     return null;

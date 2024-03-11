@@ -1,15 +1,30 @@
 import MapComponent from "../../components/listings/get-listings/Map";
 import GetListingBottomDrawer from "../../components/drawers/get-listing-bottom-drawer.component";
-import { GetListingsMobilePageProps } from "../../types/global.types";
+import { GetListingsMobilePageProps, Listing } from "../../types/global.types";
 import { Box, Divider, InputAdornment, TextField } from "@mui/material";
 import TuneIcon from "@mui/icons-material/Tune";
 import { useState } from "react";
 import RightFullPageDrawer from "../../components/drawers/full-page-right-drawer.component";
+import {
+  setUserSelectedListing,
+  setListingsRenderedInMap,
+} from "../../redux/search-slice";
+import { useDispatch } from "react-redux";
+import ListingPopup from "../../components/listings/get-listings/ListingPopup.mobile";
 
 const GetListingsMobileLayout = (props: GetListingsMobilePageProps) => {
   const { listings } = props;
+  const dispatch = useDispatch();
 
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
+
+  const handleListingClickInMap = (listing: Listing) => {
+    dispatch(setUserSelectedListing(listing));
+  };
+
+  const handleMoveEndInMap = (listings: Listing[]) => {
+    dispatch(setListingsRenderedInMap(listings));
+  };
 
   return (
     <>
@@ -42,12 +57,24 @@ const GetListingsMobileLayout = (props: GetListingsMobilePageProps) => {
                     mx: 1,
                   }}
                 />
-                <TuneIcon onClick={() => setIsFilterDrawerOpen(true)} />
+                <TuneIcon
+                  onClick={() => {
+                    setIsFilterDrawerOpen(true);
+                  }}
+                />
               </InputAdornment>
             ),
           }}
         />
-        <MapComponent listings={listings} />
+
+        {/* ListingPopup renders if user clicked on a listing in map  */}
+        <ListingPopup />
+
+        <MapComponent
+          listings={listings}
+          handleListingClick={(listing) => handleListingClickInMap(listing)}
+          handleMoveEnd={(listings) => handleMoveEndInMap(listings)}
+        />
       </Box>
       <GetListingBottomDrawer />
       <RightFullPageDrawer

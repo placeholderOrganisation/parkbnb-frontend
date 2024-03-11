@@ -1,9 +1,22 @@
 import MapComponent from "../../components/listings/get-listings/Map";
-import { GetListingsMobilePageProps } from "../../types/global.types";
+import { GetListingsMobilePageProps, Listing } from "../../types/global.types";
 
 const GetListingsDesktopLayout = (props: GetListingsMobilePageProps) => {
   const { listings } = props;
-  return <MapComponent listings={listings} />;
+  const handleListingClickInMap = (listing: Listing) => {
+    console.log("listing", listing);
+  };
+  const handleMoveEndInMap = (listings: Listing[]) => {
+    console.log("move end", listings);
+  };
+  
+  return (
+    <MapComponent
+      listings={listings}
+      handleListingClick={handleListingClickInMap}
+      handleMoveEnd={handleMoveEndInMap}
+    />
+  );
 };
 
 export default GetListingsDesktopLayout;

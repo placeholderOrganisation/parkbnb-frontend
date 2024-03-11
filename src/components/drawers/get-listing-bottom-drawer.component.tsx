@@ -8,6 +8,8 @@ import {
 import { Global } from "@emotion/react";
 import { grey } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
+import { RootState } from "../../redux/global-store";
+import { useSelector } from "react-redux";
 
 const drawerBleeding = 56;
 
@@ -53,13 +55,16 @@ export default function GetListingBottomDrawer(props: Props) {
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
+  const searchState = useSelector((state: RootState) => state.search);
+  const listingsRenderedInMap = searchState.listingsRenderedInMap;
+
   return (
     <Root>
       <CssBaseline />
       <Global
         styles={{
           ".MuiDrawer-root > .MuiPaper-root": {
-            height: `calc(50% - ${drawerBleeding}px)`,
+            height: `calc(90% - ${drawerBleeding}px)`,
             overflow: "visible",
           },
         }}
@@ -89,7 +94,7 @@ export default function GetListingBottomDrawer(props: Props) {
         >
           <Puller />
           <Typography sx={{ p: 2, color: "text.secondary" }}>
-            51 results
+            {`${listingsRenderedInMap.length} results`}
           </Typography>
         </StyledBox>
         <StyledBox

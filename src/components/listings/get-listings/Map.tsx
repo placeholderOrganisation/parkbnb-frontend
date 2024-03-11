@@ -11,10 +11,11 @@ mapboxgl.accessToken =
 
 interface MapComponentProps {
   listings: any;
+  handleListingClick: (listing: any) => void;
 }
 
 const MapComponent = (props: MapComponentProps) => {
-  const { listings } = props;
+  const { listings, handleListingClick } = props;
   const mapContainer = useRef(null);
   let map: mapboxgl.Map | null = null;
   const [lng, setLng] = useState(-79.731989);
@@ -54,40 +55,13 @@ const MapComponent = (props: MapComponentProps) => {
         },
       });
 
-      map!.on("mouseenter", "places", (e) => {
-        // Change the cursor style as a UI indicator.
-        map!.getCanvas().style.cursor = "pointer";
-
-        // Copy coordinates array.
-        // @ts-ignore
-        const coordinates = e.features[0].geometry.coordinates.slice();
-        // @ts-ignore
-        const description = e.features[0].properties.description;
-
-        // Ensure that if the map is zoomed out such that multiple
-        // copies of the feature are visible, the popup appears
-        // over the copy being pointed to.
-        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-          coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-        }
-
-        // Populate the popup and set its coordinates
-        // based on the feature found.
-        popup.setLngLat(coordinates).setHTML(description).addTo(map!);
-      });
-
       map!.on("moveend", () => {
         // @ts-ignore
         const features = map!.queryRenderedFeatures({ layers: ["places"] });
 
         if (features) {
-          console.log("features", features);
+          console.log("features in Map.tsx", features);
         }
-      });
-
-      map!.on("mouseleave", "places", () => {
-        map!.getCanvas().style.cursor = "";
-        popup.remove();
       });
 
       map!.on("click", (e) => {
@@ -101,16 +75,11 @@ const MapComponent = (props: MapComponentProps) => {
           layers: ["places"],
         });
         selectedFeatures.map((feature) => {
-          console.log(feature.properties);
+          handleListingClick(feature.properties)
         });
       });
     });
 
-    // Create a popup, but don't add it to the map yet.
-    const popup = new mapboxgl.Popup({
-      closeButton: false,
-      closeOnClick: false,
-    });
   });
 
   return (

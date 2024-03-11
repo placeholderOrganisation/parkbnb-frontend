@@ -1,5 +1,5 @@
 import MapComponent from "../../components/listings/get-listings/Map";
-import GetListingBottomDrawer from "../../components/drawers/get-listing-bottom-drawer.component";
+import GetListingBottomDrawer from "../../components/listings/get-listings/get-listing-bottom-drawer.component";
 import { GetListingsMobilePageProps, Listing } from "../../types/global.types";
 import { Box, Divider, InputAdornment, TextField } from "@mui/material";
 import TuneIcon from "@mui/icons-material/Tune";

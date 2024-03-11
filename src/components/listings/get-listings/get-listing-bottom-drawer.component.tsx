@@ -8,8 +8,9 @@ import {
 import { Global } from "@emotion/react";
 import { grey } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
-import { RootState } from "../../redux/global-store";
+import { RootState } from "../../../redux/global-store";
 import { useSelector } from "react-redux";
+import ParkingCard from "../../parking-card/parking-card.component";
 
 const drawerBleeding = 56;
 
@@ -105,7 +106,13 @@ export default function GetListingBottomDrawer(props: Props) {
             overflow: "auto",
           }}
         >
-          <Skeleton variant="rectangular" height="100%" />
+          {listingsRenderedInMap.length === 0 ? (
+            <Skeleton variant="rectangular" height="100%" />
+          ) : (
+            listingsRenderedInMap.map((listing) => (
+              <ParkingCard key={listing.id} parking={listing} />
+            ))
+          )}
         </StyledBox>
       </SwipeableDrawer>
     </Root>

@@ -57,9 +57,10 @@ const MapComponent = (props: MapComponentProps) => {
         const features = map!.queryRenderedFeatures({ layers: ["places"] });
 
         if (features) {
-          const listings = features.map((feature) => feature.properties);
           // @ts-ignore
-          handleMoveEnd(listings);
+          const listingIds = features.map((feature) => feature.properties.id);
+          // @ts-ignore
+          handleMoveEnd(listingIds);
         }
       });
 
@@ -75,7 +76,7 @@ const MapComponent = (props: MapComponentProps) => {
         });
         selectedFeatures.map((feature) => {
           // @ts-ignore
-          handleListingClick(feature.properties);
+          handleListingClick(feature.properties.id);
         });
       });
     });

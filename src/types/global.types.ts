@@ -1,3 +1,5 @@
+import { VehicleTypeToDimensions } from "./create-listing-form.types";
+
 export interface Listing {
   id: string;
   filters: {
@@ -6,7 +8,7 @@ export interface Listing {
     ev_charging: boolean;
     handicap_accessible: boolean;
     storage_type: string;
-    vehicle_type: string;
+    vehicle_type: keyof VehicleTypeToDimensions;
     length: number;
     width: number;
     spaces: number;
@@ -43,12 +45,12 @@ export interface ListingOnMap {
 
 export interface GetListingsPageProps {
   searchResults: ListingOnMap[];
-  handleMoveEndInMap: (listingsOnMap: Listing[]) => void;
-  handleListingClickInMap: (listingOnMap: Listing) => void;
+  handleMoveEndInMap: (listingIds: string[]) => void;
+  handleListingClickInMap: (id: string) => void;
 }
 
 export interface MapComponentProps {
   listings: ListingOnMap[];
-  handleListingClick: (listing: Listing) => void;
-  handleMoveEnd: (listings: Listing[]) => void;
+  handleListingClick: (listing: string) => void;
+  handleMoveEnd: (listings: string[]) => void;
 }

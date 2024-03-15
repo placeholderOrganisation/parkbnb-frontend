@@ -19,6 +19,7 @@ const GetListingsMobileLayout = (props: GetListingsPageProps) => {
           position: "relative",
         }}
       >
+        {/* search bar  */}
         <TextField
           id="outlined-basic"
           label="Search for a city"
@@ -53,18 +54,20 @@ const GetListingsMobileLayout = (props: GetListingsPageProps) => {
           }}
         />
 
-        {/* ListingPopup renders if user clicked on a listing in map  */}
+        {/* renders if user clicked on a listing in map  */}
         <ParkingCardContainerForMap />
 
+        {/* map  */}
         <MapComponent
           listings={searchResults}
-          handleListingClick={(listingOnMap) =>
-            handleListingClickInMap(listingOnMap)
-          }
-          handleMoveEnd={(listingsOnMap) => handleMoveEndInMap(listingsOnMap)}
+          handleListingClick={(listingId) => handleListingClickInMap(listingId)}
+          handleMoveEnd={(listingIds) => handleMoveEndInMap(listingIds)}
         />
       </Box>
+
+      {/* listview drawer  */}
       <GetListingBottomDrawer />
+
       <RightFullPageDrawer
         anchor="right"
         open={isFilterDrawerOpen}

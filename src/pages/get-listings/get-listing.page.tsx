@@ -3,21 +3,25 @@ import { isDesktop } from "../../utils/display-utils";
 import GetListingsDesktopLayout from "./get-listing.desktop";
 import GetListingsMobileLayout from "./get-listing.mobile";
 import { listingsOnMap } from "../../seeds/listings";
-import { Listing } from "../../types/global.types";
 import { useDispatch } from "react-redux";
 import {
   setListingsRenderedInMap,
   setUserSelectedListing,
 } from "../../redux/search-slice";
+import { getListingFromResultsGivenId } from "../../utils/parking-utils";
 
 const GetListing = () => {
   const dispatch = useDispatch();
 
-  const handleListingClickInMap = (listing: Listing) => {
-    dispatch(setUserSelectedListing(listing));
+  const handleListingClickInMap = (id: string) => {
+    const selectedListing = getListingFromResultsGivenId(listingsOnMap, id);
+    dispatch(setUserSelectedListing(selectedListing));
   };
 
-  const handleMoveEndInMap = (listings: Listing[]) => {
+  const handleMoveEndInMap = (listingIds: string[]) => {
+    const listings = listingIds.map((id) =>
+      getListingFromResultsGivenId(listingsOnMap, id)
+    );
     dispatch(setListingsRenderedInMap(listings));
   };
 

@@ -43,10 +43,12 @@ export interface ListingOnMap {
 
 export interface GetListingsPageProps {
   searchResults: ListingOnMap[];
+  handleMoveEndInMap: (listingsOnMap: Listing[]) => void;
+  handleListingClickInMap: (listingOnMap: Listing) => void;
 }
 
 export interface MapComponentProps {
   listings: ListingOnMap[];
-  handleListingClick: (listing: ListingOnMap) => void;
-  handleMoveEnd: (listings: ListingOnMap[]) => void;
+  handleListingClick: (listing: Listing) => void;
+  handleMoveEnd: (listings: Listing[]) => void;
 }

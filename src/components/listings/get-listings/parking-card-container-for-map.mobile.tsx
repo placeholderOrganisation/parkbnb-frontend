@@ -2,10 +2,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/global-store";
 import ParkingCard from "../../parking-card/parking-card.component";
 import { Box } from "@mui/material";
+import { Listing } from "../../../types/global.types";
 
 const ParkingCardContainerForMap = () => {
   const searchState = useSelector((state: RootState) => state.search);
-  const userSelectedListing = searchState.userSelectedListing;
+  const userSelectedListing: Listing | null = searchState.userSelectedListing;
 
   if (!userSelectedListing) {
     return null;
@@ -22,7 +23,7 @@ const ParkingCardContainerForMap = () => {
         bgcolor: "white",
       }}
     >
-      <ParkingCard />
+      <ParkingCard parking={userSelectedListing} />
     </Box>
   );
 };

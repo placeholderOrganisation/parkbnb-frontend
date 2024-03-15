@@ -30,3 +30,11 @@ export interface PriceFormTextFields {
 export interface CustomImageProps {
   src: string;
 }
+
+export interface VehicleTypeToDimensions {
+  bike: string;
+  "sedan / suv": string;
+  "pickup truck": string;
+  "boat / RV": string;
+  "commercial truck / trailer": string;
+}

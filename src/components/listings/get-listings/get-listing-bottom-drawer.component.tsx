@@ -2,6 +2,7 @@ import { useState } from "react";
 import {
   CssBaseline,
   Skeleton,
+  Stack,
   SwipeableDrawer,
   Typography,
 } from "@mui/material";
@@ -106,13 +107,15 @@ export default function GetListingBottomDrawer(props: Props) {
             overflow: "auto",
           }}
         >
-          {listingsRenderedInMap.length === 0 ? (
-            <Skeleton variant="rectangular" height="100%" />
-          ) : (
-            listingsRenderedInMap.map((listing) => (
-              <ParkingCard key={listing.id} />
-            ))
-          )}
+          <Stack spacing={2}>
+            {listingsRenderedInMap.length === 0 ? (
+              <Skeleton variant="rectangular" height="100%" />
+            ) : (
+              listingsRenderedInMap.map((listing) => (
+                <ParkingCard key={listing.id} parking={listing} />
+              ))
+            )}
+          </Stack>
         </StyledBox>
       </SwipeableDrawer>
     </Root>

@@ -1,14 +1,9 @@
 import { useSelector } from "react-redux";
-import { Listing } from "../../../types/global.types";
 import { RootState } from "../../../redux/global-store";
 import ParkingCard from "../../parking-card/parking-card.component";
 import { Box } from "@mui/material";
 
-export interface ListingPopupProps {
-  parking: Listing;
-}
-
-const ListingPopup = () => {
+const ParkingCardContainerForMap = () => {
   const searchState = useSelector((state: RootState) => state.search);
   const userSelectedListing = searchState.userSelectedListing;
 
@@ -27,9 +22,9 @@ const ListingPopup = () => {
         bgcolor: "white",
       }}
     >
-      <ParkingCard parking={userSelectedListing} />
+      <ParkingCard />
     </Box>
   );
 };
 
-export default ListingPopup;
+export default ParkingCardContainerForMap;

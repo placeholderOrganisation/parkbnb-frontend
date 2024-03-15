@@ -1,28 +1,22 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 
 import { Box } from "@mui/material";
 import mapboxgl, { PointLike } from "mapbox-gl";
 import { NAVBAR_HEIGHT_MOBILE } from "../../navbar/navbar-header.component";
-import { Listing } from "../../../types/global.types";
+import { MapComponentProps } from "../../../types/global.types";
 
 // Mapbox access token
 // mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 mapboxgl.accessToken =
   "pk.eyJ1IjoiY29kZXJzYmV5b25kIiwiYSI6ImNsc3ZhYmk1NjBobnQya3JxaWoyYXpleXoifQ.igcdok9oqUQAML9i3gyH_w";
 
-interface MapComponentProps {
-  listings: any;
-  handleListingClick: (listing: Listing) => void;
-  handleMoveEnd: (listings: Listing[]) => void;
-}
-
 const MapComponent = (props: MapComponentProps) => {
   const { listings, handleListingClick, handleMoveEnd } = props;
+  const zoom = 14;
+  const lng = -79.731989;
+  const lat = 43.760685;
   const mapContainer = useRef(null);
   let map: mapboxgl.Map | null = null;
-  const [lng, setLng] = useState(-79.731989);
-  const [lat, setLat] = useState(43.760685);
-  const [zoom, setZoom] = useState(14);
 
   useEffect(() => {
     if (map) return;
@@ -41,6 +35,7 @@ const MapComponent = (props: MapComponentProps) => {
         type: "geojson",
         data: {
           type: "FeatureCollection",
+          // @ts-ignore
           features: listings,
         },
       });
@@ -63,6 +58,7 @@ const MapComponent = (props: MapComponentProps) => {
 
         if (features) {
           const listings = features.map((feature) => feature.properties);
+          // @ts-ignore
           handleMoveEnd(listings);
         }
       });
@@ -78,6 +74,7 @@ const MapComponent = (props: MapComponentProps) => {
           layers: ["places"],
         });
         selectedFeatures.map((feature) => {
+          // @ts-ignore
           handleListingClick(feature.properties);
         });
       });

@@ -1,6 +1,6 @@
 import MapComponent from "../../components/listings/get-listings/Map";
 import GetListingBottomDrawer from "../../components/listings/get-listings/get-listing-bottom-drawer.component";
-import { GetListingsMobilePageProps, Listing } from "../../types/global.types";
+import { GetListingsPageProps, ListingOnMap } from "../../types/global.types";
 import { Box, Divider, InputAdornment, TextField } from "@mui/material";
 import TuneIcon from "@mui/icons-material/Tune";
 import { useState } from "react";
@@ -10,19 +10,19 @@ import {
   setListingsRenderedInMap,
 } from "../../redux/search-slice";
 import { useDispatch } from "react-redux";
-import ListingPopup from "../../components/listings/get-listings/ListingPopup.mobile";
+import ParkingCardContainerForMap from "../../components/listings/get-listings/parking-card-container-for-map.mobile";
 
-const GetListingsMobileLayout = (props: GetListingsMobilePageProps) => {
-  const { listings } = props;
+const GetListingsMobileLayout = (props: GetListingsPageProps) => {
+  const { searchResults } = props;
   const dispatch = useDispatch();
 
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
 
-  const handleListingClickInMap = (listing: Listing) => {
+  const handleListingClickInMap = (listing: ListingOnMap) => {
     dispatch(setUserSelectedListing(listing));
   };
 
-  const handleMoveEndInMap = (listings: Listing[]) => {
+  const handleMoveEndInMap = (listings: ListingOnMap[]) => {
     dispatch(setListingsRenderedInMap(listings));
   };
 
@@ -68,10 +68,10 @@ const GetListingsMobileLayout = (props: GetListingsMobilePageProps) => {
         />
 
         {/* ListingPopup renders if user clicked on a listing in map  */}
-        <ListingPopup />
+        <ParkingCardContainerForMap />
 
         <MapComponent
-          listings={listings}
+          listings={searchResults}
           handleListingClick={(listing) => handleListingClickInMap(listing)}
           handleMoveEnd={(listings) => handleMoveEndInMap(listings)}
         />

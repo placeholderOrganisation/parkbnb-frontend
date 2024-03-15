@@ -11,8 +11,6 @@ const NavbarHeader = () => {
     ? NavbarHeadersDesktopLayout
     : NavbarHeadersMobileLayout;
 
-  const signInPageUrl = "/sign-in";
-
   return (
     // height of mobile navbar
     <Box
@@ -21,7 +19,7 @@ const NavbarHeader = () => {
         height: `${NAVBAR_HEIGHT_MOBILE}px`,
       }}
     >
-      <Layout signInPageUrl={signInPageUrl} />
+      <Layout />
     </Box>
   );
 };

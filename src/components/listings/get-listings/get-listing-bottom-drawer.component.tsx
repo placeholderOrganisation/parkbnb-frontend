@@ -110,7 +110,7 @@ export default function GetListingBottomDrawer(props: Props) {
             <Skeleton variant="rectangular" height="100%" />
           ) : (
             listingsRenderedInMap.map((listing) => (
-              <ParkingCard key={listing.id} parking={listing} />
+              <ParkingCard key={listing.id} />
             ))
           )}
         </StyledBox>

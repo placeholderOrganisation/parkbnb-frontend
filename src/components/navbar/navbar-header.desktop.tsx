@@ -1,6 +1,4 @@
-import { NavbarHeaderProps } from '../../types/global.types'
-
-const NavbarHeaderDesktopLayout = (props: NavbarHeaderProps) => {
+const NavbarHeaderDesktopLayout = () => {
   return (
     <div>navbar-header.DesktopLayout</div>
   )

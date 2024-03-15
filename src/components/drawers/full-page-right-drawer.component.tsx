@@ -14,6 +14,7 @@ const RightFullPageDrawer = (props: any) => {
           height: "100vh",
         },
       }}
+      transitionDuration={300}
     >
       {children}
     </Drawer>

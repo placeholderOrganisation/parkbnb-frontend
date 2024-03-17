@@ -13,8 +13,8 @@ import NavbarHeader from "./components/navbar/navbar-header.component";
 const App = () => {
   return (
     <ThemeProvider theme={defaultTheme}>
-      <NavbarHeader />
       <Router>
+        <NavbarHeader />
         <Routes>
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/sign-in" element={<SignIn />} />

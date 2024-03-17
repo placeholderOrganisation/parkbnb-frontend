@@ -46,8 +46,9 @@ const SearchAndFilter = () => {
         open={isFilterDrawerOpen}
         drawerClose={() => setIsFilterDrawerOpen(false)}
         drawerOpen={() => setIsFilterDrawerOpen(true)}
+        drawerTitle={"Filters"}
       >
-        filters
+        <p>Filter content goes here</p>
       </RightFullPageDrawer>
     </>
   );

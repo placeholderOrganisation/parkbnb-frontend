@@ -5,6 +5,7 @@ export interface UserObject {
   verified: boolean;
   contactNumber?: string | null;
   verificationImageLink?: string[];
+  isAuthed: boolean;
 }
 
 export interface UserSignupRequestObject {

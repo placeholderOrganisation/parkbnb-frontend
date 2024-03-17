@@ -54,3 +54,14 @@ export interface MapComponentProps {
   handleListingClick: (listing: string) => void;
   handleMoveEnd: (listings: string[]) => void;
 }
+
+export interface NavbarLink {
+  name: string;
+  path: string;
+}
+
+export interface NavbarLayoutProps {
+  linksToRender: NavbarLink[];
+  handleLogoClick: () => void;
+  isUserAuthed: boolean;
+}

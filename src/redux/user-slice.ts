@@ -9,6 +9,7 @@ export const userSlice = createSlice({
     images: [],
     verified: false,
     contactNumber: null,
+    isAuthed: false,
   },
   reducers: {
     setUserData: (state: UserObject, action) => {
@@ -19,6 +20,7 @@ export const userSlice = createSlice({
       state.images = user.images;
       state.verified = user.verified;
       state.contactNumber = user.contactNumber ? user.contactNumber : null;
+      state.isAuthed = true;
     },
   },
 });

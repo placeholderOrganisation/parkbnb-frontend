@@ -25,8 +25,6 @@ const NavbarHeader = () => {
     navigate("/");
   };
 
-  console.log("user", user.isAuthed);
-
   return (
     // height of mobile navbar
     <Box

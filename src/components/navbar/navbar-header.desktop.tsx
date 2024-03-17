@@ -1,6 +1,7 @@
 import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import logo from "/vite.svg";
+import { NAVBAR_HEIGHT_MOBILE } from "./navbar-header.component";
 
 const NavbarHeaderDesktopLayout = () => {
   return (
@@ -9,6 +10,7 @@ const NavbarHeaderDesktopLayout = () => {
         <Toolbar
           sx={{
             justifyContent: "space-between",
+            height: `${NAVBAR_HEIGHT_MOBILE}px`,
           }}
         >
           <IconButton

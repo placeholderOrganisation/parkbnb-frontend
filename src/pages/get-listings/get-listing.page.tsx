@@ -8,10 +8,23 @@ import {
   setListingsRenderedInMap,
   setUserSelectedListing,
 } from "../../redux/search-slice";
-import { getListingFromResultsGivenId } from "../../utils/parking-utils";
+import {
+  convertListingOnMapObjToListingObj,
+  getListingFromResultsGivenId,
+} from "../../utils/parking-utils";
+import { useEffect } from "react";
+import { Listing } from "../../types/global.types";
 
 const GetListing = () => {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const listings: Listing[] = listingsOnMap.map((listingOnMap) => {
+      return convertListingOnMapObjToListingObj(listingOnMap);
+    });
+
+    dispatch(setListingsRenderedInMap(listings));
+  }, []);
 
   const handleListingClickInMap = (id: string) => {
     const selectedListing = getListingFromResultsGivenId(listingsOnMap, id);

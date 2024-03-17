@@ -8,12 +8,12 @@ export const getListingFromResultsGivenId = (
     (listingOnMap) => listingOnMap.properties.id === id
   );
   if (listing) {
-    return convertListingOnMapToListing(listing);
+    return convertListingOnMapObjToListingObj(listing);
   }
   return null;
 };
 
-export const convertListingOnMapToListing = (
+export const convertListingOnMapObjToListingObj = (
   listingOnMap: ListingOnMap
 ): Listing => {
   const { properties } = listingOnMap;

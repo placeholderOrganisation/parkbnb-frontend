@@ -83,9 +83,8 @@ const NavbarHeadersMobileLayout = (props: NavbarLayoutProps) => {
   };
 
   const handleLogout = () => {
-    // handle logout logic
-    navigate("/");
-    closeRightDrawer();
+    // make backend api call to logout
+    handleAuthButtonClick("/");
   };
 
   return (

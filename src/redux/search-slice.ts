@@ -16,6 +16,7 @@ export const searchSlice = createSlice({
       state.userSelectedListing = listing;
     },
     setSearchQuery: (state: SearchState, action) => {
+      // city name 
       const searchQuery: string = action.payload;
 
       state.searchQuery = searchQuery;

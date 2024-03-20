@@ -31,26 +31,59 @@ const MapComponent = (props: MapComponentProps) => {
     });
 
     map.on("load", () => {
-      map!.addSource("places", {
-        type: "geojson",
-        data: {
-          type: "FeatureCollection",
-          // @ts-ignore
-          features: listings,
-        },
-      });
+      map!.loadImage(
+        "https://docs.mapbox.com/mapbox-gl-js/assets/popup.png",
+        function (error, image) {
+          if (error) throw error;
+          map!.addImage("popup", image!, {
+            stretchX: [
+              [25, 55],
+              [85, 115],
+            ],
+            stretchY: [[25, 100]],
+            content: [25, 25, 115, 100],
+            pixelRatio: 2,
+          });
+          map!.addSource("places", {
+            type: "geojson",
+            data: {
+              type: "FeatureCollection",
+              // @ts-ignore
+              features: listings,
+            },
+          });
+          map!.addLayer({
+            id: "places",
+            type: "symbol",
+            source: "places",
+            layout: {
+              "text-field": [
+                "format",
+                ["literal", "$"],
+                {},
+                ["get", "monthly", ["get", "price"]],
+                {},
+              ],
+              "icon-text-fit": "both",
+              "icon-image": "popup",
+              "icon-allow-overlap": true,
+              "text-allow-overlap": true,
+            },
+          });
+        }
+      );
       // Add a layer showing the places.
-      map!.addLayer({
-        id: "places",
-        type: "circle",
-        source: "places",
-        paint: {
-          "circle-color": "#4264fb",
-          "circle-radius": 10,
-          "circle-stroke-width": 2,
-          "circle-stroke-color": "#ffffff",
-        },
-      });
+      // map!.addLayer({
+      //   id: "places",
+      //   type: "circle",
+      //   source: "places",
+      //   paint: {
+      //     "circle-color": "#4264fb",
+      //     "circle-radius": 10,
+      //     "circle-stroke-width": 2,
+      //     "circle-stroke-color": "#ffffff",
+      //   },
+      // });
 
       map!.on("moveend", () => {
         // @ts-ignore

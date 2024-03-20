@@ -9,8 +9,7 @@ import {
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import { ParkingCardProps } from "./parking-card.component";
 import { Listing } from "../../types/global.types";
-import { vehicleTypeToDimensions } from "../../utils/create-listing-form.utils";
-import { VehicleTypeToDimensions } from "../../types/create-listing-form.types";
+import { parseStorageType, parseVehicleType } from "../../utils/parking-utils";
 
 const Amenities = (props: { parking: Listing }) => {
   const { parking } = props;
@@ -47,23 +46,7 @@ const Title = (props: { parking: Listing }) => {
   );
 };
 
-const parseStorageType = (storage_type: string) => {
-  if (storage_type === "outdoor") {
-    return "Outdoor storage";
-  } else if (storage_type === "indoor") {
-    return "Indoor storage";
-  }
-  return "";
-};
 
-const parseVehicleType = (vehicle_type: keyof VehicleTypeToDimensions) => {
-
-  if (!vehicleTypeToDimensions[vehicle_type]) {
-    return vehicle_type;
-  }
-
-  return vehicleTypeToDimensions[vehicle_type];
-};
 
 const ParkingCardMobile = (props: ParkingCardProps) => {
   const { parking } = props;

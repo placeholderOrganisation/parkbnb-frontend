@@ -10,7 +10,7 @@ import {
 import {
   ParkingCardLayoutProps,
 } from "./parking-card.component";
-import { FilterTypes, Listing } from "../../types/global.types";
+import { FILTER_ENUMS, FilterTypes, Listing } from "../../types/global.types";
 import {
   formatParkingFilterName,
   getMonthsPassedOrDaysOrHours,
@@ -28,7 +28,7 @@ const Amenities = (props: { parking: Listing }) => {
   const { parking } = props;
   const vehicle_type = parseVehicleType(parking.filters.vehicle_type);
   const listed_on = getMonthsPassedOrDaysOrHours(parking.listed_on);
-  const attributesToShow = ["security_cameras", "24/7 access"];
+  const attributesToShow = [FILTER_ENUMS.SECURITY_CAMERAS, FILTER_ENUMS.ACCESS_24_7];
   return (
     <>
       <Stack

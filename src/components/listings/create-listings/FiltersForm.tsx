@@ -14,6 +14,15 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { vehicleTypes } from "../../../utils/create-listing-form.utils";
+import { FILTER_ENUMS, FilterTypes } from "../../../types/global.types";
+import { formatParkingFilterName } from "../../../utils/parking-utils";
+
+const parkingFilters: string[] = [
+  FILTER_ENUMS.ACCESS_24_7,
+  FILTER_ENUMS.EV_CHARGING,
+  FILTER_ENUMS.SECURITY_CAMERAS,
+  FILTER_ENUMS.HANDICAP_ACCESSIBLE,
+];
 
 export default function FiltersForm() {
   const [storageType, setStorageType] = useState("");
@@ -52,44 +61,20 @@ export default function FiltersForm() {
           Select all that apply to your space
         </Typography>
         <Grid container spacing={3}>
-          <Grid item xs={6}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  color="secondary"
-                  name="security-cameras"
-                  value="yes"
-                />
-              }
-              label="Security cameras"
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <FormControlLabel
-              control={<Checkbox color="secondary" name="access" value="yes" />}
-              label="24/7 access"
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <FormControlLabel
-              control={
-                <Checkbox color="secondary" name="ev-charging" value="yes" />
-              }
-              label="EV charging available"
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  color="secondary"
-                  name="handicap-accessible"
-                  value="yes"
-                />
-              }
-              label="Handicap accessible"
-            />
-          </Grid>
+          {parkingFilters.map((label, index) => (
+            <Grid item xs={6} key={index}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    color="secondary"
+                    name={`checkbox-${index}`}
+                    value="yes"
+                  />
+                }
+                label={formatParkingFilterName(label as keyof FilterTypes)}
+              />
+            </Grid>
+          ))}
         </Grid>
       </Box>
       {/* Dropdown filters */}

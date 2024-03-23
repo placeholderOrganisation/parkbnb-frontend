@@ -14,23 +14,16 @@ const CitySearch = (props: CitySearchProps) => {
     <TextField
       value={value}
       onChange={(e) => handleSearchQueryChange(e.target.value)}
-      id="outlined-basic"
-      label="Search for a city"
+      type="search"
+      id="city-search"
       variant="outlined"
+      label="Search for a city"
       sx={{
         width: "100%",
       }}
       InputProps={{
         endAdornment: (
           <>
-            {value && (
-              <InputAdornment
-                position="end"
-                onClick={() => handleSearchQueryChange("")}
-              >
-                <CloseIcon />
-              </InputAdornment>
-            )}
             <InputAdornment position="end">
               <Divider
                 orientation="vertical"

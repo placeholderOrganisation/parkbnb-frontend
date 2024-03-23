@@ -22,9 +22,9 @@ export interface AddressFormTextFieldProps {
 
 export interface PriceFormTextFields {
   id: string;
-  term: string;
-  helperText: string;
-  helperTextLabelId: string;
+  term?: string;
+  helperText?: string;
+  helperTextLabelId?: string;
 }
 
 export interface CustomImageProps {

@@ -7,7 +7,10 @@ import {
   FormHelperText,
   InputAdornment,
 } from "@mui/material";
-import { AddressFormTextFieldProps, PriceFormTextFields } from "../../../types/create-listing-form.types";
+import {
+  AddressFormTextFieldProps,
+  PriceFormTextFields,
+} from "../../../types/create-listing-form.types";
 
 const AddressFormTextField = (props: AddressFormTextFieldProps) => {
   const { id, name, label, autoComplete } = props;
@@ -24,8 +27,12 @@ const AddressFormTextField = (props: AddressFormTextFieldProps) => {
   );
 };
 
-const PriceFormTextField = (props: PriceFormTextFields) => {
+export const PriceFormTextField = (props: PriceFormTextFields) => {
   const { id, term, helperText, helperTextLabelId } = props;
+  const shouldShowEndAdornment = term !== undefined;
+  const shouldShowHelperText =
+    helperText !== undefined && helperTextLabelId !== undefined;
+  const helperTextLabelIdParsed = shouldShowHelperText ? helperTextLabelId : "";
   return (
     <FormControl
       sx={{
@@ -37,11 +44,23 @@ const PriceFormTextField = (props: PriceFormTextFields) => {
         variant="outlined"
         InputProps={{
           startAdornment: <InputAdornment position="start">$</InputAdornment>,
-          endAdornment: <InputAdornment position="end">/{term}</InputAdornment>,
+          endAdornment: shouldShowEndAdornment && (
+            <InputAdornment position="end">{term}</InputAdornment>
+          ),
         }}
-        aria-describedby={helperTextLabelId}
+        type="number"
+        aria-describedby={helperTextLabelIdParsed}
       />
-      <FormHelperText id={helperTextLabelId}>{helperText}</FormHelperText>
+      {shouldShowHelperText && (
+        <FormHelperText
+          id={helperTextLabelIdParsed}
+          sx={{
+            ml: 0,
+          }}
+        >
+          {helperText}
+        </FormHelperText>
+      )}
     </FormControl>
   );
 };
@@ -76,13 +95,13 @@ const addressFields = [
 const pricingFields = [
   {
     id: "per-day-price",
-    term: "day",
+    term: "/day",
     helperText: "Daily price",
     helperTextLabelId: "daily-price-input",
   },
   {
     id: "per-month-price",
-    term: "month",
+    term: "/month",
     helperText: "Monthly price",
     helperTextLabelId: "montly-price-input",
   },

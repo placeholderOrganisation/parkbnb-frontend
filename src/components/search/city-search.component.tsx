@@ -1,5 +1,4 @@
 import { Divider, InputAdornment, TextField } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 import TuneIcon from "@mui/icons-material/Tune";
 
 interface CitySearchProps {

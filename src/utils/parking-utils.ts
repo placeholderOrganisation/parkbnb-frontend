@@ -1,6 +1,10 @@
-import { VehicleTypeToDimensions } from "../types/create-listing-form.types";
-import { FilterTypes, Listing, ListingOnMap } from "../types/global.types";
-import { vehicleTypeToDimensions } from "./create-listing-form.utils";
+import {
+  FilterTypes,
+  Listing,
+  ListingOnMap,
+  VEHICLE_TYPE_ENUMS,
+  VehicleTypeToDimensions,
+} from "../types/global.types";
 import dayjs from "dayjs";
 
 export const getListingFromResultsGivenId = (
@@ -35,11 +39,12 @@ export const parseStorageType = (storage_type: string) => {
 export const parseVehicleType = (
   vehicle_type: keyof VehicleTypeToDimensions
 ) => {
-  if (!vehicleTypeToDimensions[vehicle_type]) {
+  if (!VEHICLE_TYPE_ENUMS[vehicle_type]) {
+    // if we do not find the vehicle type in the mapping, we return the vehicle type as is
     return vehicle_type;
   }
 
-  return vehicleTypeToDimensions[vehicle_type];
+  return VEHICLE_TYPE_ENUMS[vehicle_type];
 };
 
 export const formatParkingFilterName = (filterName: keyof FilterTypes) => {

@@ -1,10 +1,24 @@
-import { VehicleTypeToDimensions } from "./create-listing-form.types";
-
 export const FILTER_ENUMS = {
   SECURITY_CAMERAS: "security_cameras",
   ACCESS_24_7: "24/7 access",
   EV_CHARGING: "ev_charging",
   HANDICAP_ACCESSIBLE: "handicap_accessible",
+};
+
+export interface VehicleTypeToDimensions {
+  bike: string;
+  "sedan / suv": string;
+  "pickup truck": string;
+  "boat / RV": string;
+  "commercial truck / trailer": string;
+}
+
+export const VEHICLE_TYPE_ENUMS: VehicleTypeToDimensions = {
+  bike: "bike",
+  "sedan / suv": "sedan / suv",
+  "pickup truck": "pickup truck",
+  "boat / RV": "boat / RV",
+  "commercial truck / trailer": "commercial truck / trailer",
 };
 
 export interface FilterTypes {

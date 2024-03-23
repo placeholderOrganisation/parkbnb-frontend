@@ -8,22 +8,11 @@ import {
   Select,
   SelectChangeEvent,
   Typography,
-  Grid,
-  FormControlLabel,
   Checkbox,
 } from "@mui/material";
 import { useState } from "react";
 import { vehicleTypes } from "../../../utils/create-listing-form.utils";
-import { FILTER_ENUMS, FilterTypes } from "../../../types/global.types";
-import { formatParkingFilterName } from "../../../utils/parking-utils";
 import AmenitiesFilter from "../../filters/amenities-filter.component";
-
-const parkingFilters: string[] = [
-  FILTER_ENUMS.ACCESS_24_7,
-  FILTER_ENUMS.EV_CHARGING,
-  FILTER_ENUMS.SECURITY_CAMERAS,
-  FILTER_ENUMS.HANDICAP_ACCESSIBLE,
-];
 
 export default function FiltersForm() {
   const [storageType, setStorageType] = useState("");

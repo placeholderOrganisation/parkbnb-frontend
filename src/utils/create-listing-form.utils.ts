@@ -1,19 +1,5 @@
-import { VehicleTypeToDimensions } from "../types/create-listing-form.types";
+import { VEHICLE_TYPE_ENUMS } from "../types/global.types";
 
 export const steps = ["Address", "Filters", "Optional details", "Review"];
 
-export const vehicleTypes = [
-  "bike",
-  "sedan / suv",
-  "pickup truck",
-  "boat / RV",
-  "commercial truck / trailer",
-];
-
-export const vehicleTypeToDimensions: VehicleTypeToDimensions = {
-  bike: "bike",
-  "sedan / suv": "sedan or suv",
-  "pickup truck": "pickup truck",
-  "boat / RV": "boat or RV",
-  "commercial truck / trailer": "truck or trailer",
-};
+export const vehicleTypes = Object.keys(VEHICLE_TYPE_ENUMS);

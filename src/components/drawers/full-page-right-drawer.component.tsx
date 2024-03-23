@@ -1,25 +1,38 @@
 import { Box, Drawer, Stack, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
-const RightFullPageDrawer = (props: any) => {
+interface RightFullPageDrawerProps {
+  open: boolean;
+  drawerClose: () => void;
+  drawerTitle: string;
+  children: React.ReactNode;
+  footer?: React.ReactNode;
+  allowOverflow?: boolean;
+}
+
+const RightFullPageDrawer = (props: RightFullPageDrawerProps) => {
   const {
-    drawerOpen,
+    open,
     drawerClose,
     drawerTitle,
     children,
     footer,
+    allowOverflow = false,
     ...otherprops
   } = props;
 
+  console.log("otherprops");
   return (
     <Drawer
-      open={drawerOpen}
+      anchor="right"
+      open={open}
       {...otherprops}
       sx={{
         "& .MuiDrawer-paper": {
           width: "-webkit-fill-available",
           height: "-webkit-fill-available",
           p: 2,
+          overflow: allowOverflow ? "auto" : "visible",
         },
       }}
       transitionDuration={300}

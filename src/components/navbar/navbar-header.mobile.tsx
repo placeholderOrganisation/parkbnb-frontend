@@ -112,10 +112,8 @@ const NavbarHeadersMobileLayout = (props: NavbarLayoutProps) => {
         </Toolbar>
       </AppBar>
       <RightFullPageDrawer
-        anchor="right"
         open={drawerOpen}
         drawerClose={() => setDrawerOpen(false)}
-        drawerOpen={() => setDrawerOpen(true)}
         drawerTitle={"Company name"}
         footer={
           <RightFullPageDrawerFooter

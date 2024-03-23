@@ -13,11 +13,10 @@ const SearchAndFilter = () => {
         handleEndAdornmentClick={() => setIsFilterDrawerOpen(true)}
       />
       <RightFullPageDrawer
-        anchor="right"
         open={isFilterDrawerOpen}
         drawerClose={() => setIsFilterDrawerOpen(false)}
-        drawerOpen={() => setIsFilterDrawerOpen(true)}
         drawerTitle={"Filters"}
+        allowOverflow
       >
         <Filters />
       </RightFullPageDrawer>

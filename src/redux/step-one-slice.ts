@@ -11,7 +11,7 @@ export const stepOneSlice = createSlice({
     country: "",
     dailyRate: 0,
     monthlyRate: 0,
-    isValid: false,
+    isValid: true,
   },
   reducers: {
     setStepOneFormData: (state: StepOneState, action) => {

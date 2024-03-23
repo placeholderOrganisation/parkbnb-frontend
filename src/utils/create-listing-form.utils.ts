@@ -15,5 +15,5 @@ export const vehicleTypeToDimensions: VehicleTypeToDimensions = {
   "sedan / suv": "sedan or suv",
   "pickup truck": "pickup truck",
   "boat / RV": "boat or RV",
-  "commercial truck / trailer": "commercial truck or trailer",
+  "commercial truck / trailer": "truck or trailer",
 };

@@ -6,27 +6,57 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import { ParkingCardProps } from "./parking-card.component";
-import { Listing } from "../../types/global.types";
-import { parseStorageType, parseVehicleType } from "../../utils/parking-utils";
+
+import {
+  ParkingCardLayoutProps,
+} from "./parking-card.component";
+import { FilterTypes, Listing } from "../../types/global.types";
+import {
+  formatParkingFilterName,
+  getMonthsPassedOrDaysOrHours,
+  parseStorageType,
+  parseVehicleType,
+} from "../../utils/parking-utils";
+import CloseIcon from "@mui/icons-material/Close";
+import VerifiedIcon from "@mui/icons-material/Verified";
+import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
+import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
+import { useDispatch } from "react-redux";
+import { setUserSelectedListing } from "../../redux/search-slice";
 
 const Amenities = (props: { parking: Listing }) => {
   const { parking } = props;
   const vehicle_type = parseVehicleType(parking.filters.vehicle_type);
+  const listed_on = getMonthsPassedOrDaysOrHours(parking.listed_on);
+  const attributesToShow = ["security_cameras", "24/7 access"];
   return (
     <>
       <Stack
-        direction="row"
-        spacing={3}
         sx={{
           mt: 1,
+          width: "max-content",
         }}
       >
-        <Typography variant="subtitle2">Security cameras</Typography>
-        <Typography variant="subtitle2">24/7 Access</Typography>
+        <Typography variant="subtitle2">{`Can accomodate: ${vehicle_type}`}</Typography>
+
+        {attributesToShow.map((attribute: string) => {
+          return (
+            <Stack direction="row" spacing={1} key={attribute}>
+              {parking.filters[attribute as keyof FilterTypes] ? (
+                <CheckOutlinedIcon fontSize="small" color="success" />
+              ) : (
+                <ClearOutlinedIcon fontSize="small" color="error" />
+              )}
+              <Typography variant="subtitle2">
+                {formatParkingFilterName(attribute as keyof FilterTypes)}
+              </Typography>
+            </Stack>
+          );
+        })}
+        <Typography variant="subtitle2" color="black">
+          {listed_on}
+        </Typography>
       </Stack>
-      <Typography variant="subtitle2">{`Can accomodate: ${vehicle_type}`}</Typography>
     </>
   );
 };
@@ -36,8 +66,22 @@ const Title = (props: { parking: Listing }) => {
   const storage_type = parseStorageType(parking.filters.storage_type);
   return (
     <Stack>
-      <Typography variant="body1">{storage_type}</Typography>
-      <Stack direction="row" spacing={1}>
+      <Stack
+        direction="row"
+        sx={{
+          alignItems: "center",
+        }}
+      >
+        <Typography variant="body1">{storage_type}</Typography>
+        <VerifiedIcon fontSize="small" color="info" sx={{ ml: 1 }} />
+      </Stack>
+      <Stack
+        direction="row"
+        spacing={1}
+        sx={{
+          mt: 0.5,
+        }}
+      >
         <Typography variant="body2">${parking.price.monthly}/month</Typography>
         <Typography variant="body2">•</Typography>
         <Typography variant="body2">${parking.price.daily}/day</Typography>
@@ -46,22 +90,33 @@ const Title = (props: { parking: Listing }) => {
   );
 };
 
+const ParkingCardMobile = (props: ParkingCardLayoutProps) => {
+  const { parking, showIcon } = props;
 
+  const dispatch = useDispatch();
 
-const ParkingCardMobile = (props: ParkingCardProps) => {
-  const { parking } = props;
+  const closeParkingCard = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    dispatch(setUserSelectedListing(null));
+  };
 
   return (
-    <Card>
+    <Card
+      sx={{
+        borderRadius: 4,
+      }}
+    >
       <CardHeader
-        avatar={<Avatar aria-label="recipe">:)</Avatar>}
+        // avatar={<Avatar aria-label="recipe">:)</Avatar>}
         action={
-          <IconButton aria-label="settings">
-            <FavoriteBorderOutlinedIcon />
+          <IconButton aria-label="settings" onClick={closeParkingCard}>
+            {showIcon && <CloseIcon />}
           </IconButton>
         }
         subheader={<Amenities parking={parking} />}
-        title={<Title parking={parking} />} // Modified line
+        title={<Title parking={parking} />}
       />
     </Card>
   );

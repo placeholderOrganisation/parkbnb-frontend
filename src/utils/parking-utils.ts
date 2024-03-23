@@ -1,6 +1,7 @@
 import { VehicleTypeToDimensions } from "../types/create-listing-form.types";
-import { Listing, ListingOnMap } from "../types/global.types";
+import { FilterTypes, Listing, ListingOnMap } from "../types/global.types";
 import { vehicleTypeToDimensions } from "./create-listing-form.utils";
+import dayjs from "dayjs";
 
 export const getListingFromResultsGivenId = (
   listingOnMaps: ListingOnMap[],
@@ -31,11 +32,37 @@ export const parseStorageType = (storage_type: string) => {
   return "";
 };
 
-export const parseVehicleType = (vehicle_type: keyof VehicleTypeToDimensions) => {
-
+export const parseVehicleType = (
+  vehicle_type: keyof VehicleTypeToDimensions
+) => {
   if (!vehicleTypeToDimensions[vehicle_type]) {
     return vehicle_type;
   }
 
   return vehicleTypeToDimensions[vehicle_type];
+};
+
+export const formatParkingFilterName = (filterName: keyof FilterTypes) => {
+  return filterName.split("_").join(" ");
+};
+
+export const formatDate = (date: string) => {
+  return dayjs(date).format("MM/DD/YYYY");
+};
+
+export const getMonthsPassedOrDaysOrHours = (date: string): string => {
+  const currentDate = dayjs();
+  const startDate = dayjs(date);
+  const daysPassed = currentDate.diff(startDate, "day");
+  const hoursPassed = currentDate.diff(startDate, "hour");
+
+  if (daysPassed > 30) {
+    const monthsPassed = currentDate.diff(startDate, "month");
+    return `${monthsPassed} month ago`;
+  } else if (hoursPassed > 24) {
+    const daysPassed = currentDate.diff(startDate, "day");
+    return `${daysPassed} days ago`;
+  } else {
+    return `${hoursPassed} hours ago`;
+  }
 };

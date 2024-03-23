@@ -1,6 +1,9 @@
 import { useState } from "react";
 import {
   CssBaseline,
+  IconButton,
+  Menu,
+  MenuItem,
   Skeleton,
   Stack,
   SwipeableDrawer,
@@ -12,6 +15,7 @@ import { styled } from "@mui/material/styles";
 import { RootState } from "../../../redux/global-store";
 import { useSelector } from "react-redux";
 import ParkingCard from "../../parking-card/parking-card.component";
+import SortIcon from "@mui/icons-material/Sort";
 
 const drawerBleeding = 56;
 
@@ -49,6 +53,15 @@ export default function GetListingBottomDrawer(props: Props) {
   const { window } = props;
   const [open, setOpen] = useState(false);
 
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const openSortMenu = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
@@ -83,6 +96,7 @@ export default function GetListingBottomDrawer(props: Props) {
           keepMounted: true,
         }}
       >
+        {/* Drawer header */}
         <StyledBox
           sx={{
             position: "absolute",
@@ -92,32 +106,73 @@ export default function GetListingBottomDrawer(props: Props) {
             visibility: "visible",
             right: 0,
             left: 0,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
           <Puller />
           <Typography sx={{ p: 2, color: "text.secondary" }}>
             {`${listingsRenderedInMap.length} results`}
           </Typography>
+
+          {open && (
+            <Stack direction="row" sx={{ px: 2 }}>
+              <IconButton
+                id="basic-button"
+                aria-controls="basic-menu"
+                aria-haspopup="true"
+                aria-expanded={openSortMenu ? "true" : undefined}
+                onClick={handleClick}
+                aria-label="sort"
+                sx={{
+                  p: 0,
+                }}
+              >
+                <SortIcon />
+              </IconButton>
+            </Stack>
+          )}
         </StyledBox>
+
+        {/* Drawer content */}
         <StyledBox
           sx={{
             px: 2,
             pb: 2,
             height: "100%",
             overflow: "auto",
+            bgcolor: "grey.100",
           }}
         >
-          <Stack spacing={2}>
+          <Stack spacing={2} sx={{ my: 2 }}>
             {listingsRenderedInMap.length === 0 ? (
               <Skeleton variant="rectangular" height="100%" />
             ) : (
               listingsRenderedInMap.map((listing) => (
-                <ParkingCard key={listing.id} parking={listing} />
+                <ParkingCard
+                  key={listing.id}
+                  parking={listing}
+                  showIcon={false}
+                />
               ))
             )}
           </Stack>
         </StyledBox>
       </SwipeableDrawer>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={openSortMenu}
+        onClose={handleClose}
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
+        }}
+      >
+        <MenuItem onClick={handleClose}>Date</MenuItem>
+        <MenuItem onClick={handleClose}>Price (high to low)</MenuItem>
+        <MenuItem onClick={handleClose}>Price (low to high)</MenuItem>
+      </Menu>
     </Root>
   );
 }

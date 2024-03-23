@@ -6,16 +6,23 @@ import { Listing } from "../../types/global.types";
 
 export interface ParkingCardProps {
   parking: Listing;
+  showIcon: boolean;
+}
+
+export interface ParkingCardLayoutProps {
+  parking: Listing;
+  showIcon: boolean;
 }
 
 const ParkingCard = (props: ParkingCardProps) => {
-  const { parking } = props;
+  const { parking, showIcon } = props;
+
   const isDesktopView = isDesktop();
   const Layout = isDesktopView ? ParkingCardDesktop : ParkingCardMobile;
 
   return (
     <Box>
-      <Layout parking={parking} />
+      <Layout parking={parking} showIcon={showIcon} />
     </Box>
   );
 };

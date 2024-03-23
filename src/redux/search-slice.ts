@@ -11,12 +11,12 @@ export const searchSlice = createSlice({
   },
   reducers: {
     setUserSelectedListing: (state: SearchState, action) => {
-      const listing: Listing = action.payload;
+      const listing: Listing | null = action.payload;
 
       state.userSelectedListing = listing;
     },
     setSearchQuery: (state: SearchState, action) => {
-      // city name 
+      // city name
       const searchQuery: string = action.payload;
 
       state.searchQuery = searchQuery;
@@ -29,5 +29,9 @@ export const searchSlice = createSlice({
   },
 });
 
-export const { setUserSelectedListing, setSearchQuery, setListingsRenderedInMap } = searchSlice.actions;
+export const {
+  setUserSelectedListing,
+  setSearchQuery,
+  setListingsRenderedInMap,
+} = searchSlice.actions;
 export default searchSlice.reducer;

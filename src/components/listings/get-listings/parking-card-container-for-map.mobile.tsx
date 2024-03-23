@@ -21,9 +21,10 @@ const ParkingCardContainerForMap = () => {
         zIndex: 100,
         width: "calc(100% - 32px)",
         bgcolor: "white",
+        borderRadius: 4,
       }}
     >
-      <ParkingCard parking={userSelectedListing} />
+      <ParkingCard parking={userSelectedListing} showIcon />
     </Box>
   );
 };

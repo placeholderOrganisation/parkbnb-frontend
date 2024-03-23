@@ -1,18 +1,20 @@
 import { VehicleTypeToDimensions } from "./create-listing-form.types";
 
+export interface FilterTypes {
+  security_cameras: boolean;
+  "24/7 access": boolean;
+  ev_charging: boolean;
+  handicap_accessible: boolean;
+  storage_type: string;
+  vehicle_type: keyof VehicleTypeToDimensions;
+  length: number;
+  width: number;
+  spaces: number;
+}
+
 export interface Listing {
   id: string;
-  filters: {
-    security_cameras: boolean;
-    "24/7 access": boolean;
-    ev_charging: boolean;
-    handicap_accessible: boolean;
-    storage_type: string;
-    vehicle_type: keyof VehicleTypeToDimensions;
-    length: number;
-    width: number;
-    spaces: number;
-  };
+  filters: FilterTypes;
   address: {
     street: string;
     lng: string;

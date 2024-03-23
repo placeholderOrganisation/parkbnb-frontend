@@ -31,6 +31,7 @@ const MapComponent = (props: MapComponentProps) => {
     });
 
     map.on("load", () => {
+      // TODO: download image and serve locally
       map!.loadImage(
         "https://docs.mapbox.com/mapbox-gl-js/assets/popup.png",
         function (error, image) {

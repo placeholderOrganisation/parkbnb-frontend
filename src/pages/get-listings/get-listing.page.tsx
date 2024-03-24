@@ -3,27 +3,42 @@ import { isDesktop } from "../../utils/display-utils";
 import GetListingsDesktopLayout from "./get-listing.desktop";
 import GetListingsMobileLayout from "./get-listing.mobile";
 import { listingsOnMap } from "../../seeds/listings";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   setListingsRenderedInMap,
+  setSearchResults,
   setUserSelectedListing,
 } from "../../redux/search-slice";
 import {
+  convertListingObjToListingOnMapObj,
   convertListingOnMapObjToListingObj,
   getListingFromResultsGivenId,
 } from "../../utils/parking-utils";
 import { useEffect } from "react";
 import { Listing } from "../../types/global.types";
+import { RootState } from "../../redux/global-store";
 
 const GetListing = () => {
   const dispatch = useDispatch();
+  const isDesktopView = isDesktop();
+  const Layout = isDesktopView
+    ? GetListingsDesktopLayout
+    : GetListingsMobileLayout;
+
+  const searchResults = useSelector(
+    (state: RootState) => state.search.searchResults
+  );
+
+  const formattedSearchResults = searchResults.map((listing) => {
+    return convertListingObjToListingOnMapObj(listing);
+  });
 
   useEffect(() => {
     const listings: Listing[] = listingsOnMap.map((listingOnMap) => {
       return convertListingOnMapObjToListingObj(listingOnMap);
     });
 
-    dispatch(setListingsRenderedInMap(listings));
+    dispatch(setSearchResults(listings));
   }, []);
 
   const handleListingClickInMap = (id: string) => {
@@ -38,15 +53,10 @@ const GetListing = () => {
     dispatch(setListingsRenderedInMap(listings));
   };
 
-  const isDesktopView = isDesktop();
-  const Layout = isDesktopView
-    ? GetListingsDesktopLayout
-    : GetListingsMobileLayout;
-
   return (
     <Box>
       <Layout
-        searchResults={listingsOnMap}
+        searchResults={formattedSearchResults}
         handleListingClickInMap={handleListingClickInMap}
         handleMoveEndInMap={handleMoveEndInMap}
       />

@@ -29,6 +29,22 @@ export const convertListingOnMapObjToListingObj = (
   return properties;
 };
 
+export const convertListingObjToListingOnMapObj = (
+  listing: Listing
+): ListingOnMap => {
+  return {
+    type: "Feature",
+    geometry: {
+      type: "Point",
+      coordinates: [
+        parseFloat(listing.address.lng),
+        parseFloat(listing.address.lat),
+      ],
+    },
+    properties: listing,
+  };
+};
+
 export const parseStorageType = (storage_type: string) => {
   if (storage_type === "outdoor") {
     return "Outdoor storage";

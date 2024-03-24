@@ -5,11 +5,18 @@ import { Listing } from "../types/global.types";
 export const searchSlice = createSlice({
   name: "search",
   initialState: {
+    searchResults: [],
     searchQuery: null,
     userSelectedListing: null,
     listingsRenderedInMap: [],
   },
   reducers: {
+    setSearchResults: (state: SearchState, action) => {
+      const listings: Listing[] = action.payload;
+
+      state.searchResults = listings;
+      state.listingsRenderedInMap = listings;
+    },
     setUserSelectedListing: (state: SearchState, action) => {
       const listing: Listing | null = action.payload;
 
@@ -30,6 +37,7 @@ export const searchSlice = createSlice({
 });
 
 export const {
+  setSearchResults,
   setUserSelectedListing,
   setSearchQuery,
   setListingsRenderedInMap,

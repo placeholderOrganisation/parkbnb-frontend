@@ -45,6 +45,7 @@ const RightFullPageDrawer = (props: RightFullPageDrawerProps) => {
           alignItems="center"
           sx={{
             my: 4,
+            bgcolor: "background.paper",
           }}
         >
           <Typography variant="h4" component="div">
@@ -60,9 +61,9 @@ const RightFullPageDrawer = (props: RightFullPageDrawerProps) => {
             position: "absolute",
             bottom: 0,
             left: 0,
-            px: 2,
             width: "-webkit-fill-available",
-            my: 4,
+            zIndex: 1000,
+            bgcolor: "background.paper",
           }}
         >
           {footer}

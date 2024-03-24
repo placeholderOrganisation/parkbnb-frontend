@@ -15,7 +15,7 @@ interface NavbarButtonProps {
   handleOnClick?: () => void;
 }
 
-interface RightFullPageDrawerFooterProps {
+interface NavbarMobileFooterProps {
   isUserAuthed: boolean;
   handleAuthButtonClick: (path: string) => void;
   handleLogout: () => void;
@@ -30,10 +30,16 @@ const NavbarButton = (props: NavbarButtonProps) => {
   );
 };
 
-const RightFullPageDrawerFooter = (props: RightFullPageDrawerFooterProps) => {
+const NavbarMobileFooter = (props: NavbarMobileFooterProps) => {
   const { isUserAuthed, handleAuthButtonClick, handleLogout } = props;
   return (
-    <Stack spacing={2}>
+    <Stack
+      spacing={2}
+      sx={{
+        py: 4,
+        px: 2,
+      }}
+    >
       {isUserAuthed ? (
         <>
           <NavbarButton variant="contained" handleOnClick={handleLogout}>
@@ -116,7 +122,7 @@ const NavbarHeadersMobileLayout = (props: NavbarLayoutProps) => {
         drawerClose={() => setDrawerOpen(false)}
         drawerTitle={"Company name"}
         footer={
-          <RightFullPageDrawerFooter
+          <NavbarMobileFooter
             isUserAuthed={isUserAuthed}
             handleAuthButtonClick={handleAuthButtonClick}
             handleLogout={handleLogout}

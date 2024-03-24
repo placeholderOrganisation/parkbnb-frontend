@@ -6,6 +6,7 @@ export const searchSlice = createSlice({
   name: "search",
   initialState: {
     searchResults: [],
+    filteredSearchResults: [],
     searchQuery: null,
     userSelectedListing: null,
     listingsRenderedInMap: [],
@@ -15,6 +16,7 @@ export const searchSlice = createSlice({
       const listings: Listing[] = action.payload;
 
       state.searchResults = listings;
+      state.filteredSearchResults = listings;
       state.listingsRenderedInMap = listings;
     },
     setUserSelectedListing: (state: SearchState, action) => {
@@ -33,6 +35,20 @@ export const searchSlice = createSlice({
 
       state.listingsRenderedInMap = listings;
     },
+    filterSearchResultsByCity: (state: SearchState, action) => {
+      const cityName: string = action.payload.toLowerCase();
+      const listings = state.searchResults.filter(
+        (listing) => listing.address.city.toLowerCase() === cityName
+      );
+
+      state.filteredSearchResults = listings;
+      state.listingsRenderedInMap = listings;
+    },
+    resetFilters: (state: SearchState) => {
+      const listings = state.searchResults;
+      state.filteredSearchResults = listings;
+      state.listingsRenderedInMap = listings;
+    },
   },
 });
 
@@ -41,5 +57,7 @@ export const {
   setUserSelectedListing,
   setSearchQuery,
   setListingsRenderedInMap,
+  filterSearchResultsByCity,
+  resetFilters,
 } = searchSlice.actions;
 export default searchSlice.reducer;

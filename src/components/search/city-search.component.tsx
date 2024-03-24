@@ -1,5 +1,6 @@
 import { Divider, InputAdornment, TextField } from "@mui/material";
 import TuneIcon from "@mui/icons-material/Tune";
+import CloseIcon from "@mui/icons-material/Close";
 
 interface CitySearchProps {
   handleEndAdornmentClick: (value: boolean) => void;
@@ -13,7 +14,6 @@ const CitySearch = (props: CitySearchProps) => {
     <TextField
       value={value}
       onChange={(e) => handleSearchQueryChange(e.target.value)}
-      type="search"
       id="city-search"
       variant="outlined"
       label="Search for a city"
@@ -23,6 +23,14 @@ const CitySearch = (props: CitySearchProps) => {
       InputProps={{
         endAdornment: (
           <>
+            {value && (
+              <InputAdornment
+                position="end"
+                onClick={() => handleSearchQueryChange("")}
+              >
+                <CloseIcon />
+              </InputAdornment>
+            )}
             <InputAdornment position="end">
               <Divider
                 orientation="vertical"

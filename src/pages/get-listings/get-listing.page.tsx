@@ -25,13 +25,13 @@ const GetListing = () => {
     ? GetListingsDesktopLayout
     : GetListingsMobileLayout;
 
-  const searchResults = useSelector(
-    (state: RootState) => state.search.searchResults
+  const { filteredSearchResults, searchQuery } = useSelector(
+    (state: RootState) => state.search
   );
 
-  const formattedSearchResults = searchResults.map((listing) => {
-    return convertListingObjToListingOnMapObj(listing);
-  });
+  const formattedfilteredSearchResults = filteredSearchResults.map(
+    convertListingObjToListingOnMapObj
+  );
 
   useEffect(() => {
     const listings: Listing[] = listingsOnMap.map((listingOnMap) => {
@@ -56,7 +56,8 @@ const GetListing = () => {
   return (
     <Box>
       <Layout
-        searchResults={formattedSearchResults}
+        cityName={searchQuery || null}
+        searchResults={formattedfilteredSearchResults}
         handleListingClickInMap={handleListingClickInMap}
         handleMoveEndInMap={handleMoveEndInMap}
       />

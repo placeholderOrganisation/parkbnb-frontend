@@ -7,7 +7,7 @@ import ParkingCardContainerForMap from "../../components/listings/get-listings/p
 
 
 const GetListingsMobileLayout = (props: GetListingsPageProps) => {
-  const { searchResults, handleMoveEndInMap, handleListingClickInMap } = props;
+  const { searchResults, cityName, handleMoveEndInMap, handleListingClickInMap } = props;
 
   return (
     <>
@@ -25,6 +25,7 @@ const GetListingsMobileLayout = (props: GetListingsPageProps) => {
         {/* map  */}
         <MapComponent
           listings={searchResults}
+          cityName={cityName}
           handleListingClick={(listingId) => handleListingClickInMap(listingId)}
           handleMoveEnd={(listingIds) => handleMoveEndInMap(listingIds)}
         />

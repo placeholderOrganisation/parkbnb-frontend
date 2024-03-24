@@ -6,7 +6,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/global-store";
 import { Listing } from "../../types/global.types";
 import CitySearchSuggestionList from "./city-search-suggestions.component";
-import { setSearchQuery } from "../../redux/search-slice";
+import {
+  filterSearchResultsByCity,
+  resetFilters,
+  setSearchQuery,
+} from "../../redux/search-slice";
 
 interface SearchContainerProps {
   handleEndAdornmentClick: () => void;
@@ -15,7 +19,9 @@ interface SearchContainerProps {
 const SearchContainer = (props: SearchContainerProps) => {
   const { handleEndAdornmentClick } = props;
   const dispatch = useDispatch();
-  const searchState = useSelector((state: RootState) => state.search);
+  const { searchResults, searchQuery } = useSelector(
+    (state: RootState) => state.search
+  );
 
   const [value, setValue] = useState("");
   const [isSuggestionListOpen, setIsSuggestionListOpen] = useState(false);
@@ -23,9 +29,8 @@ const SearchContainer = (props: SearchContainerProps) => {
 
   const handleSearchQueryChange = (value: string) => {
     if (value && value.length > 0) {
-      let suggestion: Listing[] = searchState.listingsRenderedInMap.filter(
-        (listing) =>
-          listing.address.city.toLowerCase().startsWith(value.toLowerCase())
+      let suggestion: Listing[] = searchResults.filter((listing) =>
+        listing.address.city.toLowerCase().startsWith(value.toLowerCase())
       );
 
       // Remove duplicates
@@ -44,6 +49,10 @@ const SearchContainer = (props: SearchContainerProps) => {
     } else {
       setSuggestions([]);
       setIsSuggestionListOpen(false);
+      if (searchQuery) {
+        dispatch(setSearchQuery(null));
+        dispatch(resetFilters());
+      }
     }
     setValue(value);
   };
@@ -52,6 +61,7 @@ const SearchContainer = (props: SearchContainerProps) => {
     setValue(cityName);
     setIsSuggestionListOpen(false);
     dispatch(setSearchQuery(cityName));
+    dispatch(filterSearchResultsByCity(cityName));
   };
 
   return (

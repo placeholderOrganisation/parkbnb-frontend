@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 import mapboxgl, { PointLike } from "mapbox-gl";
 import { NAVBAR_HEIGHT_MOBILE } from "../../navbar/navbar-header.component";
 import { MapComponentProps } from "../../../types/global.types";
+import { getCityCoords } from "../../../utils/map-utils";
 
 // Mapbox access token
 // mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
@@ -11,10 +12,8 @@ mapboxgl.accessToken =
   "pk.eyJ1IjoiY29kZXJzYmV5b25kIiwiYSI6ImNsc3ZhYmk1NjBobnQya3JxaWoyYXpleXoifQ.igcdok9oqUQAML9i3gyH_w";
 
 const MapComponent = (props: MapComponentProps) => {
-  const { listings, handleListingClick, handleMoveEnd } = props;
-  const zoom = 9;
-  const lng = -79.608779;
-  const lat = 43.70049;
+  const { listings, cityName, handleListingClick, handleMoveEnd } = props;
+  const { lat, lng, zoom } = getCityCoords(cityName);
   const mapContainer = useRef(null);
   let map: mapboxgl.Map | null = null;
 

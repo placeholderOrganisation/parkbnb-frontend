@@ -12,9 +12,9 @@ mapboxgl.accessToken =
 
 const MapComponent = (props: MapComponentProps) => {
   const { listings, handleListingClick, handleMoveEnd } = props;
-  const zoom = 14;
-  const lng = -79.731989;
-  const lat = 43.760685;
+  const zoom = 9;
+  const lng = -79.608779;
+  const lat = 43.70049;
   const mapContainer = useRef(null);
   let map: mapboxgl.Map | null = null;
 

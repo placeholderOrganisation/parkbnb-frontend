@@ -25,8 +25,8 @@ const GetListing = () => {
     ? GetListingsDesktopLayout
     : GetListingsMobileLayout;
 
-  const { filteredSearchResults, searchQuery } = useSelector(
-    (state: RootState) => state.search
+  const filteredSearchResults = useSelector(
+    (state: RootState) => state.search.filteredSearchResults
   );
 
   const formattedfilteredSearchResults = filteredSearchResults.map(
@@ -56,7 +56,6 @@ const GetListing = () => {
   return (
     <Box>
       <Layout
-        cityName={searchQuery || null}
         searchResults={formattedfilteredSearchResults}
         handleListingClickInMap={handleListingClickInMap}
         handleMoveEndInMap={handleMoveEndInMap}

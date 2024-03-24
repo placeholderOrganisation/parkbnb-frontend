@@ -84,14 +84,12 @@ export interface ListingOnMap {
 
 export interface GetListingsPageProps {
   searchResults: ListingOnMap[];
-  cityName: string | null;
   handleMoveEndInMap: (listingIds: string[]) => void;
   handleListingClickInMap: (id: string) => void;
 }
 
 export interface MapComponentProps {
   listings: ListingOnMap[];
-  cityName: string | null;
   handleListingClick: (listing: string) => void;
   handleMoveEnd: (listings: string[]) => void;
 }

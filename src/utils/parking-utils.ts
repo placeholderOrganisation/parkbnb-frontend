@@ -1,9 +1,11 @@
 import {
+  DimensionFilterTypes,
+  DIMENSIONS_ENUMS,
   FilterTypes,
   Listing,
   ListingOnMap,
   VEHICLE_TYPE_ENUMS,
-  VehicleTypeToDimensions,
+  VehicleTypeFilterTypes,
 } from "../types/global.types";
 import dayjs from "dayjs";
 
@@ -37,7 +39,7 @@ export const parseStorageType = (storage_type: string) => {
 };
 
 export const parseVehicleType = (
-  vehicle_type: keyof VehicleTypeToDimensions
+  vehicle_type: keyof VehicleTypeFilterTypes
 ) => {
   if (!VEHICLE_TYPE_ENUMS[vehicle_type]) {
     // if we do not find the vehicle type in the mapping, we return the vehicle type as is
@@ -45,6 +47,17 @@ export const parseVehicleType = (
   }
 
   return VEHICLE_TYPE_ENUMS[vehicle_type];
+};
+
+export const parseDimensions = (
+  dimenstionString: keyof DimensionFilterTypes
+) => {
+  if (!DIMENSIONS_ENUMS[dimenstionString]) {
+    // if we do not find the dimension in the mapping, we return the dimension as is
+    return dimenstionString;
+  }
+
+  return DIMENSIONS_ENUMS[dimenstionString];
 };
 
 export const formatParkingFilterName = (filterName: keyof FilterTypes) => {

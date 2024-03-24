@@ -5,7 +5,7 @@ export const FILTER_ENUMS = {
   HANDICAP_ACCESSIBLE: "handicap_accessible",
 };
 
-export interface VehicleTypeToDimensions {
+export interface VehicleTypeFilterTypes {
   bike: string;
   "sedan / suv": string;
   "pickup truck": string;
@@ -13,12 +13,28 @@ export interface VehicleTypeToDimensions {
   "commercial truck / trailer": string;
 }
 
-export const VEHICLE_TYPE_ENUMS: VehicleTypeToDimensions = {
+export const VEHICLE_TYPE_ENUMS: VehicleTypeFilterTypes = {
   bike: "bike",
   "sedan / suv": "sedan / suv",
   "pickup truck": "pickup truck",
   "boat / RV": "boat / RV",
   "commercial truck / trailer": "commercial truck / trailer",
+};
+
+export interface DimensionFilterTypes {
+  "length: 20 width: 10": string;
+  "length: 25 width: 15": string;
+  "length: 20 width: 20": string;
+  "length: 40 width: 10": string;
+  "length: 50 width: 10": string;
+}
+
+export const DIMENSIONS_ENUMS: DimensionFilterTypes = {
+  "length: 20 width: 10": "20' x 10' (one car)",
+  "length: 25 width: 15": "25' x 15' (one pickup)",
+  "length: 20 width: 20": "20' x 20' (two cars)",
+  "length: 40 width: 10": "40' x 10'",
+  "length: 50 width: 10": "50' x 10'",
 };
 
 export interface FilterTypes {
@@ -27,7 +43,7 @@ export interface FilterTypes {
   ev_charging: boolean;
   handicap_accessible: boolean;
   storage_type: string;
-  vehicle_type: keyof VehicleTypeToDimensions;
+  vehicle_type: keyof VehicleTypeFilterTypes;
   length: number;
   width: number;
   spaces: number;

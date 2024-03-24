@@ -16,7 +16,7 @@ const pricingFilterFields = [
 const PriceFilter = () => {
   return (
     <Box sx={{ pt: 5 }}>
-      <Typography variant="h6" gutterBottom>
+      <Typography variant="h6">
         Pricing
       </Typography>
       <Grid container spacing={3}>

@@ -27,7 +27,7 @@ const AmenitiesFilter = (props: AmentiesFilterComponentProps) => {
         pt: 5,
       }}
     >
-      <Typography variant="h6" gutterBottom>
+      <Typography variant="h6">
         {title}
       </Typography>
       <Grid container spacing={3}>

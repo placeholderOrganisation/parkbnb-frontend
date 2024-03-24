@@ -85,13 +85,13 @@ export interface ListingOnMap {
 export interface GetListingsPageProps {
   searchResults: ListingOnMap[];
   handleMoveEndInMap: (listingIds: string[]) => void;
-  handleListingClickInMap: (id: string) => void;
+  handleListingClickInMap: (listingId: string) => void;
 }
 
 export interface MapComponentProps {
   listings: ListingOnMap[];
-  handleListingClick: (listing: string) => void;
-  handleMoveEnd: (listings: string[]) => void;
+  handleListingClick: (listingId: string) => void;
+  handleMoveEnd: (listingIds: string[]) => void;
 }
 
 export interface NavbarLink {

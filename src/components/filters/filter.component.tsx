@@ -37,7 +37,7 @@ const Filters = () => {
   return (
     <Stack spacing={3}>
       {filtersOptionsToRender.map((filterOption) => (
-        <Stack spacing={1.5}>
+        <Stack spacing={1.5} key={filterOption.title}>
           <Typography variant="h6">{filterOption.title}</Typography>
           {filterOption.component}
         </Stack>

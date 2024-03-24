@@ -40,7 +40,6 @@ const NumSpacesFilter = () => {
         required
         sx={{
           width: "100%",
-          mb: 2.5,
         }}
       >
         <InputLabel id="num-spaces-select-required-label">

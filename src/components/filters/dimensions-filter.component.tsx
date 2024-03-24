@@ -27,7 +27,6 @@ const DimensionsFilter = () => {
         required
         sx={{
           width: "100%",
-          mb: 2.5,
         }}
       >
         <InputLabel id="dimension-select-label">Length and width is</InputLabel>

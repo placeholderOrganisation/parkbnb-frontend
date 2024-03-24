@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import AmenitiesFilter from "../../filters/amenities-filter.component";
 import StorageTypeFilter from "../../filters/storage-type-filter.component";
 import VehicleTypeFilter from "../../filters/vehicle-type-filter.component";
@@ -9,7 +9,12 @@ export default function FiltersForm() {
   return (
     <>
       {/* Checkboxes */}
-      <AmenitiesFilter title="Select all that apply to your space" />
+      <Stack spacing={1}>
+        <Typography variant="h6">
+          Select all that apply to your space
+        </Typography>
+        <AmenitiesFilter />
+      </Stack>
       {/* Dropdown filters */}
       <Box
         sx={{
@@ -25,10 +30,12 @@ export default function FiltersForm() {
         >
           Tell us more about your space
         </Typography>
-        <StorageTypeFilter />
-        <VehicleTypeFilter />
-        <DimensionsFilter />
-        <NumSpacesFilter />
+        <Stack spacing={3}>
+          <StorageTypeFilter />
+          <VehicleTypeFilter />
+          <DimensionsFilter />
+          <NumSpacesFilter />
+        </Stack>
       </Box>
     </>
   );

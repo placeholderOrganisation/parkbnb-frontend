@@ -15,10 +15,7 @@ const pricingFilterFields = [
 ];
 const PriceFilter = () => {
   return (
-    <Box sx={{ pt: 5 }}>
-      <Typography variant="h6">
-        Pricing
-      </Typography>
+    <Box>
       <Grid container spacing={3}>
         {pricingFilterFields.map((field) => (
           <Grid item xs={6} key={field.id}>

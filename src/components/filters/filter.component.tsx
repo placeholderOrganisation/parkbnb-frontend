@@ -6,39 +6,43 @@ import VehicleTypeFilter from "./vehicle-type-filter.component";
 import DimensionsFilter from "./dimensions-filter.component";
 import NumSpacesFilter from "./num-spaces-filter.component";
 
+const filtersOptionsToRender = [
+  {
+    title: "Amenities",
+    component: <AmenitiesFilter />,
+  },
+  {
+    title: "Price",
+    component: <PriceFilter />,
+  },
+  {
+    title: "Storage type",
+    component: <StorageTypeFilter />,
+  },
+  {
+    title: "Vehicle type",
+    component: <VehicleTypeFilter />,
+  },
+  {
+    title: "Dimensions",
+    component: <DimensionsFilter />,
+  },
+  {
+    title: "Number of spaces",
+    component: <NumSpacesFilter />,
+  },
+];
+
 const Filters = () => {
   return (
-    <Stack spacing={2}>
-      <PriceFilter />
-      <AmenitiesFilter title="Amenities" />
-      <Box>
-        <Typography variant="h6">Choose storage type</Typography>
-        <StorageTypeFilter />
-      </Box>
-      <Box>
-        <Typography variant="h6">Choose vehicle type</Typography>
-        <VehicleTypeFilter />
-      </Box>
-      <Box>
-        <Typography variant="h6">Choose dimensions</Typography>
-        <DimensionsFilter />
-      </Box>
-      <Box>
-        <Typography variant="h6">Choose number of spaces</Typography>
-        <NumSpacesFilter />
-      </Box>
-      <Stack
-        spacing={2}
-        direction="row"
-        alignItems="center"
-      >
-        <Button variant="contained" color="primary" fullWidth>
-          Apply
-        </Button>
-        <Button variant="outlined" color="primary" fullWidth>
-          Reset
-        </Button>
-      </Stack>
+    <Stack spacing={3}>
+      {filtersOptionsToRender.map((filterOption) => (
+        <Stack spacing={1.5}>
+          <Typography variant="h6">{filterOption.title}</Typography>
+          {filterOption.component}
+        </Stack>
+      ))}
+      <Box sx={{pb: 10}} />
     </Stack>
   );
 };

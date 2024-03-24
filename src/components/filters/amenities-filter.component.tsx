@@ -15,21 +15,9 @@ const parkingFilters: string[] = [
   FILTER_ENUMS.HANDICAP_ACCESSIBLE,
 ];
 
-interface AmentiesFilterComponentProps {
-  title: string;
-}
-
-const AmenitiesFilter = (props: AmentiesFilterComponentProps) => {
-  const { title } = props;
+const AmenitiesFilter = () => {
   return (
-    <Box
-      sx={{
-        pt: 5,
-      }}
-    >
-      <Typography variant="h6">
-        {title}
-      </Typography>
+    <Box>
       <Grid container spacing={3}>
         {parkingFilters.map((label, index) => (
           <Grid item xs={6} key={index}>

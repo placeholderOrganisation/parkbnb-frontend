@@ -30,7 +30,6 @@ const StorageTypeFilter = () => {
         required
         sx={{
           width: "100%",
-          mb: 2.5,
         }}
       >
         <InputLabel id="storage-type-select-required-label">

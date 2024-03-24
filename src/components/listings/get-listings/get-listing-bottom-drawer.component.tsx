@@ -54,7 +54,7 @@ export default function GetListingBottomDrawer(props: Props) {
   const [open, setOpen] = useState(false);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const openSortMenu = Boolean(anchorEl);
+  
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -119,10 +119,10 @@ export default function GetListingBottomDrawer(props: Props) {
           {open && (
             <Stack direction="row" sx={{ px: 2 }}>
               <IconButton
-                id="basic-button"
-                aria-controls="basic-menu"
+                id="sort-button"
+                aria-controls="sort-menu"
                 aria-haspopup="true"
-                aria-expanded={openSortMenu ? "true" : undefined}
+                aria-expanded={!!anchorEl ? "true" : undefined}
                 onClick={handleClick}
                 aria-label="sort"
                 sx={{
@@ -161,12 +161,12 @@ export default function GetListingBottomDrawer(props: Props) {
         </StyledBox>
       </SwipeableDrawer>
       <Menu
-        id="basic-menu"
+        id="sort-menu"
         anchorEl={anchorEl}
-        open={openSortMenu}
+        open={!!anchorEl}
         onClose={handleClose}
         MenuListProps={{
-          "aria-labelledby": "basic-button",
+          "aria-labelledby": "sort-button",
         }}
       >
         <MenuItem onClick={handleClose}>Date</MenuItem>

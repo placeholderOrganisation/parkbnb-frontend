@@ -1,39 +1,59 @@
 import { useState, useMemo } from "react";
-import Map, { Marker } from "react-map-gl";
+import Map, {
+  CircleLayer,
+  Layer,
+  MapLayerMouseEvent,
+  Marker,
+  Source,
+  ViewStateChangeEvent,
+} from "react-map-gl";
 
 import Pin from "./Pin";
 
-import { MapComponentProps } from "../../types/global.types";
+import { ListingOnMap, MapComponentProps } from "../../types/global.types";
 import { Box } from "@mui/material";
 import { getCityCoords } from "../../utils/map-utils";
+import { FeatureCollection } from "geojson";
 
 const TOKEN =
   "pk.eyJ1IjoiY29kZXJzYmV5b25kIiwiYSI6ImNsc3ZhYmk1NjBobnQya3JxaWoyYXpleXoifQ.igcdok9oqUQAML9i3gyH_w";
 
 const MapComponent = (props: MapComponentProps) => {
-  const { listings, handleListingClick } = props;
+  const { listings, handleListingClick, handleMoveEnd } = props;
   const { lat, lng, zoom } = getCityCoords("default");
 
-  const pins = useMemo(
-    () =>
-      listings.map((listing, index) => (
-        <Marker
-          key={`marker-${index}`}
-          longitude={listing.geometry.coordinates[0]}
-          latitude={listing.geometry.coordinates[1]}
-          anchor="bottom"
-          onClick={(e) => {
-            // If we let the click event propagates to the map, it will immediately close the popup
-            // with `closeOnClick: true`
-            e.originalEvent.stopPropagation();
-            handleListingClick(listing.properties.id);
-          }}
-        >
-          <Pin label={`$${listing.properties.price.monthly}`} />
-        </Marker>
-      )),
-    [listings]
-  );
+  const geojson: FeatureCollection = {
+    type: "FeatureCollection",
+    // @ts-ignore
+    features: listings,
+  };
+
+  const layerStyle: CircleLayer = {
+    id: "point",
+    type: "circle",
+    paint: {
+      "circle-radius": 10,
+      "circle-color": "#007cbf",
+    },
+  };
+
+  const moveEndHandler = (e: ViewStateChangeEvent) => {
+    const listingsInView = e.target.queryRenderedFeatures({
+      // @ts-ignore
+      layers: ["point"],
+    });
+    const listingIdsInView = listingsInView.map(
+      (listing) => listing.properties?.id
+    );
+    handleMoveEnd(listingIdsInView);
+  };
+
+  // add onclick handler for layers
+  const clickHandler = (e: MapLayerMouseEvent) => {
+    const listingId = e;
+    console.log("listingId", listingId);
+    // handleListingClick(listingId);
+  };
 
   return (
     <Box
@@ -43,6 +63,9 @@ const MapComponent = (props: MapComponentProps) => {
       }}
     >
       <Map
+        reuseMaps
+        onMoveEnd={moveEndHandler}
+        onClick={clickHandler}
         initialViewState={{
           latitude: lat,
           longitude: lng,
@@ -51,7 +74,10 @@ const MapComponent = (props: MapComponentProps) => {
         mapStyle="mapbox://styles/mapbox/streets-v11"
         mapboxAccessToken={TOKEN}
       >
-        {pins}
+        {/* {pins} */}
+        <Source id="my-data" type="geojson" data={geojson}>
+          <Layer {...layerStyle} />
+        </Source>
       </Map>
     </Box>
   );

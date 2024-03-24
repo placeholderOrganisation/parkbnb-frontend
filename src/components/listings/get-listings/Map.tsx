@@ -121,12 +121,12 @@ const MapComponent = (props: MapComponentProps) => {
   return (
     <Box>
       <Box
-        ref={mapContainer}
-        className="map-container"
-        sx={{
-          height: `calc(100vh - ${NAVBAR_HEIGHT_MOBILE}px)`,
-          width: "100%",
-        }}
+        // ref={mapContainer}
+        // className="map-container"
+        // sx={{
+        //   height: `calc(100vh - ${NAVBAR_HEIGHT_MOBILE}px)`,
+        //   width: "100%",
+        // }}
       />
     </Box>
   );

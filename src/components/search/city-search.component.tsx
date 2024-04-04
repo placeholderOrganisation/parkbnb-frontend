@@ -23,6 +23,7 @@ const CitySearch = (props: CitySearchProps) => {
       InputProps={{
         endAdornment: (
           <>
+            {/* X icon */}
             {value && (
               <InputAdornment
                 position="end"
@@ -31,6 +32,7 @@ const CitySearch = (props: CitySearchProps) => {
                 <CloseIcon />
               </InputAdornment>
             )}
+            {/* open filter drawer with divider icon */}
             <InputAdornment position="end">
               <Divider
                 orientation="vertical"

@@ -12,6 +12,7 @@ export const searchSlice = createSlice({
     listingsRenderedInMap: [],
   },
   reducers: {
+    // this function should only be invoked once when get-listings page mounts
     setSearchResults: (state: SearchState, action) => {
       const listings: Listing[] = action.payload;
 
@@ -44,7 +45,7 @@ export const searchSlice = createSlice({
       state.filteredSearchResults = listings;
       state.listingsRenderedInMap = listings;
     },
-    resetFilters: (state: SearchState) => {
+    resetSearchQueryFilter: (state: SearchState) => {
       const listings = state.searchResults;
       state.filteredSearchResults = listings;
       state.listingsRenderedInMap = listings;
@@ -58,6 +59,6 @@ export const {
   setSearchQuery,
   setListingsRenderedInMap,
   filterSearchResultsByCity,
-  resetFilters,
+  resetSearchQueryFilter,
 } = searchSlice.actions;
 export default searchSlice.reducer;

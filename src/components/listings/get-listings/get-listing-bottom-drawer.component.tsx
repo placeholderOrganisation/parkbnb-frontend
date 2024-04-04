@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   CssBaseline,
   IconButton,
@@ -16,8 +16,16 @@ import { RootState } from "../../../redux/global-store";
 import { useSelector } from "react-redux";
 import ParkingCard from "../../parking-card/parking-card.component";
 import SortIcon from "@mui/icons-material/Sort";
+import dayjs from "dayjs";
+import { Listing } from "../../../types/global.types";
 
 const drawerBleeding = 56;
+
+enum SortOption {
+    Date,
+    PriceHighToLow,
+    PriceLowToHigh,
+}
 
 interface Props {
   /**
@@ -52,13 +60,20 @@ const Puller = styled("div")(({ theme }) => ({
 export default function GetListingBottomDrawer(props: Props) {
   const { window } = props;
   const [open, setOpen] = useState(false);
+  const listingsRenderedInMap = useSelector((state: RootState) => state.search.listingsRenderedInMap);
 
+  const [sortOption, setSortOption] = useState(SortOption.Date);
+  const [sortedListings, setSortedListings] = useState<Listing[]>(listingsRenderedInMap)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+
+  const handleClose = (option?: number) => {
+    if (option !== undefined) {
+        setSortOption(option);
+    }
     setAnchorEl(null);
   };
 
@@ -66,12 +81,32 @@ export default function GetListingBottomDrawer(props: Props) {
     setOpen(newOpen);
   };
 
+  useEffect(() => {
+    // Sort the listings based on the selected option
+    let tmpSortedListings = listingsRenderedInMap;
+    switch (sortOption) {
+      case SortOption.Date:
+        tmpSortedListings = [...listingsRenderedInMap].sort((a, b) => {
+            const listedOnListingA = dayjs(a.listed_on);
+            const listedOnListingB = dayjs(b.listed_on);
+            return listedOnListingB.diff(listedOnListingA);
+        });
+        break;
+      case SortOption.PriceHighToLow:
+        tmpSortedListings = [...listingsRenderedInMap].sort((a, b) => b.price.monthly - a.price.monthly);
+        break;
+      case SortOption.PriceLowToHigh:
+        tmpSortedListings = [...listingsRenderedInMap].sort((a, b) => a.price.monthly - b.price.monthly);
+        break;
+      default:
+        break;
+    }
+    setSortedListings(tmpSortedListings);
+  }, [sortOption]);
+
   // This is used only for the example
   const container =
     window !== undefined ? () => window().document.body : undefined;
-
-  const searchState = useSelector((state: RootState) => state.search);
-  const listingsRenderedInMap = searchState.listingsRenderedInMap;
 
   return (
     <Root>
@@ -113,7 +148,7 @@ export default function GetListingBottomDrawer(props: Props) {
         >
           <Puller />
           <Typography sx={{ p: 2, color: "text.secondary" }}>
-            {`${listingsRenderedInMap.length} results`}
+            {`${sortedListings.length} results`}
           </Typography>
 
           {open && (
@@ -122,7 +157,7 @@ export default function GetListingBottomDrawer(props: Props) {
                 id="sort-button"
                 aria-controls="sort-menu"
                 aria-haspopup="true"
-                aria-expanded={!!anchorEl ? "true" : undefined}
+                aria-expanded={!anchorEl ? "true" : undefined}
                 onClick={handleClick}
                 aria-label="sort"
                 sx={{
@@ -146,10 +181,10 @@ export default function GetListingBottomDrawer(props: Props) {
           }}
         >
           <Stack spacing={2} sx={{ my: 2 }}>
-            {listingsRenderedInMap.length === 0 ? (
+            {sortedListings.length === 0 ? (
               <Skeleton variant="rectangular" height="100%" />
             ) : (
-              listingsRenderedInMap.map((listing) => (
+                sortedListings.map((listing) => (
                 <ParkingCard
                   key={listing.id}
                   parking={listing}
@@ -164,14 +199,14 @@ export default function GetListingBottomDrawer(props: Props) {
         id="sort-menu"
         anchorEl={anchorEl}
         open={!!anchorEl}
-        onClose={handleClose}
+        onClose={()=>{handleClose()}}
         MenuListProps={{
           "aria-labelledby": "sort-button",
         }}
       >
-        <MenuItem onClick={handleClose}>Date</MenuItem>
-        <MenuItem onClick={handleClose}>Price (high to low)</MenuItem>
-        <MenuItem onClick={handleClose}>Price (low to high)</MenuItem>
+        <MenuItem onClick={()=>{handleClose(SortOption.Date)}}>Date</MenuItem>
+        <MenuItem onClick={()=>{handleClose(SortOption.PriceHighToLow)}}>Price (high to low)</MenuItem>
+        <MenuItem onClick={()=>{handleClose(SortOption.PriceLowToHigh)}}>Price (low to high)</MenuItem>
       </Menu>
     </Root>
   );

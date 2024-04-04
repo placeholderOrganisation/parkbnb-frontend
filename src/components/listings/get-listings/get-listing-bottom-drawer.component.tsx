@@ -22,9 +22,9 @@ import { Listing } from "../../../types/global.types";
 const drawerBleeding = 56;
 
 enum SortOption {
-    Date,
-    PriceHighToLow,
-    PriceLowToHigh,
+  Date,
+  PriceHighToLow,
+  PriceLowToHigh,
 }
 
 interface Props {
@@ -60,19 +60,23 @@ const Puller = styled("div")(({ theme }) => ({
 export default function GetListingBottomDrawer(props: Props) {
   const { window } = props;
   const [open, setOpen] = useState(false);
-  const listingsRenderedInMap = useSelector((state: RootState) => state.search.listingsRenderedInMap);
+  const listingsRenderedInMap = useSelector(
+    (state: RootState) => state.search.listingsRenderedInMap
+  );
 
   const [sortOption, setSortOption] = useState(SortOption.Date);
-  const [sortedListings, setSortedListings] = useState<Listing[]>(listingsRenderedInMap)
+  const [sortedListings, setSortedListings] = useState<Listing[]>(
+    listingsRenderedInMap
+  );
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = (option?: number) => {
     if (option !== undefined) {
-        setSortOption(option);
+      setSortOption(option);
     }
     setAnchorEl(null);
   };
@@ -87,22 +91,30 @@ export default function GetListingBottomDrawer(props: Props) {
     switch (sortOption) {
       case SortOption.Date:
         tmpSortedListings = [...listingsRenderedInMap].sort((a, b) => {
-            const listedOnListingA = dayjs(a.listed_on);
-            const listedOnListingB = dayjs(b.listed_on);
-            return listedOnListingB.diff(listedOnListingA);
+          const listedOnListingA = dayjs(a.listed_on);
+          const listedOnListingB = dayjs(b.listed_on);
+          return listedOnListingB.diff(listedOnListingA);
         });
         break;
       case SortOption.PriceHighToLow:
-        tmpSortedListings = [...listingsRenderedInMap].sort((a, b) => b.price.monthly - a.price.monthly);
+        tmpSortedListings = [...listingsRenderedInMap].sort(
+          (a, b) => b.price.monthly - a.price.monthly
+        );
         break;
       case SortOption.PriceLowToHigh:
-        tmpSortedListings = [...listingsRenderedInMap].sort((a, b) => a.price.monthly - b.price.monthly);
+        tmpSortedListings = [...listingsRenderedInMap].sort(
+          (a, b) => a.price.monthly - b.price.monthly
+        );
         break;
       default:
         break;
     }
     setSortedListings(tmpSortedListings);
   }, [sortOption]);
+
+  useEffect(() => {
+    setSortedListings(listingsRenderedInMap);
+  }, [listingsRenderedInMap]);
 
   // This is used only for the example
   const container =
@@ -184,7 +196,7 @@ export default function GetListingBottomDrawer(props: Props) {
             {sortedListings.length === 0 ? (
               <Skeleton variant="rectangular" height="100%" />
             ) : (
-                sortedListings.map((listing) => (
+              sortedListings.map((listing) => (
                 <ParkingCard
                   key={listing.id}
                   parking={listing}
@@ -199,14 +211,34 @@ export default function GetListingBottomDrawer(props: Props) {
         id="sort-menu"
         anchorEl={anchorEl}
         open={!!anchorEl}
-        onClose={()=>{handleClose()}}
+        onClose={() => {
+          handleClose();
+        }}
         MenuListProps={{
           "aria-labelledby": "sort-button",
         }}
       >
-        <MenuItem onClick={()=>{handleClose(SortOption.Date)}}>Date</MenuItem>
-        <MenuItem onClick={()=>{handleClose(SortOption.PriceHighToLow)}}>Price (high to low)</MenuItem>
-        <MenuItem onClick={()=>{handleClose(SortOption.PriceLowToHigh)}}>Price (low to high)</MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleClose(SortOption.Date);
+          }}
+        >
+          Date
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleClose(SortOption.PriceHighToLow);
+          }}
+        >
+          Price (high to low)
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleClose(SortOption.PriceLowToHigh);
+          }}
+        >
+          Price (low to high)
+        </MenuItem>
       </Menu>
     </Root>
   );

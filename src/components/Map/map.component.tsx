@@ -10,6 +10,7 @@ import { MapComponentProps } from "../../types/global.types";
 import { Box } from "@mui/material";
 import { getCityCoords } from "../../utils/map-utils";
 import { FeatureCollection } from "geojson";
+import { NAVBAR_HEIGHT_MOBILE } from "../navbar/navbar-header.component";
 
 const TOKEN =
   "pk.eyJ1IjoiY29kZXJzYmV5b25kIiwiYSI6ImNsc3ZhYmk1NjBobnQya3JxaWoyYXpleXoifQ.igcdok9oqUQAML9i3gyH_w";
@@ -57,7 +58,7 @@ const MapComponent = (props: MapComponentProps) => {
   return (
     <Box
       sx={{
-        height: "100vh",
+        height: `calc(100vh - ${NAVBAR_HEIGHT_MOBILE}px)`,
         width: "100vw",
       }}
     >

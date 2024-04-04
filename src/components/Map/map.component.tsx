@@ -1,16 +1,12 @@
-import { useState, useMemo } from "react";
 import Map, {
   CircleLayer,
   Layer,
   MapLayerMouseEvent,
-  Marker,
   Source,
   ViewStateChangeEvent,
 } from "react-map-gl";
 
-import Pin from "./Pin";
-
-import { ListingOnMap, MapComponentProps } from "../../types/global.types";
+import { MapComponentProps } from "../../types/global.types";
 import { Box } from "@mui/material";
 import { getCityCoords } from "../../utils/map-utils";
 import { FeatureCollection } from "geojson";
@@ -29,18 +25,19 @@ const MapComponent = (props: MapComponentProps) => {
   };
 
   const layerStyle: CircleLayer = {
-    id: "point",
+    id: "point_fill",
     type: "circle",
     paint: {
       "circle-radius": 10,
       "circle-color": "#007cbf",
     },
+    source: "my-data",
   };
 
   const moveEndHandler = (e: ViewStateChangeEvent) => {
     const listingsInView = e.target.queryRenderedFeatures({
       // @ts-ignore
-      layers: ["point"],
+      layers: ["point_fill"],
     });
     const listingIdsInView = listingsInView.map(
       (listing) => listing.properties?.id
@@ -50,9 +47,11 @@ const MapComponent = (props: MapComponentProps) => {
 
   // add onclick handler for layers
   const clickHandler = (e: MapLayerMouseEvent) => {
-    const listingId = e;
-    console.log("listingId", listingId);
-    // handleListingClick(listingId);
+    const features = e.features;
+    if (!features || features.length === 0) return;
+    const listing = features[0];
+    const listingId = listing.properties?.id;
+    handleListingClick(listingId);
   };
 
   return (
@@ -73,10 +72,10 @@ const MapComponent = (props: MapComponentProps) => {
         }}
         mapStyle="mapbox://styles/mapbox/streets-v11"
         mapboxAccessToken={TOKEN}
+        interactiveLayerIds={['point_fill']}
       >
-        {/* {pins} */}
         <Source id="my-data" type="geojson" data={geojson}>
-          <Layer {...layerStyle} />
+          <Layer {...layerStyle}  />
         </Source>
       </Map>
     </Box>

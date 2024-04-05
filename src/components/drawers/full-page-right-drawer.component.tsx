@@ -21,7 +21,6 @@ const RightFullPageDrawer = (props: RightFullPageDrawerProps) => {
     ...otherprops
   } = props;
 
-  console.log("otherprops");
   return (
     <Drawer
       anchor="right"

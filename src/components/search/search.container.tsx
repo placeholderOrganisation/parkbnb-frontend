@@ -8,8 +8,7 @@ import { Listing } from "../../types/global.types";
 import CitySearchSuggestionList from "./city-search-suggestions.component";
 import {
   setSearchQuery,
-  filterSearchResultsBySearchQuery,
-  resetSearchResultsBySearchQuery,
+  filterSearchResults,
 } from "../../redux/search-slice";
 
 interface SearchContainerProps {
@@ -53,7 +52,7 @@ const SearchContainer = (props: SearchContainerProps) => {
       // if search query is set in redux reset it
       if (searchQuery) {
         dispatch(setSearchQuery(""));
-        dispatch(resetSearchResultsBySearchQuery());
+        dispatch(filterSearchResults());
       }
     }
     setValue(value);
@@ -63,7 +62,7 @@ const SearchContainer = (props: SearchContainerProps) => {
     setValue(cityName);
     setIsSuggestionListOpen(false);
     dispatch(setSearchQuery(cityName));
-    dispatch(filterSearchResultsBySearchQuery());
+    dispatch(filterSearchResults());
   };
 
   return (

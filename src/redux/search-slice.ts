@@ -38,6 +38,7 @@ export const searchSlice = createSlice({
 
       state.listingsRenderedInMap = listings;
     },
+    // TODO: delete this function
     filterSearchResultsByCity: (state: SearchState, action) => {
       const cityName: string = action.payload.toLowerCase();
       const listings = state.searchResults.filter(
@@ -47,7 +48,13 @@ export const searchSlice = createSlice({
       state.filteredSearchResults = listings;
       state.listingsRenderedInMap = listings;
     },
-    resetSearchQueryFilter: (state: SearchState) => {
+    setFilteredSearchResults: (state: SearchState, action) => {
+      const listings: Listing[] = action.payload;
+
+      state.filteredSearchResults = listings;
+      state.listingsRenderedInMap = listings;
+    },
+    resetFilteredSearchResults: (state: SearchState) => {
       const listings = state.searchResults;
       state.filteredSearchResults = listings;
       state.listingsRenderedInMap = listings;
@@ -61,6 +68,7 @@ export const {
   setSearchQuery,
   setListingsRenderedInMap,
   filterSearchResultsByCity,
-  resetSearchQueryFilter,
+  setFilteredSearchResults,
+  resetFilteredSearchResults,
 } = searchSlice.actions;
 export default searchSlice.reducer;

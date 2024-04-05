@@ -7,8 +7,8 @@ import { RootState } from "../../redux/global-store";
 import { Listing } from "../../types/global.types";
 import CitySearchSuggestionList from "./city-search-suggestions.component";
 import {
-  filterSearchResultsByCity,
-  resetSearchQueryFilter,
+  resetFilteredSearchResults,
+  setFilteredSearchResults,
   setSearchQuery,
 } from "../../redux/search-slice";
 
@@ -53,17 +53,21 @@ const SearchContainer = (props: SearchContainerProps) => {
       // if search query is set in redux reset it
       if (searchQuery) {
         dispatch(setSearchQuery(null));
-        dispatch(resetSearchQueryFilter());
+        dispatch(resetFilteredSearchResults());
       }
     }
     setValue(value);
   };
 
   const handleSuggestionClick = (cityName: string) => {
+    const listings = searchResults.filter(
+      (listing) => listing.address.city.toLowerCase() === cityName
+    );
+
     setValue(cityName);
     setIsSuggestionListOpen(false);
     dispatch(setSearchQuery(cityName));
-    dispatch(filterSearchResultsByCity(cityName));
+    dispatch(setFilteredSearchResults(listings));
   };
 
   return (

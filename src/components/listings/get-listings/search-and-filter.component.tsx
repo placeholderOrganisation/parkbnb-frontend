@@ -33,7 +33,7 @@ const SearchAndFilter = () => {
         open={isFilterDrawerOpen}
         drawerClose={() => setIsFilterDrawerOpen(false)}
         drawerTitle={"Filters"}
-        allowOverflow
+        // allowOverflow
         footer={
           <Stack
             spacing={2}

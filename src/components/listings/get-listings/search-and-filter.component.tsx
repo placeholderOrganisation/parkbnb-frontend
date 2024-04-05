@@ -1,9 +1,9 @@
 import { useState } from "react";
+import { Box, Button, Stack } from "@mui/material";
 
+import Filters from "../../filters/filter.component";
 import SearchContainer from "../../search/search.container";
 import RightFullPageDrawer from "../../drawers/full-page-right-drawer.component";
-import Filters from "../../filters/filter.component";
-import { Box, Button, Stack } from "@mui/material";
 
 const SearchAndFilter = () => {
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);

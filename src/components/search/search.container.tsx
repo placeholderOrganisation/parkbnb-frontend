@@ -25,7 +25,7 @@ const SearchContainer = (props: SearchContainerProps) => {
 
   const [value, setValue] = useState("");
   const [isSuggestionListOpen, setIsSuggestionListOpen] = useState(false);
-  const [suggestions, setSuggestions] = useState<Listing[]>([]); // Specify the type as an array of Listing objects
+  const [suggestions, setSuggestions] = useState<Listing[]>([]);
 
   const handleSearchQueryChange = (value: string) => {
     if (value && value.length > 0) {

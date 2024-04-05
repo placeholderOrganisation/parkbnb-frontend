@@ -19,9 +19,10 @@ interface SearchContainerProps {
 const SearchContainer = (props: SearchContainerProps) => {
   const { handleEndAdornmentClick } = props;
   const dispatch = useDispatch();
-  const { searchResults, searchQuery } = useSelector(
-    (state: RootState) => state.search
-  );
+  const {
+    searchResults,
+    filters: { searchQuery },
+  } = useSelector((state: RootState) => state.search);
 
   const [value, setValue] = useState("");
   const [isSuggestionListOpen, setIsSuggestionListOpen] = useState(false);

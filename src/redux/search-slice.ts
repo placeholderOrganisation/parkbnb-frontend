@@ -7,9 +7,11 @@ export const searchSlice = createSlice({
   initialState: {
     searchResults: [],
     filteredSearchResults: [],
-    searchQuery: null,
     userSelectedListing: null,
     listingsRenderedInMap: [],
+    filters: {
+      searchQuery: null
+    }
   },
   reducers: {
     // this function should only be invoked once when get-listings page mounts
@@ -29,7 +31,7 @@ export const searchSlice = createSlice({
       // city name
       const searchQuery: string = action.payload;
 
-      state.searchQuery = searchQuery;
+      state.filters.searchQuery = searchQuery;
     },
     setListingsRenderedInMap: (state: SearchState, action) => {
       const listings: Listing[] = action.payload;

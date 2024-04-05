@@ -2,7 +2,6 @@ import { useRef, useEffect } from "react";
 
 import { Box } from "@mui/material";
 import mapboxgl, { PointLike } from "mapbox-gl";
-import { NAVBAR_HEIGHT_MOBILE } from "../../navbar/navbar-header.component";
 import { MapComponentProps } from "../../../types/global.types";
 import { getCityCoords } from "../../../utils/map-utils";
 import { useSelector } from "react-redux";
@@ -15,7 +14,7 @@ mapboxgl.accessToken =
 
 const MapComponent = (props: MapComponentProps) => {
   const { listings, handleListingClick, handleMoveEnd } = props;
-  const cityName = useSelector((state: RootState) => state.search.searchQuery);
+  const cityName = useSelector((state: RootState) => state.search.filters.searchQuery);
   const { lat, lng, zoom } = getCityCoords(cityName);
   const mapContainer = useRef(null);
   let map: mapboxgl.Map | null = null;

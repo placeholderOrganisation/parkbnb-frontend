@@ -4,9 +4,25 @@ import { Box, Button, Stack } from "@mui/material";
 import Filters from "../../filters/filter.component";
 import SearchContainer from "../../search/search.container";
 import RightFullPageDrawer from "../../drawers/full-page-right-drawer.component";
+import { useDispatch } from "react-redux";
+import { filterSearchResults } from "../../../redux/search-slice";
 
 const SearchAndFilter = () => {
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
+  const dispatch = useDispatch();
+
+  const handleResetFilters = () => {
+    console.log("reset filters");
+    // dispatch(setFilters({}));
+    dispatch(filterSearchResults());
+    setIsFilterDrawerOpen(false);
+  };
+
+  const handleApplyFilters = () => {
+    // filters are already set in redux via individual filter components
+    dispatch(filterSearchResults());
+    setIsFilterDrawerOpen(false);
+  };
 
   return (
     <>
@@ -28,10 +44,20 @@ const SearchAndFilter = () => {
               mx: 2,
             }}
           >
-            <Button variant="contained" color="primary" fullWidth>
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth
+              onClick={handleApplyFilters}
+            >
               Apply
             </Button>
-            <Button variant="outlined" color="primary" fullWidth>
+            <Button
+              variant="outlined"
+              color="primary"
+              fullWidth
+              onClick={handleResetFilters}
+            >
               Reset
             </Button>
           </Stack>

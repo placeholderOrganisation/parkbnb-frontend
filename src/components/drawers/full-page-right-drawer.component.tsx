@@ -30,7 +30,8 @@ const RightFullPageDrawer = (props: RightFullPageDrawerProps) => {
         "& .MuiDrawer-paper": {
           width: "-webkit-fill-available",
           height: "-webkit-fill-available",
-          p: 2,
+          px: 2,
+          pt: 2,
           overflow: allowOverflow ? "auto" : "visible",
         },
       }}

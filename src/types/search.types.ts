@@ -7,6 +7,6 @@ export interface SearchState {
   userSelectedListing: Listing | null;
   listingsRenderedInMap: Listing[] | [];
   filters:{
-    searchQuery: string | null;
+    searchQuery: string;
   }
 }

@@ -10,8 +10,8 @@ export const searchSlice = createSlice({
     userSelectedListing: null,
     listingsRenderedInMap: [],
     filters: {
-      searchQuery: null
-    }
+      searchQuery: "",
+    },
   },
   reducers: {
     // this function should only be invoked once when get-listings page mounts
@@ -29,7 +29,7 @@ export const searchSlice = createSlice({
     },
     setSearchQuery: (state: SearchState, action) => {
       // city name
-      const searchQuery: string = action.payload;
+      const searchQuery: string = action.payload.toLowerCase();
 
       state.filters.searchQuery = searchQuery;
     },
@@ -38,9 +38,20 @@ export const searchSlice = createSlice({
 
       state.listingsRenderedInMap = listings;
     },
-    // TODO: delete this function
-    filterSearchResultsByCity: (state: SearchState, action) => {
-      const cityName: string = action.payload.toLowerCase();
+    /**
+     * There are 2 scenarios where this function is called
+     * 1. when user resets the search query
+     * 2. when user resets the filters
+     *
+     *
+     * In both scenarios, we need to reset the filteredSearchResults to the searchResults
+     * In the first scenario, we need to apply the filters
+     * In the second scenario, we need to filter based on the searchQuery
+     *
+     */
+    filterSearchResultsBySearchQuery: (state: SearchState) => {
+      const cityName: string = state.filters.searchQuery;
+
       const listings = state.searchResults.filter(
         (listing) => listing.address.city.toLowerCase() === cityName
       );
@@ -48,14 +59,10 @@ export const searchSlice = createSlice({
       state.filteredSearchResults = listings;
       state.listingsRenderedInMap = listings;
     },
-    setFilteredSearchResults: (state: SearchState, action) => {
-      const listings: Listing[] = action.payload;
-
-      state.filteredSearchResults = listings;
-      state.listingsRenderedInMap = listings;
-    },
-    resetFilteredSearchResults: (state: SearchState) => {
+    resetSearchResultsBySearchQuery: (state: SearchState) => {
       const listings = state.searchResults;
+
+      // TODO: get applied filter and filter state.searchResults
       state.filteredSearchResults = listings;
       state.listingsRenderedInMap = listings;
     },
@@ -67,8 +74,7 @@ export const {
   setUserSelectedListing,
   setSearchQuery,
   setListingsRenderedInMap,
-  filterSearchResultsByCity,
-  setFilteredSearchResults,
-  resetFilteredSearchResults,
+  filterSearchResultsBySearchQuery,
+  resetSearchResultsBySearchQuery,
 } = searchSlice.actions;
 export default searchSlice.reducer;

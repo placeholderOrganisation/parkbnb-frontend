@@ -1,3 +1,4 @@
+// need to manually add to search slice filters.
 export const FILTER_ENUMS = {
   SECURITY_CAMERAS: "security_cameras",
   ACCESS_24_7: "24/7 access",

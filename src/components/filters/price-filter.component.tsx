@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { PriceFormTextField } from "../listings/create-listings/AddressForm";
 
 const pricingFilterFields = [

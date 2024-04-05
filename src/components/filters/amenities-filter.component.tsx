@@ -3,7 +3,6 @@ import {
   Checkbox,
   FormControlLabel,
   Grid,
-  Typography,
 } from "@mui/material";
 import { FILTER_ENUMS, FilterTypes } from "../../types/global.types";
 import { formatParkingFilterName } from "../../utils/parking-utils";

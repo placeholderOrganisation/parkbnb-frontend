@@ -1,3 +1,5 @@
+export const MAX_PRICE = 2000;
+
 // need to manually add to search slice filters.
 export interface AmenitiesTypeFilterTypes {
   security_cameras: boolean;

@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { SearchState } from "../types/search.types";
 import { Listing } from "../types/global.types";
-import { amenitiesInitialState } from "./search-slice.util";
+import {
+  amenitiesInitialState,
+  monthlyPriceInitialState,
+} from "./search-slice.util";
 
 export const searchSlice = createSlice({
   name: "search",
@@ -13,6 +16,7 @@ export const searchSlice = createSlice({
     filters: {
       searchQuery: "",
       amenities: amenitiesInitialState,
+      price: monthlyPriceInitialState,
     },
   },
   reducers: {
@@ -43,6 +47,10 @@ export const searchSlice = createSlice({
     setAmenitiesFilter: (state: SearchState, action) => {
       const updatedAmenities = action.payload;
       state.filters.amenities = updatedAmenities;
+    },
+    setMonthlyPriceFilter: (state: SearchState, action) => {
+      const { minPrice, maxPrice } = action.payload;
+      state.filters.price = { monthlyMin: minPrice, monthlyMax: maxPrice };
     },
     /**
      * There are 4 scenarios to handle for filtering the search results:
@@ -97,11 +105,27 @@ export const searchSlice = createSlice({
       }
 
       if (state.filters.amenities.security_cameras) {
-        listings = listings.filter((listing) => listing.filters.security_cameras);
+        listings = listings.filter(
+          (listing) => listing.filters.security_cameras
+        );
       }
 
       if (state.filters.amenities.handicap_accessible) {
-        listings = listings.filter((listing) => listing.filters.handicap_accessible);
+        listings = listings.filter(
+          (listing) => listing.filters.handicap_accessible
+        );
+      }
+
+      if (state.filters.price.monthlyMin > 0) {
+        listings = listings.filter(
+          (listing) => listing.price.monthly >= state.filters.price.monthlyMin
+        );
+      }
+
+      if (state.filters.price.monthlyMax < Number.MAX_VALUE) {
+        listings = listings.filter(
+          (listing) => listing.price.monthly <= state.filters.price.monthlyMax
+        );
       }
 
       // TODO: filter the search results based on the filters
@@ -119,5 +143,6 @@ export const {
   setListingsRenderedInMap,
   filterSearchResults,
   setAmenitiesFilter,
+  setMonthlyPriceFilter,
 } = searchSlice.actions;
 export default searchSlice.reducer;

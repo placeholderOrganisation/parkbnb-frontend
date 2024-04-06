@@ -28,7 +28,14 @@ const AddressFormTextField = (props: AddressFormTextFieldProps) => {
 };
 
 export const PriceFormTextField = (props: PriceFormTextFields) => {
-  const { id, term, helperText, helperTextLabelId } = props;
+  const {
+    id,
+    term,
+    helperText,
+    helperTextLabelId,
+    value,
+    handleChange = () => {},
+  } = props;
   const shouldShowEndAdornment = term !== undefined;
   const shouldShowHelperText =
     helperText !== undefined && helperTextLabelId !== undefined;
@@ -38,9 +45,11 @@ export const PriceFormTextField = (props: PriceFormTextFields) => {
       sx={{
         width: "100%",
       }}
+      onChange={handleChange}
     >
       <TextField
         id={id}
+        value={value && value}
         variant="outlined"
         InputProps={{
           startAdornment: <InputAdornment position="start">$</InputAdornment>,

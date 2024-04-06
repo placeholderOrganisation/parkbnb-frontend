@@ -8,19 +8,29 @@ import NumSpacesFilter from "./num-spaces-filter.component";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/global-store";
 import { AmenitiesTypeFilterTypes } from "../../types/global.types";
-import { setAmenitiesFilter } from "../../redux/search-slice";
+import {
+  setAmenitiesFilter,
+  setMonthlyPriceFilter,
+} from "../../redux/search-slice";
 
 const Filters = () => {
   const dispatch = useDispatch();
 
-  const amenitiesInRedux = useSelector(
-    (state: RootState) => state.search.filters.amenities
+  const { amenities: amenitiesInRedux, price: priceInRedux } = useSelector(
+    (state: RootState) => state.search.filters
   );
 
   const handleAmentiFilterChange = (
     updatedAmenities: AmenitiesTypeFilterTypes
   ) => {
     dispatch(setAmenitiesFilter(updatedAmenities));
+  };
+
+  const handleMonthlyPriceFilterChange = (
+    minPrice: number,
+    maxPrice: number
+  ) => {
+    dispatch(setMonthlyPriceFilter({ minPrice, maxPrice }));
   };
 
   const filtersOptionsToRender = [
@@ -34,8 +44,13 @@ const Filters = () => {
       ),
     },
     {
-      title: "Price",
-      component: <PriceFilter />,
+      title: "Monthly price",
+      component: (
+        <PriceFilter
+          priceInRedux={priceInRedux}
+          handleMonthlyPriceFilterChange={handleMonthlyPriceFilterChange}
+        />
+      ),
     },
     {
       title: "Storage type",

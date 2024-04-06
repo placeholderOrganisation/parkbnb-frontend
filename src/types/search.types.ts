@@ -6,8 +6,12 @@ export interface SearchState {
 
   userSelectedListing: Listing | null;
   listingsRenderedInMap: Listing[] | [];
-  filters:{
+  filters: {
     searchQuery: string;
     amenities: AmenitiesTypeFilterTypes;
-  }
+    price: {
+      monthlyMin: number;
+      monthlyMax: number;
+    };
+  };
 }

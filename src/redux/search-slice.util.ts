@@ -4,3 +4,8 @@ export const amenitiesInitialState = {
   security_cameras: false,
   handicap_accessible: false,
 };
+
+export const monthlyPriceInitialState = {
+  monthlyMin: 0,
+  monthlyMax: Number.MAX_VALUE,
+};

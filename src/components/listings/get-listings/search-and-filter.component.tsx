@@ -5,8 +5,8 @@ import Filters from "../../filters/filter.component";
 import SearchContainer from "../../search/search.container";
 import RightFullPageDrawer from "../../drawers/full-page-right-drawer.component";
 import { useDispatch } from "react-redux";
-import { filterSearchResults, setAmenitiesFilter } from "../../../redux/search-slice";
-import { amenitiesInitialState } from "../../../redux/search-slice.util";
+import { filterSearchResults, setAmenitiesFilter, setMonthlyPriceFilter } from "../../../redux/search-slice";
+import { amenitiesInitialState, monthlyPriceInitialState } from "../../../redux/search-slice.util";
 
 const SearchAndFilter = () => {
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
@@ -15,6 +15,7 @@ const SearchAndFilter = () => {
   const handleResetFilters = () => {
     // reset filters in redux to default
     dispatch(setAmenitiesFilter(amenitiesInitialState));
+    dispatch(setMonthlyPriceFilter(monthlyPriceInitialState));
     // filters are already set in redux to default
     dispatch(filterSearchResults());
     setIsFilterDrawerOpen(false);

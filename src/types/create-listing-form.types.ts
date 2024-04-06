@@ -25,6 +25,8 @@ export interface PriceFormTextFields {
   term?: string;
   helperText?: string;
   helperTextLabelId?: string;
+  value?: number;
+  handleChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface CustomImageProps {

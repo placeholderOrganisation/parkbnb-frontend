@@ -11,14 +11,17 @@ import { AmenitiesTypeFilterTypes } from "../../types/global.types";
 import {
   setAmenitiesFilter,
   setMonthlyPriceFilter,
+  setStorageTypeFilter,
 } from "../../redux/search-slice";
 
 const Filters = () => {
   const dispatch = useDispatch();
 
-  const { amenities: amenitiesInRedux, price: priceInRedux } = useSelector(
-    (state: RootState) => state.search.filters
-  );
+  const {
+    amenities: amenitiesInRedux,
+    price: priceInRedux,
+    storageType: storageTypeInRedux,
+  } = useSelector((state: RootState) => state.search.filters);
 
   const handleAmentiFilterChange = (
     updatedAmenities: AmenitiesTypeFilterTypes
@@ -31,6 +34,10 @@ const Filters = () => {
     maxPrice: number
   ) => {
     dispatch(setMonthlyPriceFilter({ minPrice, maxPrice }));
+  };
+
+  const handleStorageTypeFilterChange = (storageType: string) => {
+    dispatch(setStorageTypeFilter(storageType));
   };
 
   const filtersOptionsToRender = [
@@ -54,7 +61,12 @@ const Filters = () => {
     },
     {
       title: "Storage type",
-      component: <StorageTypeFilter />,
+      component: (
+        <StorageTypeFilter
+          storageTypeInRedux={storageTypeInRedux}
+          handleStorageTypeFilterChange={handleStorageTypeFilterChange}
+        />
+      ),
     },
     {
       title: "Vehicle type",

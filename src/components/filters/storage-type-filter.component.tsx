@@ -7,6 +7,7 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import { useState } from "react";
+import { storageTypeInitialState } from "../../redux/search-slice.util";
 
 const StorageTypesOptions = [
   {
@@ -19,10 +20,21 @@ const StorageTypesOptions = [
   },
 ];
 
-const StorageTypeFilter = () => {
-  const [storageType, setStorageType] = useState("");
+interface StorageTypeFilterProps {
+  storageTypeInRedux?: string;
+  handleStorageTypeFilterChange?: (storageType: string) => void;
+}
+
+const StorageTypeFilter = (props: StorageTypeFilterProps) => {
+  const {
+    storageTypeInRedux,
+    handleStorageTypeFilterChange = () => {},
+  } = props;
+
+  const [storageType, setStorageType] = useState(storageTypeInRedux || storageTypeInitialState);
   const handleStorageTypeChange = (event: SelectChangeEvent) => {
     setStorageType(event.target.value);
+    handleStorageTypeFilterChange(event.target.value);
   };
   return (
     <Box>

@@ -4,6 +4,7 @@ import { Listing } from "../types/global.types";
 import {
   amenitiesInitialState,
   monthlyPriceInitialState,
+  storageTypeInitialState,
 } from "./search-slice.util";
 
 export const searchSlice = createSlice({
@@ -17,6 +18,7 @@ export const searchSlice = createSlice({
       searchQuery: "",
       amenities: amenitiesInitialState,
       price: monthlyPriceInitialState,
+      storageType: storageTypeInitialState,
     },
   },
   reducers: {
@@ -51,6 +53,10 @@ export const searchSlice = createSlice({
     setMonthlyPriceFilter: (state: SearchState, action) => {
       const { minPrice, maxPrice } = action.payload;
       state.filters.price = { monthlyMin: minPrice, monthlyMax: maxPrice };
+    },
+    setStorageTypeFilter: (state: SearchState, action) => {
+      const storageType: string = action.payload;
+      state.filters.storageType = storageType;
     },
     /**
      * There are 4 scenarios to handle for filtering the search results:
@@ -128,6 +134,12 @@ export const searchSlice = createSlice({
         );
       }
 
+      if (state.filters.storageType) {
+        listings = listings.filter(
+          (listing) => listing.filters.storage_type === state.filters.storageType
+        );
+      }
+
       // TODO: filter the search results based on the filters
 
       state.filteredSearchResults = listings;
@@ -144,5 +156,6 @@ export const {
   filterSearchResults,
   setAmenitiesFilter,
   setMonthlyPriceFilter,
+  setStorageTypeFilter
 } = searchSlice.actions;
 export default searchSlice.reducer;

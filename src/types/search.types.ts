@@ -13,5 +13,6 @@ export interface SearchState {
       monthlyMin: number;
       monthlyMax: number;
     };
+    storageType: string;
   };
 }

@@ -9,3 +9,5 @@ export const monthlyPriceInitialState = {
   monthlyMin: 0,
   monthlyMax: Number.MAX_VALUE,
 };
+
+export const storageTypeInitialState = "";

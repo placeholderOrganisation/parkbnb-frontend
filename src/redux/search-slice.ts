@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { SearchState } from "../types/search.types";
 import { Listing } from "../types/global.types";
+import { amenitiesInitialState } from "./search-slice.util";
 
 export const searchSlice = createSlice({
   name: "search",
@@ -11,12 +12,7 @@ export const searchSlice = createSlice({
     listingsRenderedInMap: [],
     filters: {
       searchQuery: "",
-      amenities: {
-        "24/7 access": false,
-        ev_charging: false,
-        security_cameras: false,
-        handicap_accessible: false,
-      },
+      amenities: amenitiesInitialState,
     },
   },
   reducers: {
@@ -90,6 +86,22 @@ export const searchSlice = createSlice({
         listings = state.searchResults.filter(
           (listing) => listing.address.city.toLowerCase() === searchQuery
         );
+      }
+
+      if (state.filters.amenities["24/7 access"]) {
+        listings = listings.filter((listing) => listing.filters["24/7 access"]);
+      }
+
+      if (state.filters.amenities.ev_charging) {
+        listings = listings.filter((listing) => listing.filters.ev_charging);
+      }
+
+      if (state.filters.amenities.security_cameras) {
+        listings = listings.filter((listing) => listing.filters.security_cameras);
+      }
+
+      if (state.filters.amenities.handicap_accessible) {
+        listings = listings.filter((listing) => listing.filters.handicap_accessible);
       }
 
       // TODO: filter the search results based on the filters

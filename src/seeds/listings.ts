@@ -127,7 +127,7 @@ export const listingsOnMap: ListingOnMap[] = [
         handicap_accessible: false,
         storage_type: "outdoor",
         vehicle_type: "commercial truck / trailer",
-        length: 20,
+        length: 40,
         width: 10,
         spaces: 5,
       },

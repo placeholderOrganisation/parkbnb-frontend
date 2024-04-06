@@ -164,15 +164,10 @@ export const searchSlice = createSlice({
         );
       }
 
-      if (state.filters.dimensions.minLength > 0) {
+      if (state.filters.dimensions.minLength > 0 && state.filters.dimensions.minWidth > 0) {
+        const area = state.filters.dimensions.minLength * state.filters.dimensions.minWidth;
         listings = listings.filter(
-          (listing) => listing.filters.length >= state.filters.dimensions.minLength
-        );
-      }
-
-      if (state.filters.dimensions.minWidth > 0) {
-        listings = listings.filter(
-          (listing) => listing.filters.width >= state.filters.dimensions.minWidth
+          (listing) => listing.filters.length * listing.filters.width >= area
         );
       }
 

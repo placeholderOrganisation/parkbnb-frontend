@@ -36,7 +36,7 @@ const NavbarMobileFooter = (props: NavbarMobileFooterProps) => {
     <Stack
       spacing={2}
       sx={{
-        py: 4,
+        py: 6,
         px: 2,
       }}
     >

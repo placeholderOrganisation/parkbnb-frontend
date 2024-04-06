@@ -7,9 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 
-import {
-  ParkingCardLayoutProps,
-} from "./parking-card.component";
+import { ParkingCardLayoutProps } from "./parking-card.component";
 import { FILTER_ENUMS, FilterTypes, Listing } from "../../types/global.types";
 import {
   formatParkingFilterName,
@@ -28,7 +26,10 @@ const Amenities = (props: { parking: Listing }) => {
   const { parking } = props;
   const vehicle_type = parseVehicleType(parking.filters.vehicle_type);
   const listed_on = getMonthsPassedOrDaysOrHours(parking.listed_on);
-  const attributesToShow = [FILTER_ENUMS.SECURITY_CAMERAS, FILTER_ENUMS.ACCESS_24_7];
+  const attributesToShow = [
+    FILTER_ENUMS.SECURITY_CAMERAS,
+    FILTER_ENUMS.ACCESS_24_7,
+  ];
   return (
     <>
       <Stack
@@ -68,23 +69,23 @@ const Title = (props: { parking: Listing }) => {
     <Stack>
       <Stack
         direction="row"
-        sx={{
-          alignItems: "center",
-        }}
-      >
-        <Typography variant="body1">{storage_type}</Typography>
-        <VerifiedIcon fontSize="small" color="info" sx={{ ml: 1 }} />
-      </Stack>
-      <Stack
-        direction="row"
         spacing={1}
         sx={{
           mt: 0.5,
         }}
       >
-        <Typography variant="body2">${parking.price.monthly}/month</Typography>
-        <Typography variant="body2">•</Typography>
-        <Typography variant="body2">${parking.price.daily}/day</Typography>
+        <Typography variant="body1">${parking.price.monthly}/month</Typography>
+        {/* <Typography variant="body1">•</Typography>
+        <Typography variant="body1">${parking.price.daily}/day</Typography> */}
+        <VerifiedIcon fontSize="small" color="info" sx={{ ml: 1 }} />
+      </Stack>
+      <Stack
+        direction="row"
+        sx={{
+          alignItems: "center",
+        }}
+      >
+        <Typography variant="body2">{storage_type}</Typography>
       </Stack>
     </Stack>
   );

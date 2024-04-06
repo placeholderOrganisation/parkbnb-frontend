@@ -10,6 +10,7 @@ import {
   setAmenitiesFilter,
   setDimesionsFilter,
   setMonthlyPriceFilter,
+  setNumSpacesFilter,
   setStorageTypeFilter,
   setVehicleTypesFilter,
 } from "../../../redux/search-slice";
@@ -17,6 +18,7 @@ import {
   amenitiesInitialState,
   dimensionsInitialState,
   monthlyPriceInitialState,
+  numSpacesFilterInitialState,
   storageTypeInitialState,
   vehicleTypeInitialState,
 } from "../../../redux/search-slice.util";
@@ -32,6 +34,7 @@ const SearchAndFilter = () => {
     dispatch(setStorageTypeFilter(storageTypeInitialState));
     dispatch(setVehicleTypesFilter(vehicleTypeInitialState));
     dispatch(setDimesionsFilter(dimensionsInitialState));
+    dispatch(setNumSpacesFilter(numSpacesFilterInitialState));
     // filters are already set in redux to default
     dispatch(filterSearchResults());
     setIsFilterDrawerOpen(false);

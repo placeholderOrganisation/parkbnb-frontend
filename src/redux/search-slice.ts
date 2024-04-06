@@ -5,6 +5,7 @@ import {
   amenitiesInitialState,
   dimensionsInitialState,
   monthlyPriceInitialState,
+  numSpacesFilterInitialState,
   storageTypeInitialState,
   vehicleTypeInitialState,
 } from "./search-slice.util";
@@ -23,6 +24,7 @@ export const searchSlice = createSlice({
       storageType: storageTypeInitialState,
       vehicleTypes: vehicleTypeInitialState,
       dimensions: dimensionsInitialState,
+      numSpaces: numSpacesFilterInitialState,
     },
   },
   reducers: {
@@ -69,6 +71,10 @@ export const searchSlice = createSlice({
     setDimesionsFilter: (state: SearchState, action) => {
       const dimensions: { minLength: number; minWidth: number } = action.payload;
       state.filters.dimensions = dimensions;
+    },
+    setNumSpacesFilter: (state: SearchState, action) => {
+      const numSpaces: number = action.payload;
+      state.filters.numSpaces = numSpaces;
     },
     /**
      * There are 4 scenarios to handle for filtering the search results:
@@ -170,6 +176,12 @@ export const searchSlice = createSlice({
         );
       }
 
+      if (state.filters.numSpaces > 1) {
+        listings = listings.filter(
+          (listing) => listing.filters.spaces >= state.filters.numSpaces
+        );
+      }
+
       // TODO: filter the search results based on the filters
 
       state.filteredSearchResults = listings;
@@ -188,6 +200,7 @@ export const {
   setMonthlyPriceFilter,
   setStorageTypeFilter,
   setVehicleTypesFilter,
-  setDimesionsFilter
+  setDimesionsFilter,
+  setNumSpacesFilter
 } = searchSlice.actions;
 export default searchSlice.reducer;

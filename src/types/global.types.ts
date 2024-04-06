@@ -32,20 +32,52 @@ export const VEHICLE_TYPE_ENUMS: VehicleTypeFilterTypes = {
 };
 
 export interface DimensionFilterTypes {
-  "length: 20 width: 10": {label: string, length: number; width: number};
-  "length: 25 width: 15": {label: string, length: number; width: number};
-  "length: 20 width: 20": {label: string, length: number; width: number};
-  "length: 40 width: 10": {label: string, length: number; width: number};
-  "length: 50 width: 10": {label: string, length: number; width: number};
+  "length: 20 width: 10": { label: string; length: number; width: number };
+  "length: 25 width: 15": { label: string; length: number; width: number };
+  "length: 20 width: 20": { label: string; length: number; width: number };
+  "length: 40 width: 10": { label: string; length: number; width: number };
+  "length: 50 width: 10": { label: string; length: number; width: number };
 }
 
 export const DIMENSIONS_ENUMS: DimensionFilterTypes = {
-  "length: 20 width: 10": {label: "20' x 10' (one car)", length: 20, width: 10},
-  "length: 25 width: 15": {label: "25' x 15' (one pickup)", length: 25, width: 15},
-  "length: 20 width: 20": {label: "20' x 20' (two cars)", length: 20, width: 20},
-  "length: 40 width: 10": {label: "40' x 10'", length: 40, width: 10},
-  "length: 50 width: 10": {label: "50' x 10'", length: 50, width: 10},
+  "length: 20 width: 10": {
+    label: "20' x 10' (one car)",
+    length: 20,
+    width: 10,
+  },
+  "length: 25 width: 15": {
+    label: "25' x 15' (one pickup)",
+    length: 25,
+    width: 15,
+  },
+  "length: 20 width: 20": {
+    label: "20' x 20' (two cars)",
+    length: 20,
+    width: 20,
+  },
+  "length: 40 width: 10": { label: "40' x 10'", length: 40, width: 10 },
+  "length: 50 width: 10": { label: "50' x 10'", length: 50, width: 10 },
 };
+
+export interface NumSpacesFilterTypes {
+  value: number;
+  label: string;
+}
+
+export const numSpacesOptions: NumSpacesFilterTypes[] = [
+  {
+    value: 1,
+    label: "One or more",
+  },
+  {
+    value: 2,
+    label: "Two or more",
+  },
+  {
+    value: 3,
+    label: "Three or more",
+  },
+];
 
 export interface FilterTypes {
   security_cameras: boolean;

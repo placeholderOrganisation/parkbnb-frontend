@@ -12,6 +12,7 @@ import {
   setAmenitiesFilter,
   setDimesionsFilter,
   setMonthlyPriceFilter,
+  setNumSpacesFilter,
   setStorageTypeFilter,
   setVehicleTypesFilter,
 } from "../../redux/search-slice";
@@ -25,6 +26,7 @@ const Filters = () => {
     storageType: storageTypeInRedux,
     vehicleTypes: vehicleTypesInRedux,
     dimensions: dimensionsInRedux,
+    numSpaces: numSpacesInRedux,
   } = useSelector((state: RootState) => state.search.filters);
 
   const handleAmentiFilterChange = (
@@ -53,6 +55,10 @@ const Filters = () => {
     minWidth: number;
   }) => {
     dispatch(setDimesionsFilter(dimensions));
+  };
+
+  const handleNumSpacesFilterChange = (numSpaces: number) => {
+    dispatch(setNumSpacesFilter(numSpaces));
   };
 
   const filtersOptionsToRender = [
@@ -103,7 +109,12 @@ const Filters = () => {
     },
     {
       title: "Number of spaces",
-      component: <NumSpacesFilter />,
+      component: (
+        <NumSpacesFilter
+          numSpacesInRedux={numSpacesInRedux}
+          handleNumSpacesFilterChange={handleNumSpacesFilterChange}
+        />
+      ),
     },
   ];
 

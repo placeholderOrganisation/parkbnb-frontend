@@ -19,5 +19,6 @@ export interface SearchState {
       minLength: number;
       minWidth: number;
     };
+    numSpaces: number;
   };
 }

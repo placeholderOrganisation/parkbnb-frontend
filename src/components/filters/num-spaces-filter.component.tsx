@@ -7,31 +7,24 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import { useState } from "react";
+import { numSpacesOptions } from "../../types/global.types";
+import { numSpacesFilterInitialState } from "../../redux/search-slice.util";
 
-const numSpacesOptions = [
-  {
-    value: 1,
-    label: "One",
-  },
-  {
-    value: 2,
-    label: "Two",
-  },
-  {
-    value: 3,
-    label: "Three",
-  },
-  {
-    value: 4,
-    label: "Three or more",
-  },
-];
+interface NumSpacesFilterProps {
+  numSpacesInRedux?: number;
+  handleNumSpacesFilterChange?: (numSpaces: number) => void;
+}
 
-const NumSpacesFilter = () => {
-  const [spacesAvailable, setSpacesAvailable] = useState("");
+const NumSpacesFilter = (props: NumSpacesFilterProps) => {
+  const { numSpacesInRedux, handleNumSpacesFilterChange = () => {} } = props;
+  const initialNumSpaceLabel = numSpacesInRedux || numSpacesFilterInitialState;
+
+  const [numSpacesAvailable, setNumSpacesAvailable] = useState(initialNumSpaceLabel);
 
   const handleSpacesAvailableChange = (event: SelectChangeEvent) => {
-    setSpacesAvailable(event.target.value);
+    const numSpaces = parseInt(event.target.value);
+    setNumSpacesAvailable(numSpaces);
+    handleNumSpacesFilterChange(numSpaces);
   };
 
   return (
@@ -48,7 +41,8 @@ const NumSpacesFilter = () => {
         <Select
           labelId="num-spaces-select-required-label"
           id="num-spaces-select-required"
-          value={spacesAvailable}
+          // @ts-expect-error
+          value={numSpacesAvailable}
           label="How many spaces are available? *"
           onChange={handleSpacesAvailableChange}
         >

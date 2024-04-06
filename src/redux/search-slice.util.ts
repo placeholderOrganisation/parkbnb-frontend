@@ -18,3 +18,5 @@ export const dimensionsInitialState = {
   minLength: 0,
   minWidth: 0,
 };
+
+export const numSpacesFilterInitialState = 1;

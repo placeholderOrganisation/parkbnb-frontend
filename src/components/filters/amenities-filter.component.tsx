@@ -5,6 +5,7 @@ import {
   FILTER_ENUMS,
 } from "../../types/global.types";
 import { formatParkingFilterName } from "../../utils/parking-utils";
+import { amenitiesInitialState } from "../../redux/search-slice.util";
 
 // using this list to manage the order in which amenities are displayed
 const parkingFilters: string[] = [
@@ -15,14 +16,14 @@ const parkingFilters: string[] = [
 ];
 
 interface AmenitiesFilterProps {
-  amenitiesInRedux: AmenitiesTypeFilterTypes;
+  amenitiesInRedux?: AmenitiesTypeFilterTypes;
   handleAmentiFilterChange?: (
     updatedAmenities: AmenitiesTypeFilterTypes
   ) => void;
 }
 
 const AmenitiesFilter = (props: AmenitiesFilterProps) => {
-  const { amenitiesInRedux, handleAmentiFilterChange = () => {} } = props;
+  const { amenitiesInRedux = amenitiesInitialState, handleAmentiFilterChange = () => {} } = props;
 
   const [amenities, setAmenities] = useState<AmenitiesTypeFilterTypes>(
     amenitiesInRedux
@@ -31,7 +32,7 @@ const AmenitiesFilter = (props: AmenitiesFilterProps) => {
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target;
     const updatedAmenities = {
-      ...amenitiesInRedux,
+      ...amenities,
       [name]: checked,
     };
     setAmenities(updatedAmenities);

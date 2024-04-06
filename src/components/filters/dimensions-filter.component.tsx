@@ -29,12 +29,12 @@ const DimensionsFilter = () => {
           width: "100%",
         }}
       >
-        <InputLabel id="dimension-select-label">Length and width is</InputLabel>
+        <InputLabel id="dimension-select-label">Length and width of space is</InputLabel>
         <Select
           labelId="dimension-select-label"
           id="dimension-select"
           value={dimensions}
-          label="Length and width is *"
+          label="Length and width of space is *"
           onChange={handleDimensionsChange}
         >
           {dimesionTypes.map((dimension: string) => (

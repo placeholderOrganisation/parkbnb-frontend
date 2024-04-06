@@ -13,3 +13,8 @@ export const monthlyPriceInitialState = {
 export const storageTypeInitialState = "";
 
 export const vehicleTypeInitialState = [];
+
+export const dimensionsInitialState = {
+  minLength: 0,
+  minWidth: 0,
+};

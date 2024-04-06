@@ -15,5 +15,9 @@ export interface SearchState {
     };
     storageType: string;
     vehicleTypes: string[];
+    dimensions: {
+      minLength: number;
+      minWidth: number;
+    };
   };
 }

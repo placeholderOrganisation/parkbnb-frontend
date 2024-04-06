@@ -8,12 +8,14 @@ import { useDispatch } from "react-redux";
 import {
   filterSearchResults,
   setAmenitiesFilter,
+  setDimesionsFilter,
   setMonthlyPriceFilter,
   setStorageTypeFilter,
   setVehicleTypesFilter,
 } from "../../../redux/search-slice";
 import {
   amenitiesInitialState,
+  dimensionsInitialState,
   monthlyPriceInitialState,
   storageTypeInitialState,
   vehicleTypeInitialState,
@@ -29,6 +31,7 @@ const SearchAndFilter = () => {
     dispatch(setMonthlyPriceFilter(monthlyPriceInitialState));
     dispatch(setStorageTypeFilter(storageTypeInitialState));
     dispatch(setVehicleTypesFilter(vehicleTypeInitialState));
+    dispatch(setDimesionsFilter(dimensionsInitialState));
     // filters are already set in redux to default
     dispatch(filterSearchResults());
     setIsFilterDrawerOpen(false);

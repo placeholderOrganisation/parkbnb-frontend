@@ -10,6 +10,7 @@ import { RootState } from "../../redux/global-store";
 import { AmenitiesTypeFilterTypes } from "../../types/global.types";
 import {
   setAmenitiesFilter,
+  setDimesionsFilter,
   setMonthlyPriceFilter,
   setStorageTypeFilter,
   setVehicleTypesFilter,
@@ -23,6 +24,7 @@ const Filters = () => {
     price: priceInRedux,
     storageType: storageTypeInRedux,
     vehicleTypes: vehicleTypesInRedux,
+    dimensions: dimensionsInRedux,
   } = useSelector((state: RootState) => state.search.filters);
 
   const handleAmentiFilterChange = (
@@ -44,7 +46,14 @@ const Filters = () => {
 
   const handleVehicleTypesFilterChange = (vehicleTypes: string[]) => {
     dispatch(setVehicleTypesFilter(vehicleTypes));
-  }
+  };
+
+  const handleDimensionsFilterChange = (dimensions: {
+    minLength: number;
+    minWidth: number;
+  }) => {
+    dispatch(setDimesionsFilter(dimensions));
+  };
 
   const filtersOptionsToRender = [
     {
@@ -76,14 +85,21 @@ const Filters = () => {
     },
     {
       title: "Vehicle type",
-      component: <VehicleTypeFilter 
-        vehicleTypesInRedux={vehicleTypesInRedux}
-        handleVehicleTypesFilterChange={handleVehicleTypesFilterChange}
-      />,
+      component: (
+        <VehicleTypeFilter
+          vehicleTypesInRedux={vehicleTypesInRedux}
+          handleVehicleTypesFilterChange={handleVehicleTypesFilterChange}
+        />
+      ),
     },
     {
       title: "Dimensions",
-      component: <DimensionsFilter />,
+      component: (
+        <DimensionsFilter
+          dimensionsInRedux={dimensionsInRedux}
+          handleDimensionsFilterChange={handleDimensionsFilterChange}
+        />
+      ),
     },
     {
       title: "Number of spaces",

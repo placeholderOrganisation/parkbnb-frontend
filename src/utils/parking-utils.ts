@@ -65,7 +65,7 @@ export const parseVehicleType = (
   return VEHICLE_TYPE_ENUMS[vehicle_type];
 };
 
-export const parseDimensions = (
+export const parseDimensionsReturnLabel = (
   dimenstionString: keyof DimensionFilterTypes
 ) => {
   if (!DIMENSIONS_ENUMS[dimenstionString]) {
@@ -73,7 +73,32 @@ export const parseDimensions = (
     return dimenstionString;
   }
 
-  return DIMENSIONS_ENUMS[dimenstionString];
+  return DIMENSIONS_ENUMS[dimenstionString].label;
+};
+
+export const parseDimensionsReturnLengthAndWidth = (
+  dimenstionString: keyof DimensionFilterTypes
+) => {
+  if (!DIMENSIONS_ENUMS[dimenstionString]) {
+    // if we do not find the dimension in the mapping, we return the dimension as is
+    return { length: 0, width: 0 };
+  }
+
+  return {
+    length: DIMENSIONS_ENUMS[dimenstionString].length,
+    width: DIMENSIONS_ENUMS[dimenstionString].width,
+  };
+};
+
+export const parseLengthAndWidth = (length: number, width: number) => {
+  let result = "";
+  Object.keys(DIMENSIONS_ENUMS).forEach((dimension) => {
+    const d = DIMENSIONS_ENUMS[dimension as keyof DimensionFilterTypes];
+    if (d.length === length && d.width === width) {
+      result = dimension;
+    }
+  });
+  return result;
 };
 
 export const formatParkingFilterName = (filterName: keyof FilterTypes) => {

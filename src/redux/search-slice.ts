@@ -3,6 +3,7 @@ import { SearchState } from "../types/search.types";
 import { Listing } from "../types/global.types";
 import {
   amenitiesInitialState,
+  dimensionsInitialState,
   monthlyPriceInitialState,
   storageTypeInitialState,
   vehicleTypeInitialState,
@@ -21,6 +22,7 @@ export const searchSlice = createSlice({
       price: monthlyPriceInitialState,
       storageType: storageTypeInitialState,
       vehicleTypes: vehicleTypeInitialState,
+      dimensions: dimensionsInitialState,
     },
   },
   reducers: {
@@ -63,6 +65,10 @@ export const searchSlice = createSlice({
     setVehicleTypesFilter: (state: SearchState, action) => {
       const vehicleTypes: string[] = action.payload;
       state.filters.vehicleTypes = vehicleTypes;
+    },
+    setDimesionsFilter: (state: SearchState, action) => {
+      const dimensions: { minLength: number; minWidth: number } = action.payload;
+      state.filters.dimensions = dimensions;
     },
     /**
      * There are 4 scenarios to handle for filtering the search results:
@@ -152,6 +158,18 @@ export const searchSlice = createSlice({
         );
       }
 
+      if (state.filters.dimensions.minLength > 0) {
+        listings = listings.filter(
+          (listing) => listing.filters.length >= state.filters.dimensions.minLength
+        );
+      }
+
+      if (state.filters.dimensions.minWidth > 0) {
+        listings = listings.filter(
+          (listing) => listing.filters.width >= state.filters.dimensions.minWidth
+        );
+      }
+
       // TODO: filter the search results based on the filters
 
       state.filteredSearchResults = listings;
@@ -169,6 +187,7 @@ export const {
   setAmenitiesFilter,
   setMonthlyPriceFilter,
   setStorageTypeFilter,
-  setVehicleTypesFilter
+  setVehicleTypesFilter,
+  setDimesionsFilter
 } = searchSlice.actions;
 export default searchSlice.reducer;

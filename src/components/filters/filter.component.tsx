@@ -12,6 +12,7 @@ import {
   setAmenitiesFilter,
   setMonthlyPriceFilter,
   setStorageTypeFilter,
+  setVehicleTypesFilter,
 } from "../../redux/search-slice";
 
 const Filters = () => {
@@ -21,6 +22,7 @@ const Filters = () => {
     amenities: amenitiesInRedux,
     price: priceInRedux,
     storageType: storageTypeInRedux,
+    vehicleTypes: vehicleTypesInRedux,
   } = useSelector((state: RootState) => state.search.filters);
 
   const handleAmentiFilterChange = (
@@ -39,6 +41,10 @@ const Filters = () => {
   const handleStorageTypeFilterChange = (storageType: string) => {
     dispatch(setStorageTypeFilter(storageType));
   };
+
+  const handleVehicleTypesFilterChange = (vehicleTypes: string[]) => {
+    dispatch(setVehicleTypesFilter(vehicleTypes));
+  }
 
   const filtersOptionsToRender = [
     {
@@ -70,7 +76,10 @@ const Filters = () => {
     },
     {
       title: "Vehicle type",
-      component: <VehicleTypeFilter />,
+      component: <VehicleTypeFilter 
+        vehicleTypesInRedux={vehicleTypesInRedux}
+        handleVehicleTypesFilterChange={handleVehicleTypesFilterChange}
+      />,
     },
     {
       title: "Dimensions",

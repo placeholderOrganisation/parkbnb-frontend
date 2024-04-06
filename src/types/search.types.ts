@@ -14,5 +14,6 @@ export interface SearchState {
       monthlyMax: number;
     };
     storageType: string;
+    vehicleTypes: string[];
   };
 }

@@ -5,6 +5,7 @@ import {
   amenitiesInitialState,
   monthlyPriceInitialState,
   storageTypeInitialState,
+  vehicleTypeInitialState,
 } from "./search-slice.util";
 
 export const searchSlice = createSlice({
@@ -19,6 +20,7 @@ export const searchSlice = createSlice({
       amenities: amenitiesInitialState,
       price: monthlyPriceInitialState,
       storageType: storageTypeInitialState,
+      vehicleTypes: vehicleTypeInitialState,
     },
   },
   reducers: {
@@ -57,6 +59,10 @@ export const searchSlice = createSlice({
     setStorageTypeFilter: (state: SearchState, action) => {
       const storageType: string = action.payload;
       state.filters.storageType = storageType;
+    },
+    setVehicleTypesFilter: (state: SearchState, action) => {
+      const vehicleTypes: string[] = action.payload;
+      state.filters.vehicleTypes = vehicleTypes;
     },
     /**
      * There are 4 scenarios to handle for filtering the search results:
@@ -140,6 +146,12 @@ export const searchSlice = createSlice({
         );
       }
 
+      if (state.filters.vehicleTypes.length > 0) {
+        listings = listings.filter((listing) =>
+          state.filters.vehicleTypes.includes(listing.filters.vehicle_type)
+        );
+      }
+
       // TODO: filter the search results based on the filters
 
       state.filteredSearchResults = listings;
@@ -156,6 +168,7 @@ export const {
   filterSearchResults,
   setAmenitiesFilter,
   setMonthlyPriceFilter,
-  setStorageTypeFilter
+  setStorageTypeFilter,
+  setVehicleTypesFilter
 } = searchSlice.actions;
 export default searchSlice.reducer;

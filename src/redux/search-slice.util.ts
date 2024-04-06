@@ -11,3 +11,5 @@ export const monthlyPriceInitialState = {
 };
 
 export const storageTypeInitialState = "";
+
+export const vehicleTypeInitialState = [];

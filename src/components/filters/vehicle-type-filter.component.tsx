@@ -18,13 +18,22 @@ import {
 
 export const vehicleTypes = Object.keys(VEHICLE_TYPE_ENUMS);
 
-const VehicleTypeFilter = () => {
-  const [vehicleType, setVehicleType] = useState<string[]>([]);
+interface VehicleTypeFilterProps {
+  vehicleTypesInRedux?: string[];
+  handleVehicleTypesFilterChange?: (vehicleTypes: string[]) => void;
+}
+
+const VehicleTypeFilter = (props: VehicleTypeFilterProps) => {
+  const { vehicleTypesInRedux, handleVehicleTypesFilterChange = () => {} } = props;
+  const [vehicleType, setVehicleType] = useState<string[]>(
+    vehicleTypesInRedux || []
+  );
   const handleVehicleTypeChange = (event: SelectChangeEvent<string>) => {
     const {
       target: { value },
     } = event;
     setVehicleType(typeof value === "string" ? value.split(",") : value);
+    handleVehicleTypesFilterChange(typeof value === "string" ? value.split(",") : value);
   };
   return (
     <Box>
@@ -53,9 +62,7 @@ const VehicleTypeFilter = () => {
             <MenuItem key={name} value={name}>
               <Checkbox checked={vehicleType.indexOf(name) > -1} />
               <ListItemText
-                primary={parseVehicleType(
-                  name as keyof VehicleTypeFilterTypes
-                )}
+                primary={parseVehicleType(name as keyof VehicleTypeFilterTypes)}
               />
             </MenuItem>
           ))}

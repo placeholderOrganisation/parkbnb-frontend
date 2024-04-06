@@ -1,12 +1,12 @@
+import { useState } from "react";
+import { Box, Checkbox, FormControlLabel, Grid } from "@mui/material";
 import {
-  Box,
-  Checkbox,
-  FormControlLabel,
-  Grid,
-} from "@mui/material";
-import { FILTER_ENUMS, FilterTypes } from "../../types/global.types";
+  AmenitiesTypeFilterTypes,
+  FILTER_ENUMS,
+} from "../../types/global.types";
 import { formatParkingFilterName } from "../../utils/parking-utils";
 
+// using this list to manage the order in which amenities are displayed
 const parkingFilters: string[] = [
   FILTER_ENUMS.ACCESS_24_7,
   FILTER_ENUMS.EV_CHARGING,
@@ -14,7 +14,30 @@ const parkingFilters: string[] = [
   FILTER_ENUMS.HANDICAP_ACCESSIBLE,
 ];
 
-const AmenitiesFilter = () => {
+interface AmenitiesFilterProps {
+  amenitiesInRedux: AmenitiesTypeFilterTypes;
+  handleAmentiFilterChange?: (
+    updatedAmenities: AmenitiesTypeFilterTypes
+  ) => void;
+}
+
+const AmenitiesFilter = (props: AmenitiesFilterProps) => {
+  const { amenitiesInRedux, handleAmentiFilterChange = () => {} } = props;
+
+  const [amenities, setAmenities] = useState<AmenitiesTypeFilterTypes>(
+    amenitiesInRedux
+  );
+
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = event.target;
+    const updatedAmenities = {
+      ...amenitiesInRedux,
+      [name]: checked,
+    };
+    setAmenities(updatedAmenities);
+    handleAmentiFilterChange(updatedAmenities);
+  };
+
   return (
     <Box>
       <Grid container spacing={3}>
@@ -24,11 +47,17 @@ const AmenitiesFilter = () => {
               control={
                 <Checkbox
                   color="secondary"
-                  name={`checkbox-${index}`}
+                  name={label}
                   value="yes"
+                  checked={
+                    amenities[label as keyof AmenitiesTypeFilterTypes] || false
+                  }
+                  onChange={handleCheckboxChange}
                 />
               }
-              label={formatParkingFilterName(label as keyof FilterTypes)}
+              label={formatParkingFilterName(
+                label as keyof AmenitiesTypeFilterTypes
+              )}
             />
           </Grid>
         ))}

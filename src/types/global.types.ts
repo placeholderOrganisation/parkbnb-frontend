@@ -1,4 +1,11 @@
 // need to manually add to search slice filters.
+export interface AmenitiesTypeFilterTypes {
+  security_cameras: boolean;
+  "24/7 access": boolean;
+  ev_charging: boolean;
+  handicap_accessible: boolean;
+}
+
 export const FILTER_ENUMS = {
   SECURITY_CAMERAS: "security_cameras",
   ACCESS_24_7: "24/7 access",

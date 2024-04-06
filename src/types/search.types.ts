@@ -1,4 +1,4 @@
-import { Listing } from "./global.types";
+import { AmenitiesTypeFilterTypes, Listing } from "./global.types";
 
 export interface SearchState {
   searchResults: Listing[] | [];
@@ -8,5 +8,6 @@ export interface SearchState {
   listingsRenderedInMap: Listing[] | [];
   filters:{
     searchQuery: string;
+    amenities: AmenitiesTypeFilterTypes;
   }
 }

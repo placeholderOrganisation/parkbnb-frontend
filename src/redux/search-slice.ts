@@ -11,6 +11,12 @@ export const searchSlice = createSlice({
     listingsRenderedInMap: [],
     filters: {
       searchQuery: "",
+      amenities: {
+        "24/7 access": false,
+        ev_charging: false,
+        security_cameras: false,
+        handicap_accessible: false,
+      },
     },
   },
   reducers: {
@@ -37,6 +43,10 @@ export const searchSlice = createSlice({
       const searchQuery: string = action.payload.toLowerCase();
 
       state.filters.searchQuery = searchQuery;
+    },
+    setAmenitiesFilter: (state: SearchState, action) => {
+      const updatedAmenities = action.payload;
+      state.filters.amenities = updatedAmenities;
     },
     /**
      * There are 4 scenarios to handle for filtering the search results:
@@ -72,13 +82,13 @@ export const searchSlice = createSlice({
     filterSearchResults: (state: SearchState) => {
       // assumes that the search query is already set correctly in the state
 
-      const cityName: string = state.filters.searchQuery;
+      const searchQuery: string = state.filters.searchQuery;
       let listings: Listing[] = state.searchResults;
 
       // filter the search results based on the search query
-      if (cityName) {
+      if (searchQuery) {
         listings = state.searchResults.filter(
-          (listing) => listing.address.city.toLowerCase() === cityName
+          (listing) => listing.address.city.toLowerCase() === searchQuery
         );
       }
 
@@ -96,5 +106,6 @@ export const {
   setSearchQuery,
   setListingsRenderedInMap,
   filterSearchResults,
+  setAmenitiesFilter,
 } = searchSlice.actions;
 export default searchSlice.reducer;

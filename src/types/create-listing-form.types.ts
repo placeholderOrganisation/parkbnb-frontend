@@ -30,6 +30,7 @@ export interface StepOneState {
 
 export interface AddressFormTextFieldProps {
   id: string;
+  value: string;
   name: string;
   label: string;
   autoComplete?: string;

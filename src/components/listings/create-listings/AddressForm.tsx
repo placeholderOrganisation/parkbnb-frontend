@@ -13,12 +13,13 @@ import {
 } from "../../../types/create-listing-form.types";
 import ProvincePicker from "./province-picker.component";
 import { ChangeEvent, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   setStepOneAddressFormData,
   setStepOnePricingFormData,
   setStepOneValidity,
 } from "../../../redux/step-one-slice";
+import { RootState } from "../../../redux/global-store";
 
 const AddressFormTextField = (props: AddressFormTextFieldProps) => {
   const {
@@ -28,6 +29,7 @@ const AddressFormTextField = (props: AddressFormTextFieldProps) => {
     autoComplete,
     handleChange = () => {},
     error = false,
+    value,
   } = props;
   return (
     <TextField
@@ -41,6 +43,7 @@ const AddressFormTextField = (props: AddressFormTextFieldProps) => {
       onChange={handleChange}
       error={error}
       helperText={error ? "This field is required" : ""} // currently only showing error if this fields is not set
+      value={value}
     />
   );
 };
@@ -126,13 +129,22 @@ const pricingFields = [
 
 const AddressForm = () => {
   const dispatch = useDispatch();
+  const {
+    street,
+    city,
+    postal,
+    province,
+    country,
+    dailyRate,
+    monthlyRate,
+  } = useSelector((state: RootState) => state.stepOneForm);
 
   const [address, setAddress] = useState({
-    street: "",
-    city: "",
-    postal: "",
-    province: "Ontario",
-    country: "Canada",
+    street: street,
+    city: city,
+    postal: postal,
+    province: province || "Ontario",
+    country: country || "Canada",
   });
 
   const [addressError, setAddressError] = useState({
@@ -143,8 +155,8 @@ const AddressForm = () => {
   });
 
   const [pricing, setPricing] = useState({
-    dailyRate: 0,
-    monthlyRate: 0,
+    dailyRate: dailyRate | 0,
+    monthlyRate: monthlyRate | 0,
   });
 
   const [pricingError, setPricingError] = useState({
@@ -197,6 +209,7 @@ const AddressForm = () => {
               autoComplete="shipping address-line1"
               handleChange={handleAddressChange}
               error={addressError.street}
+              value={address.street}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -207,6 +220,7 @@ const AddressForm = () => {
               autoComplete="shipping address-level2"
               handleChange={handleAddressChange}
               error={addressError.city}
+              value={address.city}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -220,6 +234,7 @@ const AddressForm = () => {
               autoComplete="shipping postal-code"
               handleChange={handleAddressChange}
               error={addressError.postal}
+              value={address.postal}
             />
           </Grid>
         </Grid>
@@ -241,6 +256,7 @@ const AddressForm = () => {
                 key={field.id}
                 handleChange={handlePricingChange}
                 error={pricingError[field.name as keyof typeof pricingError]}
+                value={pricing[field.name as keyof typeof pricing]}
               />
             </Grid>
           ))}

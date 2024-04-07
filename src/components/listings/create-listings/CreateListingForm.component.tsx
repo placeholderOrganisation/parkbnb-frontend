@@ -15,6 +15,7 @@ import Copyright from "../../auth/copyright";
 import { steps } from "../../../utils/create-listing-form.utils";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/global-store";
+import { StepOneState } from "../../../types/create-listing-form.types";
 
 const getStepContent = (step: number) => {
   switch (step) {
@@ -33,12 +34,12 @@ const getStepContent = (step: number) => {
 
 const CreateListingForm = () => {
   const [activeStep, setActiveStep] = useState(0);
-  const state: RootState = useSelector((state: RootState) => state);
+  const stepOneFormState: StepOneState = useSelector((state: RootState) => state.stepOneForm);
 
   const isCurrentStepValid = () => {
     switch (activeStep) {
       case 0:
-        return state.stepOneForm.isValid;
+        return stepOneFormState.isValid;
       default:
         return true;
     }
@@ -99,6 +100,7 @@ const CreateListingForm = () => {
                   variant="contained"
                   onClick={handleNext}
                   sx={{ mt: 3, ml: 1 }}
+                  disabled={!isCurrentStepValid()}
                 >
                   {activeStep === steps.length - 1 ? "Place order" : "Next"}
                 </Button>

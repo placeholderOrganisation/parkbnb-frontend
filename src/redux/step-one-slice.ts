@@ -11,10 +11,10 @@ export const stepOneSlice = createSlice({
     country: "",
     dailyRate: 0,
     monthlyRate: 0,
-    isValid: true,
+    isValid: false,
   },
   reducers: {
-    setStepOneFormData: (state: StepOneState, action) => {
+    setStepOneAddressFormData: (state: StepOneState, action) => {
       const stepOneData: StepOneState = action.payload;
 
       state.street = stepOneData.street;
@@ -22,14 +22,29 @@ export const stepOneSlice = createSlice({
       state.province = stepOneData.province;
       state.postal = stepOneData.postal;
       state.country = stepOneData.country;
+    },
+    setStepOnePricingFormData: (state: StepOneState, action) => {
+      const stepOneData: StepOneState = action.payload;
+
       state.dailyRate = stepOneData.dailyRate;
       state.monthlyRate = stepOneData.monthlyRate;
     },
-    setStepOneValidity: (state: StepOneState, action) => {
-      state.isValid = action.payload;
+    setStepOneValidity: (state: StepOneState) => {
+      state.isValid =
+        state.street !== "" &&
+        state.city !== "" &&
+        state.province !== "" &&
+        state.postal !== "" &&
+        state.country !== "" &&
+        state.dailyRate > 0 &&
+        state.monthlyRate > 0;
     },
   },
 });
 
-export const { setStepOneFormData } = stepOneSlice.actions;
+export const {
+  setStepOneAddressFormData,
+  setStepOnePricingFormData,
+  setStepOneValidity,
+} = stepOneSlice.actions;
 export default stepOneSlice.reducer;

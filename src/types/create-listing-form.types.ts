@@ -1,6 +1,21 @@
+import { ChangeEvent } from "react";
+
 export interface CreateListingFormState {
   activeStep: number;
 }
+
+export const provincesInCanada = [
+  "Ontario",
+  "British Columbia",
+  "Quebec",
+  "Saskatchewan",
+  "Manitoba",
+  "Alberta",
+  "Nova Scotia",
+  "New Brunswick",
+  "Newfoundland and Labrador",
+  "Prince Edward Island",
+];
 
 export interface StepOneState {
   street: string;
@@ -18,15 +33,19 @@ export interface AddressFormTextFieldProps {
   name: string;
   label: string;
   autoComplete?: string;
+  handleChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  error?: boolean;
 }
 
 export interface PriceFormTextFields {
   id: string;
+  name: string;
   term?: string;
   helperText?: string;
   helperTextLabelId?: string;
   value?: number;
   handleChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  error?: boolean;
 }
 
 export interface CustomImageProps {

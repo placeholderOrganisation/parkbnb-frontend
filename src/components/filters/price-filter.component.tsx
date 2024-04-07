@@ -63,6 +63,7 @@ const PriceFilter = (props: PriceFilterProps) => {
           <Grid item xs={6} key={field.id}>
             <PriceFormTextField
               id={field.id}
+              name={field.id}
               helperText={field.helperText}
               helperTextLabelId={field.helperTextLabelId}
               handleChange={
@@ -71,6 +72,7 @@ const PriceFilter = (props: PriceFilterProps) => {
                   : handleMaxPriceChange
               }
               // downstream I do not render number input if value === ""
+              // so it should be safe to pass a "" here
               // @ts-expect-error
               value={displayPrice(field.id)}
             />

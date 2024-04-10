@@ -1,4 +1,5 @@
 import { ChangeEvent } from "react";
+import { AmenitiesTypeFilterTypes } from "./global.types";
 
 export interface CreateListingFormState {
   activeStep: number;
@@ -25,6 +26,18 @@ export interface StepOneState {
   country: string;
   dailyRate: number;
   monthlyRate: number;
+  isValid: boolean;
+}
+
+export interface StepTwoState {
+  amenities: AmenitiesTypeFilterTypes;
+  storageType: string;
+  vehicleTypes: string[];
+  dimensions: {
+    minLength: number;
+    minWidth: number;
+  };
+  numSpaces: number;
   isValid: boolean;
 }
 

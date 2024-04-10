@@ -57,11 +57,6 @@ export default function ImagePicker() {
     setUploadState("initial");
   };
 
-  // @ts-ignore
-  const onUpload = (data) => {
-    console.log(data.logo[0]);
-  };
-
   return (
     <Box
       sx={{

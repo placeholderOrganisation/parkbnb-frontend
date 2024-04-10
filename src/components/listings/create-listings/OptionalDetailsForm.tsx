@@ -32,7 +32,6 @@ export default function OptionalDetailsForm() {
       >
         <TextField
           variant="outlined"
-          required
           id="description"
           name="description"
           label="Describe your space"

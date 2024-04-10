@@ -15,7 +15,6 @@ import Copyright from "../../auth/copyright";
 import { steps } from "../../../utils/create-listing-form.utils";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/global-store";
-import { StepOneState } from "../../../types/create-listing-form.types";
 
 const getStepContent = (step: number) => {
   switch (step) {

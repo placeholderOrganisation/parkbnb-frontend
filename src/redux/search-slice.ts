@@ -177,8 +177,6 @@ export const searchSlice = createSlice({
         );
       }
 
-      // TODO: filter the search results based on the filters
-
       state.filteredSearchResults = listings;
       state.listingsRenderedInMap = listings;
     },

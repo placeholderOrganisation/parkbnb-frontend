@@ -2,8 +2,16 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import { Box, Grid } from "@mui/material";
 import ImagePicker from "./ImagePicker.component";
+import { useDispatch } from "react-redux";
+import { setDescription } from "../../../redux/step-three-slice";
 
 export default function OptionalDetailsForm() {
+  const dispatch = useDispatch();
+
+  const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setDescription(event.target.value));
+  }
+
   return (
     <>
       {/* Image Picker Box */}
@@ -38,6 +46,7 @@ export default function OptionalDetailsForm() {
           fullWidth
           multiline
           rows={5}
+          onChange={handleDescriptionChange}
         />
       </Box>
     </>

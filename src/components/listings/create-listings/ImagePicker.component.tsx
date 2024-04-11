@@ -7,11 +7,15 @@ import {
   Grid,
   Box,
   Input,
+  Button,
+  Stack,
 } from "@mui/material";
 
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import { isDesktop } from "../../../utils/display-utils";
 import { CustomImageProps } from "../../../types/create-listing-form.types";
+import { useDispatch } from "react-redux";
+import { removeImage, setImages } from "../../../redux/step-three-slice";
 
 const CustomImage = (props: CustomImageProps) => {
   const { src } = props;
@@ -32,8 +36,11 @@ const CustomImage = (props: CustomImageProps) => {
 };
 
 export default function ImagePicker() {
-  const [uploadState, setUploadState] = React.useState("initial");
+  const [imageName, setImageName] = React.useState("");
   const [image, setImage] = React.useState("");
+  const [uploadState, setUploadState] = React.useState("initial");
+
+  const dispatch = useDispatch();
 
   // @ts-ignore
   const handleUploadClick = (event) => {
@@ -46,6 +53,8 @@ export default function ImagePicker() {
         // @ts-ignore
         setImage(reader.result);
         setUploadState("uploaded");
+        setImageName(file.name);
+        dispatch(setImages({ file: reader.result, name: file.name}));
       };
     }
   };
@@ -55,6 +64,7 @@ export default function ImagePicker() {
     // @ts-ignore
     setImage(null);
     setUploadState("initial");
+    dispatch(removeImage(imageName))
   };
 
   return (
@@ -68,8 +78,8 @@ export default function ImagePicker() {
     >
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Card>
-            {uploadState === "initial" ? (
+          {uploadState === "initial" ? (
+            <Card>
               <CardContent
                 sx={{
                   paddingBottom: "14px !important",
@@ -114,18 +124,29 @@ export default function ImagePicker() {
                   </label>
                 </Box>
               </CardContent>
-            ) : (
-              <CardActionArea
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                }}
+            </Card>
+          ) : (
+            <Stack spacing={2}>
+              <Card>
+                <CardActionArea
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                  onClick={handleResetClick}
+                >
+                  <CustomImage src={image} />
+                </CardActionArea>
+              </Card>
+              <Button
                 onClick={handleResetClick}
+                variant="contained"
+                color="primary"
               >
-                <CustomImage src={image} />
-              </CardActionArea>
-            )}
-          </Card>
+                Reset image
+              </Button>
+            </Stack>
+          )}
         </Grid>
       </Grid>
     </Box>

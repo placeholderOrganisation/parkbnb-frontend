@@ -33,7 +33,7 @@ const getStepContent = (step: number) => {
 
 const CreateListingForm = () => {
   const [activeStep, setActiveStep] = useState(0);
-  const { stepOneForm, stepTwoForm } = useSelector((state: RootState) => state);
+  const { stepOneForm, stepTwoForm, stepThreeForm } = useSelector((state: RootState) => state);
 
   const isCurrentStepValid = () => {
     switch (activeStep) {
@@ -41,6 +41,8 @@ const CreateListingForm = () => {
         return stepOneForm.isValid;
       case 1:
         return stepTwoForm.isValid;
+      case 2:
+        return stepThreeForm.isValid;
       default:
         return true;
     }

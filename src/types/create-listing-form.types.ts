@@ -41,6 +41,12 @@ export interface StepTwoState {
   isValid: boolean;
 }
 
+export interface StepThreeState {
+  images: File[];
+  description: string;
+  isValid: boolean;
+}
+
 export interface AddressFormTextFieldProps {
   id: string;
   value: string;

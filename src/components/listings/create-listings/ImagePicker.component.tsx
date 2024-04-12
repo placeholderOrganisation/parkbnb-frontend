@@ -12,23 +12,27 @@ import {
 } from "@mui/material";
 
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
-import { handleUpload, HandleUploadToS3Response } from "../../../utils/s3-utils";
+import {
+  handleUpload,
+  HandleUploadToS3Response,
+} from "../../../utils/s3-utils";
 import { useDispatch } from "react-redux";
 import { removeImage, setImages } from "../../../redux/step-three-slice";
 import { CustomImage } from "./image-picker-custom-image.component";
 
-
-
 interface ImagePickerProps {
   imagesInRedux: string[];
   index: number;
-  disabled?: boolean;
 }
 
 export default function ImagePicker(props: ImagePickerProps) {
-  const { imagesInRedux, index, disabled = false } = props;
-  const [image, setImage] = useState(imagesInRedux.length > index ? imagesInRedux[index] : "");
-  const [uploadState, setUploadState] = useState(imagesInRedux.length > index ? "uploaded" : "initial");
+  const { imagesInRedux, index } = props;
+  const [image, setImage] = useState(
+    imagesInRedux.length > index ? imagesInRedux[index] : ""
+  );
+  const [uploadState, setUploadState] = useState(
+    imagesInRedux.length > index ? "uploaded" : "initial"
+  );
 
   const dispatch = useDispatch();
 
@@ -36,7 +40,9 @@ export default function ImagePicker(props: ImagePickerProps) {
   const handleUploadClick = async (event) => {
     var file = event.target.files[0];
     if (file) {
-      const uploadedFileReq: HandleUploadToS3Response = await handleUpload(file);
+      const uploadedFileReq: HandleUploadToS3Response = await handleUpload(
+        file
+      );
       if (uploadedFileReq.success) {
         setImage(uploadedFileReq.location!);
         dispatch(setImages(uploadedFileReq.location));
@@ -127,7 +133,6 @@ export default function ImagePicker(props: ImagePickerProps) {
                 onClick={handleResetClick}
                 variant="contained"
                 color="primary"
-                disabled={disabled}
               >
                 Reset image
               </Button>

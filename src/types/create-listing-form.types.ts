@@ -42,7 +42,7 @@ export interface StepTwoState {
 }
 
 export interface StepThreeState {
-  images: File[];
+  images: string[];
   description: string;
   isValid: boolean;
 }

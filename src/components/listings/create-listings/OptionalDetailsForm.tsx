@@ -1,16 +1,23 @@
 import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
 import { Box, Grid } from "@mui/material";
 import ImagePicker from "./ImagePicker.component";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setDescription } from "../../../redux/step-three-slice";
+import { RootState } from "../../../redux/global-store";
+import DescriptionField from "./DescriptionField.component";
 
 export default function OptionalDetailsForm() {
   const dispatch = useDispatch();
+  const {
+    description: descriptionInRedux,
+    images: imagesInRedux,
+  } = useSelector((state: RootState) => state.stepThreeForm);
 
-  const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDescriptionChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     dispatch(setDescription(event.target.value));
-  }
+  };
 
   return (
     <>
@@ -25,10 +32,10 @@ export default function OptionalDetailsForm() {
         </Typography>
         <Grid container spacing={3}>
           <Grid item xs={6}>
-            <ImagePicker />
+            <ImagePicker imagesInRedux={imagesInRedux} index={0} />
           </Grid>
           <Grid item xs={6}>
-            <ImagePicker />
+            <ImagePicker imagesInRedux={imagesInRedux} index={1} />
           </Grid>
         </Grid>
       </Box>
@@ -38,15 +45,9 @@ export default function OptionalDetailsForm() {
           pt: 2.5,
         }}
       >
-        <TextField
-          variant="outlined"
-          id="description"
-          name="description"
-          label="Describe your space"
-          fullWidth
-          multiline
-          rows={5}
-          onChange={handleDescriptionChange}
+        <DescriptionField
+          descriptionInRedux={descriptionInRedux}
+          handleDescriptionChange={handleDescriptionChange}
         />
       </Box>
     </>

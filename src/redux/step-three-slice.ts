@@ -10,22 +10,16 @@ export const stepThreeSlice = createSlice({
   },
   reducers: {
     setImages: (state: StepThreeState, action) => {
-      const fileToSave: File = action.payload.file;
+      const fileUrl: File = action.payload;
 
-      const imagesLength = state.images.length;
-
-      if (imagesLength >= 2) {
-        state.images = []
-      }
-
-      if (fileToSave) {
+      if (fileUrl) {
         state.images.push(action.payload);
       }
     },
     removeImage: (state: StepThreeState, action) => {
-      const fileName: string = action.payload;
+      const fileUrl: string = action.payload;
       const updatedImageList = state.images.filter(
-        (file) => file.name !== fileName
+        (url) => url !== fileUrl
       );
       if (updatedImageList.length === 0) {
         state.images = [];

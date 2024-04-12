@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import {
   Card,
   CardActionArea,
@@ -11,9 +11,10 @@ import {
   Stack,
 } from "@mui/material";
 
-import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import { isDesktop } from "../../../utils/display-utils";
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import { CustomImageProps } from "../../../types/create-listing-form.types";
+import { handleUpload, HandleUploadToS3Response } from "../../../utils/s3-utils";
 import { useDispatch } from "react-redux";
 import { removeImage, setImages } from "../../../redux/step-three-slice";
 
@@ -35,36 +36,37 @@ const CustomImage = (props: CustomImageProps) => {
   );
 };
 
-export default function ImagePicker() {
-  const [imageName, setImageName] = React.useState("");
-  const [image, setImage] = React.useState("");
-  const [uploadState, setUploadState] = React.useState("initial");
+interface ImagePickerProps {
+  imagesInRedux: string[];
+  index: number;
+}
+
+export default function ImagePicker(props: ImagePickerProps) {
+  const { imagesInRedux, index } = props;
+  const [image, setImage] = useState(imagesInRedux.length > index ? imagesInRedux[index] : "");
+  const [uploadState, setUploadState] = useState(imagesInRedux.length > index ? "uploaded" : "initial");
 
   const dispatch = useDispatch();
 
   // @ts-ignore
-  const handleUploadClick = (event) => {
+  const handleUploadClick = async (event) => {
     var file = event.target.files[0];
-    const reader = new FileReader();
     if (file) {
-      reader.readAsDataURL(file);
-      // @ts-ignore
-      reader.onloadend = function (e) {
-        // @ts-ignore
-        setImage(reader.result);
+      const uploadedFileReq: HandleUploadToS3Response = await handleUpload(file);
+      if (uploadedFileReq.success) {
+        setImage(uploadedFileReq.location!);
+        dispatch(setImages(uploadedFileReq.location));
         setUploadState("uploaded");
-        setImageName(file.name);
-        dispatch(setImages({ file: reader.result, name: file.name}));
-      };
+      }
     }
   };
 
   // @ts-ignore
   const handleResetClick = (event) => {
     // @ts-ignore
-    setImage(null);
+    setImage("");
     setUploadState("initial");
-    dispatch(removeImage(imageName))
+    dispatch(removeImage(image));
   };
 
   return (

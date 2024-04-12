@@ -68,7 +68,7 @@ const Review = () => {
       title: "Description",
       component: (
         <Stack spacing={1}>
-          <Typography variant="subtitle1">{descriptionInRedux}</Typography>
+          <Typography variant="subtitle1">{descriptionInRedux ? descriptionInRedux : "No description provided"}</Typography>
         </Stack>
       ),
     },

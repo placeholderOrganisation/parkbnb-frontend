@@ -33,7 +33,7 @@ const ProvincePicker = (props: ProvincePickerProps) => {
           name="province"
           value={province}
           label="Province *"
-          autoComplete="state-province"
+          autoComplete="shipping state-province"
           // @ts-expect-error
           onChange={handleProvinceChange}
         >

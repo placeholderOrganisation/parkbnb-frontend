@@ -55,6 +55,7 @@ export interface AddressFormTextFieldProps {
   autoComplete?: string;
   handleChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   error?: boolean;
+  disabled?: boolean;
 }
 
 export interface PriceFormTextFields {

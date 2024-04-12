@@ -30,6 +30,7 @@ const AddressFormTextField = (props: AddressFormTextFieldProps) => {
     handleChange = () => {},
     error = false,
     value,
+    disabled = false,
   } = props;
   return (
     <TextField
@@ -44,6 +45,7 @@ const AddressFormTextField = (props: AddressFormTextFieldProps) => {
       error={error}
       helperText={error ? "This field is required" : ""} // currently only showing error if this fields is not set
       value={value}
+      disabled={disabled}
     />
   );
 };
@@ -154,6 +156,7 @@ const AddressForm = () => {
     city: false,
     province: false,
     postal: false,
+    country: false,
   });
 
   const [pricing, setPricing] = useState({
@@ -237,6 +240,18 @@ const AddressForm = () => {
               handleChange={handleAddressChange}
               error={addressError.postal}
               value={address.postal}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <AddressFormTextField
+              id="country"
+              name="country"
+              label="Country"
+              autoComplete="shipping country"
+              handleChange={handleAddressChange}
+              error={addressError.country}
+              value={address.country}
+              disabled
             />
           </Grid>
         </Grid>

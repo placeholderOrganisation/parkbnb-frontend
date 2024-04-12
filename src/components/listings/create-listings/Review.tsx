@@ -46,7 +46,6 @@ const Review = () => {
     images: imagesInRedux,
   } = useSelector((state: RootState) => state.stepThreeForm);
 
-  console.log('first', dailyRate, monthlyRate)
   const componentsToRender = [
     {
       title: "Images",

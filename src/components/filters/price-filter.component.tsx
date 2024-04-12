@@ -3,29 +3,27 @@ import { PriceFormTextField } from "../listings/create-listings/AddressForm";
 import { useState } from "react";
 import { MAX_PRICE } from "../../types/global.types";
 
-const pricingFilterFields = [
-  {
-    id: "minimum-price",
-    helperText: "min price",
-    helperTextLabelId: "min-price-input",
-  },
-  {
-    id: "maximum-price",
-    helperText: "max price",
-    helperTextLabelId: "max-price-input",
-  },
-];
-
 interface PriceFilterProps {
+  pricingFilterFields: {
+    id: string;
+    helperText: string;
+    helperTextLabelId: string;
+  }[];
   priceInRedux?: {
     monthlyMin: number;
     monthlyMax: number;
   };
   handleMonthlyPriceFilterChange?: (minPrice: number, maxPrice: number) => void;
+  disabled?: boolean;
 }
 
 const PriceFilter = (props: PriceFilterProps) => {
-  const { priceInRedux, handleMonthlyPriceFilterChange = () => {} } = props;
+  const {
+    pricingFilterFields,
+    priceInRedux,
+    handleMonthlyPriceFilterChange = () => {},
+    disabled = false,
+  } = props;
 
   const [minPrice, setMinPrice] = useState<number>(
     priceInRedux?.monthlyMin || 0
@@ -56,6 +54,17 @@ const PriceFilter = (props: PriceFilterProps) => {
     }
   };
 
+  const handlePriceChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    fieldName: string
+  ) => {
+    if (fieldName === "minimum-price") {
+      return handleMinPriceChange(event);
+    } else {
+      return handleMaxPriceChange(event);
+    }
+  };
+
   return (
     <Box>
       <Grid container spacing={3}>
@@ -66,15 +75,14 @@ const PriceFilter = (props: PriceFilterProps) => {
               name={field.id}
               helperText={field.helperText}
               helperTextLabelId={field.helperTextLabelId}
-              handleChange={
-                field.id === "minimum-price"
-                  ? handleMinPriceChange
-                  : handleMaxPriceChange
-              }
+              handleChange={(event) => {
+                handlePriceChange(event, field.id);
+              }}
               // downstream I do not render number input if value === ""
               // so it should be safe to pass a "" here
               // @ts-expect-error
               value={displayPrice(field.id)}
+              disabled={disabled}
             />
           </Grid>
         ))}

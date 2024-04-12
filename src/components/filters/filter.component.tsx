@@ -17,6 +17,19 @@ import {
   setVehicleTypesFilter,
 } from "../../redux/search-slice";
 
+const pricingFilterFields = [
+  {
+    id: "minimum-price",
+    helperText: "min price",
+    helperTextLabelId: "min-price-input",
+  },
+  {
+    id: "maximum-price",
+    helperText: "max price",
+    helperTextLabelId: "max-price-input",
+  },
+];
+
 const Filters = () => {
   const dispatch = useDispatch();
 
@@ -75,6 +88,7 @@ const Filters = () => {
       title: "Monthly price",
       component: (
         <PriceFilter
+          pricingFilterFields={pricingFilterFields}
           priceInRedux={priceInRedux}
           handleMonthlyPriceFilterChange={handleMonthlyPriceFilterChange}
         />

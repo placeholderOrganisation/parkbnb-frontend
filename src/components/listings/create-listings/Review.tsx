@@ -7,7 +7,7 @@ import StorageTypeFilter from "../../filters/storage-type-filter.component";
 import VehicleTypeFilter from "../../filters/vehicle-type-filter.component";
 import DimensionsFilter from "../../filters/dimensions-filter.component";
 import NumSpacesFilter from "../../filters/num-spaces-filter.component";
-import ImagePicker from "./ImagePicker.component";
+import { CustomImage } from "./image-picker-custom-image.component";
 
 const pricingFilterFields = [
   {
@@ -46,16 +46,11 @@ const Review = () => {
     images: imagesInRedux,
   } = useSelector((state: RootState) => state.stepThreeForm);
 
+  const isThereAtLeastOneImage = imagesInRedux.some((image) => image !== null);
+  const firstImage = imagesInRedux.length >= 1 ? imagesInRedux[0] : null;
+  const secondImage = imagesInRedux.length >= 2 ? imagesInRedux[1] : null;
+
   const componentsToRender = [
-    {
-      title: "Images",
-      component: (
-        <Stack direction="row" spacing={2}>
-          <ImagePicker imagesInRedux={imagesInRedux} index={0} disabled />
-          <ImagePicker imagesInRedux={imagesInRedux} index={1} disabled />
-        </Stack>
-      ),
-    },
     {
       title: "Address",
       component: (
@@ -65,10 +60,25 @@ const Review = () => {
       ),
     },
     {
+      title: "Images",
+      component: isThereAtLeastOneImage ? (
+        <Stack direction="row" spacing={2}>
+          <CustomImage src={firstImage} />
+          <CustomImage src={secondImage} />
+        </Stack>
+      ) : (
+        <Typography variant="subtitle1">{"No images provided"}</Typography>
+      ),
+    },
+    {
       title: "Description",
       component: (
         <Stack spacing={1}>
-          <Typography variant="subtitle1">{descriptionInRedux ? descriptionInRedux : "No description provided"}</Typography>
+          <Typography variant="subtitle1">
+            {descriptionInRedux
+              ? descriptionInRedux
+              : "No description provided"}
+          </Typography>
         </Stack>
       ),
     },

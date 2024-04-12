@@ -16,3 +16,7 @@ export const authClient = axios.create({
 export const userClient = axios.create({
   baseURL: `${baseURL}/v1/user`,
 });
+
+export const s3Client = axios.create({
+  baseURL: `${baseURL}/v1/s3`,
+});

@@ -69,7 +69,3 @@ export interface PriceFormTextFields {
   error?: boolean;
   disabled?: boolean;
 }
-
-export interface CustomImageProps {
-  src: string;
-}

@@ -11,30 +11,13 @@ import {
   Stack,
 } from "@mui/material";
 
-import { isDesktop } from "../../../utils/display-utils";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
-import { CustomImageProps } from "../../../types/create-listing-form.types";
 import { handleUpload, HandleUploadToS3Response } from "../../../utils/s3-utils";
 import { useDispatch } from "react-redux";
 import { removeImage, setImages } from "../../../redux/step-three-slice";
+import { CustomImage } from "./image-picker-custom-image.component";
 
-const CustomImage = (props: CustomImageProps) => {
-  const { src } = props;
-  const isDesktopView = isDesktop();
-  const _width = isDesktopView ? "250px" : "100px";
-  const _height = isDesktopView ? "250px" : "100px";
 
-  return (
-    <img
-      style={{
-        width: _width,
-        height: _height,
-      }}
-      src={src}
-      alt="uploaded image"
-    />
-  );
-};
 
 interface ImagePickerProps {
   imagesInRedux: string[];

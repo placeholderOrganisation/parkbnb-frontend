@@ -23,12 +23,14 @@ const StorageTypesOptions = [
 interface StorageTypeFilterProps {
   storageTypeInRedux?: string;
   handleStorageTypeFilterChange?: (storageType: string) => void;
+  disabled?: boolean;
 }
 
 const StorageTypeFilter = (props: StorageTypeFilterProps) => {
   const {
     storageTypeInRedux,
     handleStorageTypeFilterChange = () => {},
+    disabled = false,
   } = props;
 
   const [storageType, setStorageType] = useState(storageTypeInRedux || storageTypeInitialState);
@@ -43,6 +45,7 @@ const StorageTypeFilter = (props: StorageTypeFilterProps) => {
         sx={{
           width: "100%",
         }}
+        disabled={disabled}
       >
         <InputLabel id="storage-type-select-required-label">
           Storage type

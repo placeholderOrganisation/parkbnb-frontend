@@ -39,10 +39,11 @@ const CustomImage = (props: CustomImageProps) => {
 interface ImagePickerProps {
   imagesInRedux: string[];
   index: number;
+  disabled?: boolean;
 }
 
 export default function ImagePicker(props: ImagePickerProps) {
-  const { imagesInRedux, index } = props;
+  const { imagesInRedux, index, disabled = false } = props;
   const [image, setImage] = useState(imagesInRedux.length > index ? imagesInRedux[index] : "");
   const [uploadState, setUploadState] = useState(imagesInRedux.length > index ? "uploaded" : "initial");
 
@@ -135,7 +136,6 @@ export default function ImagePicker(props: ImagePickerProps) {
                     display: "flex",
                     justifyContent: "center",
                   }}
-                  onClick={handleResetClick}
                 >
                   <CustomImage src={image} />
                 </CardActionArea>
@@ -144,6 +144,7 @@ export default function ImagePicker(props: ImagePickerProps) {
                 onClick={handleResetClick}
                 variant="contained"
                 color="primary"
+                disabled={disabled}
               >
                 Reset image
               </Button>

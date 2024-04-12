@@ -20,10 +20,15 @@ interface AmenitiesFilterProps {
   handleAmentiFilterChange?: (
     updatedAmenities: AmenitiesTypeFilterTypes
   ) => void;
+  disabled?: boolean;
 }
 
 const AmenitiesFilter = (props: AmenitiesFilterProps) => {
-  const { amenitiesInRedux = amenitiesInitialState, handleAmentiFilterChange = () => {} } = props;
+  const {
+    amenitiesInRedux = amenitiesInitialState,
+    handleAmentiFilterChange = () => {},
+    disabled = false,
+  } = props;
 
   const [amenities, setAmenities] = useState<AmenitiesTypeFilterTypes>(
     amenitiesInRedux
@@ -45,6 +50,7 @@ const AmenitiesFilter = (props: AmenitiesFilterProps) => {
         {parkingFilters.map((label, index) => (
           <Grid item xs={6} key={index}>
             <FormControlLabel
+              disabled={disabled}
               control={
                 <Checkbox
                   color="secondary"

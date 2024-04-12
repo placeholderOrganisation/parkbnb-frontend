@@ -66,6 +66,7 @@ export interface PriceFormTextFields {
   value?: number;
   handleChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   error?: boolean;
+  disabled?: boolean;
 }
 
 export interface CustomImageProps {

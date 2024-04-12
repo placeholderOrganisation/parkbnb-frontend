@@ -26,10 +26,15 @@ interface DimensionsFilterProps {
     minLength: number;
     minWidth: number;
   }) => void;
+  disabled?: boolean;
 }
 
 const DimensionsFilter = (props: DimensionsFilterProps) => {
-  const { dimensionsInRedux, handleDimensionsFilterChange = () => {} } = props;
+  const {
+    dimensionsInRedux,
+    handleDimensionsFilterChange = () => {},
+    disabled = false,
+  } = props;
 
   const intialDimensions = dimensionsInRedux || dimensionsInitialState;
   const dimensionLabel = parseLengthAndWidth(
@@ -53,6 +58,7 @@ const DimensionsFilter = (props: DimensionsFilterProps) => {
         sx={{
           width: "100%",
         }}
+        disabled={disabled}
       >
         <InputLabel id="dimension-select-label">
           Length and width of space is

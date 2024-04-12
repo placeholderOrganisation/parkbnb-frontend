@@ -21,10 +21,11 @@ export const vehicleTypes = Object.keys(VEHICLE_TYPE_ENUMS);
 interface VehicleTypeFilterProps {
   vehicleTypesInRedux?: string[];
   handleVehicleTypesFilterChange?: (vehicleTypes: string[]) => void;
+  disabled?: boolean;
 }
 
 const VehicleTypeFilter = (props: VehicleTypeFilterProps) => {
-  const { vehicleTypesInRedux, handleVehicleTypesFilterChange = () => {} } = props;
+  const { vehicleTypesInRedux, handleVehicleTypesFilterChange = () => {}, disabled = false } = props;
   const [vehicleType, setVehicleType] = useState<string[]>(
     vehicleTypesInRedux || []
   );
@@ -42,6 +43,7 @@ const VehicleTypeFilter = (props: VehicleTypeFilterProps) => {
         sx={{
           width: "100%",
         }}
+        disabled={disabled}
       >
         <InputLabel id="vehicle-type-select-label">
           Your space can accommodate

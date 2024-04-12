@@ -3,11 +3,12 @@ import React, { useState } from "react";
 
 interface DescriptionFieldProps {
   descriptionInRedux: string;
-  handleDescriptionChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleDescriptionChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
 }
 
 const DescriptionField = (props: DescriptionFieldProps) => {
-  const { descriptionInRedux, handleDescriptionChange } = props;
+  const { descriptionInRedux, handleDescriptionChange = () => {}, disabled = false } = props;
 
   const [userDescription, setUserDescription] = useState(descriptionInRedux);
 
@@ -27,6 +28,7 @@ const DescriptionField = (props: DescriptionFieldProps) => {
       multiline
       rows={5}
       onChange={handleUserDescriptionChange}
+      disabled={disabled}
     />
   );
 };

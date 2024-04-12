@@ -13,13 +13,20 @@ import { numSpacesFilterInitialState } from "../../redux/search-slice.util";
 interface NumSpacesFilterProps {
   numSpacesInRedux?: number;
   handleNumSpacesFilterChange?: (numSpaces: number) => void;
+  disabled?: boolean;
 }
 
 const NumSpacesFilter = (props: NumSpacesFilterProps) => {
-  const { numSpacesInRedux, handleNumSpacesFilterChange = () => {} } = props;
+  const {
+    numSpacesInRedux,
+    handleNumSpacesFilterChange = () => {},
+    disabled = false,
+  } = props;
   const initialNumSpaceLabel = numSpacesInRedux || numSpacesFilterInitialState;
 
-  const [numSpacesAvailable, setNumSpacesAvailable] = useState(initialNumSpaceLabel);
+  const [numSpacesAvailable, setNumSpacesAvailable] = useState(
+    initialNumSpaceLabel
+  );
 
   const handleSpacesAvailableChange = (event: SelectChangeEvent) => {
     const numSpaces = parseInt(event.target.value);
@@ -34,6 +41,7 @@ const NumSpacesFilter = (props: NumSpacesFilterProps) => {
         sx={{
           width: "100%",
         }}
+        disabled={disabled}
       >
         <InputLabel id="num-spaces-select-required-label">
           How many spaces are available?

@@ -1,87 +1,136 @@
-import * as React from 'react';
-import Typography from '@mui/material/Typography';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import Grid from '@mui/material/Grid';
+import { Stack, Typography } from "@mui/material";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/global-store";
+import AmenitiesFilter from "../../filters/amenities-filter.component";
+import PriceFilter from "../../filters/price-filter.component";
+import StorageTypeFilter from "../../filters/storage-type-filter.component";
+import VehicleTypeFilter from "../../filters/vehicle-type-filter.component";
+import DimensionsFilter from "../../filters/dimensions-filter.component";
+import NumSpacesFilter from "../../filters/num-spaces-filter.component";
+import ImagePicker from "./ImagePicker.component";
 
-const products = [
+const pricingFilterFields = [
   {
-    name: 'Product 1',
-    desc: 'A nice thing',
-    price: '$9.99',
+    id: "minimum-price",
+    helperText: "daily price",
+    helperTextLabelId: "daily-price-input",
   },
   {
-    name: 'Product 2',
-    desc: 'Another thing',
-    price: '$3.45',
+    id: "maximum-price",
+    helperText: "monthly price",
+    helperTextLabelId: "monthly-price-input",
   },
-  {
-    name: 'Product 3',
-    desc: 'Something else',
-    price: '$6.51',
-  },
-  {
-    name: 'Product 4',
-    desc: 'Best thing of all',
-    price: '$14.11',
-  },
-  { name: 'Shipping', desc: '', price: 'Free' },
-];
-const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
-const payments = [
-  { name: 'Card type', detail: 'Visa' },
-  { name: 'Card holder', detail: 'Mr John Smith' },
-  { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-  { name: 'Expiry date', detail: '04/2024' },
 ];
 
-export default function Review() {
+const Review = () => {
+  const {
+    amenities: amenitiesInRedux,
+    storageType: storageTypeInRedux,
+    vehicleTypes: vehicleTypesInRedux,
+    dimensions: dimensionsInRedux,
+    numSpaces: numSpacesInRedux,
+  } = useSelector((state: RootState) => state.stepTwoForm);
+
+  const {
+    street,
+    city,
+    postal,
+    province,
+    country,
+    dailyRate,
+    monthlyRate,
+  } = useSelector((state: RootState) => state.stepOneForm);
+
+  const {
+    description: descriptionInRedux,
+    images: imagesInRedux,
+  } = useSelector((state: RootState) => state.stepThreeForm);
+
+  console.log('first', dailyRate, monthlyRate)
+  const componentsToRender = [
+    {
+      title: "Images",
+      component: (
+        <Stack direction="row" spacing={2}>
+          <ImagePicker imagesInRedux={imagesInRedux} index={0} disabled />
+          <ImagePicker imagesInRedux={imagesInRedux} index={1} disabled />
+        </Stack>
+      ),
+    },
+    {
+      title: "Address",
+      component: (
+        <Stack spacing={1}>
+          <Typography variant="subtitle1">{`${street}, ${city}, ${province}, ${postal}, ${country}`}</Typography>
+        </Stack>
+      ),
+    },
+    {
+      title: "Description",
+      component: (
+        <Stack spacing={1}>
+          <Typography variant="subtitle1">{descriptionInRedux}</Typography>
+        </Stack>
+      ),
+    },
+    {
+      title: "Amenities",
+      component: (
+        <AmenitiesFilter amenitiesInRedux={amenitiesInRedux} disabled />
+      ),
+    },
+    {
+      title: "Price",
+      component: (
+        <PriceFilter
+          pricingFilterFields={pricingFilterFields}
+          priceInRedux={{
+            monthlyMin: dailyRate,
+            monthlyMax: monthlyRate,
+          }}
+          disabled
+        />
+      ),
+    },
+    {
+      title: "Storage type",
+      component: (
+        <StorageTypeFilter storageTypeInRedux={storageTypeInRedux} disabled />
+      ),
+    },
+    {
+      title: "Vehicle type",
+      component: (
+        <VehicleTypeFilter vehicleTypesInRedux={vehicleTypesInRedux} disabled />
+      ),
+    },
+    {
+      title: "Dimensions",
+      component: (
+        <DimensionsFilter dimensionsInRedux={dimensionsInRedux} disabled />
+      ),
+    },
+    {
+      title: "Number of spaces",
+      component: (
+        <NumSpacesFilter numSpacesInRedux={numSpacesInRedux} disabled />
+      ),
+    },
+  ];
+
   return (
-    <React.Fragment>
-      <Typography variant="h6" gutterBottom>
-        Order summary
+    <Stack spacing={3}>
+      <Typography variant="h4" sx={{ pt: 5 }}>
+        Listing summary
       </Typography>
-      <List disablePadding>
-        {products.map((product) => (
-          <ListItem key={product.name} sx={{ py: 1, px: 0 }}>
-            <ListItemText primary={product.name} secondary={product.desc} />
-            <Typography variant="body2">{product.price}</Typography>
-          </ListItem>
-        ))}
-        <ListItem sx={{ py: 1, px: 0 }}>
-          <ListItemText primary="Total" />
-          <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-            $34.06
-          </Typography>
-        </ListItem>
-      </List>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-            Shipping
-          </Typography>
-          <Typography gutterBottom>John Smith</Typography>
-          <Typography gutterBottom>{addresses.join(', ')}</Typography>
-        </Grid>
-        <Grid item container direction="column" xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-            Payment details
-          </Typography>
-          <Grid container>
-            {payments.map((payment) => (
-              <React.Fragment key={payment.name}>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.name}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.detail}</Typography>
-                </Grid>
-              </React.Fragment>
-            ))}
-          </Grid>
-        </Grid>
-      </Grid>
-    </React.Fragment>
+      {componentsToRender.map((component) => (
+        <Stack spacing={1.5} key={component.title}>
+          <Typography variant="h6">{component.title}</Typography>
+          {component.component}
+        </Stack>
+      ))}
+    </Stack>
   );
-}
+};
+
+export default Review;

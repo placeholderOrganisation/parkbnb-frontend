@@ -87,7 +87,7 @@ const CreateListingForm = () => {
                 activeStep={activeStep}
                 steps={steps.length}
                 position="static"
-                sx={{ pt: 3 }}
+                sx={{ pt: 3, px: 0 }}
                 nextButton={null}
                 backButton={null}
                 LinearProgressProps={{ sx: { width: "100%" } }}
@@ -105,7 +105,7 @@ const CreateListingForm = () => {
                   sx={{ mt: 3, ml: 1 }}
                   disabled={!isCurrentStepValid()}
                 >
-                  {activeStep === steps.length - 1 ? "Place order" : "Next"}
+                  {activeStep === steps.length - 1 ? "Create listing" : "Next"}
                 </Button>
               </Box>
             </>

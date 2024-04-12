@@ -58,6 +58,7 @@ export const PriceFormTextField = (props: PriceFormTextFields) => {
     value,
     handleChange = () => {},
     error = false,
+    disabled = false,
   } = props;
   const shouldShowEndAdornment = term !== undefined;
   const shouldShowHelperText =
@@ -84,6 +85,7 @@ export const PriceFormTextField = (props: PriceFormTextFields) => {
         type="number"
         aria-describedby={helperTextLabelIdParsed}
         error={error}
+        disabled={disabled}
       />
       {shouldShowHelperText && (
         <FormHelperText

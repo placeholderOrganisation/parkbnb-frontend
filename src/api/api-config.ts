@@ -20,3 +20,7 @@ export const userClient = axios.create({
 export const s3Client = axios.create({
   baseURL: `${baseURL}/v1/s3`,
 });
+
+export const geocodingClient = axios.create({
+  baseURL: `${baseURL}/v1/geocode`,
+});

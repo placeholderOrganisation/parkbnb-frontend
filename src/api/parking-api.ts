@@ -1,0 +1,17 @@
+import { Listing } from "../types/global.types";
+import { parkingClient } from "./api-config";
+
+export const createParking = async (parkingData: Listing) => {
+  try {
+    const response = await parkingClient.post("/", parkingData);
+    if (response.status === 201) {
+      console.log("Parking created successfully");
+      return response.data;
+    } else {
+      throw new Error("Error creating parking");
+    }
+  } catch (error) {
+    console.error("Error creating parking", error);
+    throw error;
+  }
+};

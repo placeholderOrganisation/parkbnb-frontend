@@ -92,6 +92,7 @@ export interface FilterTypes {
 }
 
 export interface Listing {
+  owner_id: string;
   id: string;
   filters: FilterTypes;
   address: {

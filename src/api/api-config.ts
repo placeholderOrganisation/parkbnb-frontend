@@ -24,3 +24,7 @@ export const s3Client = axios.create({
 export const geocodingClient = axios.create({
   baseURL: `${baseURL}/v1/geocode`,
 });
+
+export const parkingClient = axios.create({
+  baseURL: `${baseURL}/v1/parking`,
+});

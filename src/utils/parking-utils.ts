@@ -8,6 +8,12 @@ import {
   VehicleTypeFilterTypes,
 } from "../types/global.types";
 import dayjs from "dayjs";
+import { createParking } from "../api/parking-api";
+import {
+  StepOneState,
+  StepThreeState,
+  StepTwoState,
+} from "../types/create-listing-form.types";
 
 export const getListingFromResultsGivenId = (
   listingOnMaps: ListingOnMap[],
@@ -123,5 +129,131 @@ export const getMonthsPassedOrDaysOrHours = (date: string): string => {
     return `${daysPassed} days ago`;
   } else {
     return `${hoursPassed} hours ago`;
+  }
+};
+
+export const assembleCreateListingBody = (
+  stepOneFormData: StepOneState,
+  stepTwoFormData: StepTwoState,
+  stepThreeFormData: StepThreeState,
+  lat: number,
+  lng: number,
+  ownerId: string,
+  ownerContact: string
+): Listing => {
+  const emptyParkingObject = initializeEmptyParking();
+
+  const {
+    street,
+    city,
+    province,
+    postal,
+    country,
+    dailyRate,
+    monthlyRate,
+  } = stepOneFormData;
+
+  const parsedLat = lat.toString();
+  const parsedLng = lng.toString();
+  const address = {
+    street,
+    city,
+    state: province,
+    zip: postal,
+    country,
+    lat: parsedLat,
+    lng: parsedLng,
+  };
+
+  const price = {
+    daily: dailyRate,
+    monthly: monthlyRate,
+  };
+
+  // filters
+  const {
+    amenities,
+    storageType,
+    vehicleTypes,
+    dimensions,
+    numSpaces,
+  } = stepTwoFormData;
+
+  const { images, description } = stepThreeFormData;
+
+  emptyParkingObject.filters = {
+    "24/7 access": amenities["24/7 access"],
+    ev_charging: amenities.ev_charging,
+    handicap_accessible: amenities.handicap_accessible,
+    security_cameras: amenities.security_cameras,
+    storage_type: storageType,
+    // @ts-ignore
+    vehicle_type: vehicleTypes,
+    length: dimensions.minLength,
+    width: dimensions.minWidth,
+    spaces: numSpaces,
+  };
+  emptyParkingObject.address = address;
+  emptyParkingObject.price = price;
+  emptyParkingObject.images = images;
+  emptyParkingObject.description = description;
+
+  if (ownerId) {
+    emptyParkingObject.owner_id = ownerId;
+  }
+
+  if (ownerContact) {
+    emptyParkingObject.contact = ownerContact;
+  }
+
+  return emptyParkingObject;
+};
+
+export const initializeEmptyParking = () => {
+  const newParkingObject: Listing = {
+    filters: {
+      security_cameras: false,
+      "24/7 access": false,
+      ev_charging: false,
+      handicap_accessible: false,
+      storage_type: "",
+      // @ts-ignore
+      vehicle_type: "",
+      length: 0,
+      width: 0,
+      spaces: 0,
+    },
+    address: {
+      lat: "",
+      lng: "",
+      street: "",
+      city: "",
+      state: "",
+      zip: "",
+      country: "",
+    },
+    price: {
+      daily: 0,
+      monthly: 0,
+    },
+    images: [],
+    description: "",
+    owner_id: "",
+    contact: "",
+    is_available: true,
+    is_scraped: false,
+  };
+
+  return newParkingObject;
+};
+
+// api wrappers
+export const handleCreateParking = async (parkingData: Listing) => {
+  try {
+    const data = await createParking(parkingData);
+    return { data, success: true };
+  } catch (error) {
+    console.error("Error creating parking", error);
+    return { error, success: false };
   }
 };

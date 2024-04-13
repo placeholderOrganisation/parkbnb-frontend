@@ -5,7 +5,12 @@ import {
   StepTwoState,
 } from "../../../types/create-listing-form.types";
 import { handleGeocode } from "../../../utils/geo-coding.utils";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import {
+  assembleCreateListingBody,
+  handleCreateParking,
+} from "../../../utils/parking-utils";
+import { test_user } from "../../../seeds/user";
 
 interface PublishListingProps {
   shouldMakeApiCall: boolean;
@@ -22,19 +27,50 @@ const PublishListing = (props: PublishListingProps) => {
     stepThreeFormData,
   } = props;
 
+  const user = test_user;
+  const [isCreatingListing, setIsCreatingListing] = useState(false);
+  const [addressWithLatLng, setAddressWithLatLng] = useState({
+    lat: 0,
+    lng: 0,
+  });
+
   useEffect(() => {
     if (shouldMakeApiCall) {
       const address = `${stepOneFormData.street}, ${stepOneFormData.city}, ${stepOneFormData.province}, ${stepOneFormData.postal}, ${stepOneFormData.country}`;
 
       handleGeocode(address).then((response) => {
         if (response.success) {
-          console.log("lat lng", response.lat, response.lng);
+          setAddressWithLatLng({ lat: response.lat!, lng: response.lng! });
+          setIsCreatingListing(true);
         } else {
           console.log("error getting lat lng");
         }
       });
     }
   }, [shouldMakeApiCall]);
+
+  useEffect(() => {
+    if (isCreatingListing) {
+      // make api call to create listing
+      const listingData = assembleCreateListingBody(
+        stepOneFormData,
+        stepTwoFormData,
+        stepThreeFormData,
+        addressWithLatLng.lat,
+        addressWithLatLng.lng,
+        user.id,
+        user.contactNumber
+      );
+      handleCreateParking(listingData).then((response) => {
+        if (response.success) {
+          console.log("listing created", response);
+          setIsCreatingListing(false);
+        } else {
+          console.log("error creating listing");
+        }
+      });
+    }
+  }, [isCreatingListing]);
 
   return (
     <Stack

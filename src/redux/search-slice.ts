@@ -65,7 +65,7 @@ export const searchSlice = createSlice({
       state.filters.storageType = storageType;
     },
     setVehicleTypesFilter: (state: SearchState, action) => {
-      const vehicleTypes: string[] = action.payload;
+      const vehicleTypes: string = action.payload;
       state.filters.vehicleTypes = vehicleTypes;
     },
     setDimesionsFilter: (state: SearchState, action) => {

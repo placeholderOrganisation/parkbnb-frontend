@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
   Box,
-  Checkbox,
   FormControl,
   InputLabel,
   ListItemText,
@@ -19,22 +18,24 @@ import {
 export const vehicleTypes = Object.keys(VEHICLE_TYPE_ENUMS);
 
 interface VehicleTypeFilterProps {
-  vehicleTypesInRedux?: string[];
-  handleVehicleTypesFilterChange?: (vehicleTypes: string[]) => void;
+  vehicleTypesInRedux?: string;
+  handleVehicleTypesFilterChange?: (vehicleTypes: string) => void;
   disabled?: boolean;
 }
 
 const VehicleTypeFilter = (props: VehicleTypeFilterProps) => {
-  const { vehicleTypesInRedux, handleVehicleTypesFilterChange = () => {}, disabled = false } = props;
-  const [vehicleType, setVehicleType] = useState<string[]>(
-    vehicleTypesInRedux || []
-  );
+  const {
+    vehicleTypesInRedux,
+    handleVehicleTypesFilterChange = () => {},
+    disabled = false,
+  } = props;
+  const [vehicleType, setVehicleType] = useState(vehicleTypesInRedux);
   const handleVehicleTypeChange = (event: SelectChangeEvent<string>) => {
     const {
       target: { value },
     } = event;
-    setVehicleType(typeof value === "string" ? value.split(",") : value);
-    handleVehicleTypesFilterChange(typeof value === "string" ? value.split(",") : value);
+    setVehicleType(value);
+    handleVehicleTypesFilterChange(value);
   };
   return (
     <Box>
@@ -51,7 +52,6 @@ const VehicleTypeFilter = (props: VehicleTypeFilterProps) => {
         <Select
           labelId="vehicle-type-select-label"
           id="vehicle-type-select"
-          multiple
           // @ts-ignore
           value={vehicleType}
           onChange={handleVehicleTypeChange}
@@ -62,7 +62,6 @@ const VehicleTypeFilter = (props: VehicleTypeFilterProps) => {
         >
           {vehicleTypes.map((name) => (
             <MenuItem key={name} value={name}>
-              <Checkbox checked={vehicleType.indexOf(name) > -1} />
               <ListItemText
                 primary={parseVehicleType(name as keyof VehicleTypeFilterTypes)}
               />

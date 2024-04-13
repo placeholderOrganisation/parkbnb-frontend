@@ -41,7 +41,7 @@ export default function FiltersForm() {
     updateStepTwoValidity();
   };
 
-  const handleVehicleTypesChange = (vehicleTypes: string[]) => {
+  const handleVehicleTypesChange = (vehicleTypes: string) => {
     dispatch(setVehicleTypes(vehicleTypes));
     updateStepTwoValidity();
   };

@@ -32,7 +32,7 @@ export interface StepOneState {
 export interface StepTwoState {
   amenities: AmenitiesTypeFilterTypes;
   storageType: string;
-  vehicleTypes: string[];
+  vehicleTypes: string;
   dimensions: {
     minLength: number;
     minWidth: number;

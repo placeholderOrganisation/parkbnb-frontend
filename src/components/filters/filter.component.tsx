@@ -59,7 +59,7 @@ const Filters = () => {
     dispatch(setStorageTypeFilter(storageType));
   };
 
-  const handleVehicleTypesFilterChange = (vehicleTypes: string[]) => {
+  const handleVehicleTypesFilterChange = (vehicleTypes: string) => {
     dispatch(setVehicleTypesFilter(vehicleTypes));
   };
 

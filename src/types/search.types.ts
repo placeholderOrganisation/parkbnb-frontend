@@ -14,7 +14,7 @@ export interface SearchState {
       monthlyMax: number;
     };
     storageType: string;
-    vehicleTypes: string[];
+    vehicleTypes: string;
     dimensions: {
       minLength: number;
       minWidth: number;

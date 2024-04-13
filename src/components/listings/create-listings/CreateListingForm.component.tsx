@@ -6,8 +6,6 @@ import {
   Button,
   Typography,
   MobileStepper,
-  CircularProgress,
-  Stack,
 } from "@mui/material";
 import Review from "./Review";
 import AddressForm from "./AddressForm";
@@ -18,6 +16,7 @@ import { steps } from "../../../utils/create-listing-form.utils";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/global-store";
 import BottomDrawer from "../../drawers/BottomDrawer";
+import PublishListing from "./publish-listing.component";
 
 const getStepContent = (step: number) => {
   switch (step) {
@@ -59,7 +58,6 @@ const CreateListingForm = () => {
       return;
     }
     if (activeStep === steps.length - 1) {
-      // Submit the form
       // open drawer
       setIsSubmitting(true);
       return;
@@ -114,29 +112,14 @@ const CreateListingForm = () => {
           <Copyright />
           <BottomDrawer
             open={isSubmitting}
-            handleClose={() => {
-              setIsSubmitting(false);
-            }}
+            handleClose={() => {}}
           >
-            <Stack
-              direction="row"
-              justifyContent="center"
-              alignItems="center"
-              spacing={2}
-              sx={{
-                pt: [0, 10],
-              }}
-            >
-              <CircularProgress sx={{ width: "50%" }} />
-              <Stack sx={{ width: "50%" }}>
-                <Typography variant="caption">
-                  Creating your listing...
-                </Typography>
-                <Typography variant="caption">
-                  Please do not go back or refresh the page
-                </Typography>
-              </Stack>
-            </Stack>
+            <PublishListing
+              shouldMakeApiCall={isSubmitting}
+              stepOneFormData={stepOneForm}
+              stepTwoFormData={stepTwoForm}
+              stepThreeFormData={stepThreeForm}
+            />
           </BottomDrawer>
         </Container>
       )}

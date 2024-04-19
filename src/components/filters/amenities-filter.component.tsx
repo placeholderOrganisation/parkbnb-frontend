@@ -9,7 +9,7 @@ import { amenitiesInitialState } from "../../redux/search-slice.util";
 
 // using this list to manage the order in which amenities are displayed
 const parkingFilters: string[] = [
-  FILTER_ENUMS.ACCESS_24_7,
+  FILTER_ENUMS.ALL_DAY_ACCESS,
   FILTER_ENUMS.EV_CHARGING,
   FILTER_ENUMS.SECURITY_CAMERAS,
   FILTER_ENUMS.HANDICAP_ACCESSIBLE,

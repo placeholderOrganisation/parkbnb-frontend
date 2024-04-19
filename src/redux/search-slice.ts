@@ -120,8 +120,8 @@ export const searchSlice = createSlice({
         );
       }
 
-      if (state.filters.amenities["24/7 access"]) {
-        listings = listings.filter((listing) => listing.filters["24/7 access"]);
+      if (state.filters.amenities.ALL_DAY_ACCESS) {
+        listings = listings.filter((listing) => listing.filters.ALL_DAY_ACCESS);
       }
 
       if (state.filters.amenities.ev_charging) {

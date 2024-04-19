@@ -1,5 +1,5 @@
 export const amenitiesInitialState = {
-  "24/7 access": false,
+  ALL_DAY_ACCESS: false,
   ev_charging: false,
   security_cameras: false,
   handicap_accessible: false,

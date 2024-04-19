@@ -15,7 +15,7 @@ import {
   StepTwoState,
 } from "../types/create-listing-form.types";
 
-export const getListingFromResultsGivenId = (
+export const getListingFromListingOnMapResultsGivenId = (
   listingOnMaps: ListingOnMap[],
   id: string
 ): Listing | null => {
@@ -24,6 +24,17 @@ export const getListingFromResultsGivenId = (
   );
   if (listing) {
     return convertListingOnMapObjToListingObj(listing);
+  }
+  return null;
+};
+
+export const getListingFromListingArrayGivenId = (
+  listings: Listing[],
+  id: string
+): Listing | null => {
+  const listing = listings.find((listing) => listing.id === id);
+  if (listing) {
+    return listing;
   }
   return null;
 };
@@ -182,7 +193,7 @@ export const assembleCreateListingBody = (
   const { images, description } = stepThreeFormData;
 
   emptyParkingObject.filters = {
-    "24/7 access": amenities["24/7 access"],
+    ALL_DAY_ACCESS: amenities.ALL_DAY_ACCESS,
     ev_charging: amenities.ev_charging,
     handicap_accessible: amenities.handicap_accessible,
     security_cameras: amenities.security_cameras,
@@ -213,7 +224,7 @@ export const initializeEmptyParking = () => {
   const newParkingObject: Listing = {
     filters: {
       security_cameras: false,
-      "24/7 access": false,
+      ALL_DAY_ACCESS: false,
       ev_charging: false,
       handicap_accessible: false,
       storage_type: "",

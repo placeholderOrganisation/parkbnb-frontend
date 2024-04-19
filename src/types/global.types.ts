@@ -3,14 +3,14 @@ export const MAX_PRICE = 2000;
 // need to manually add to search slice filters.
 export interface AmenitiesTypeFilterTypes {
   security_cameras: boolean;
-  "24/7 access": boolean;
+  ALL_DAY_ACCESS: boolean;
   ev_charging: boolean;
   handicap_accessible: boolean;
 }
 
 export const FILTER_ENUMS = {
   SECURITY_CAMERAS: "security_cameras",
-  ACCESS_24_7: "24/7 access",
+  ALL_DAY_ACCESS: "24/7 access",
   EV_CHARGING: "ev_charging",
   HANDICAP_ACCESSIBLE: "handicap_accessible",
 };
@@ -81,7 +81,7 @@ export const numSpacesOptions: NumSpacesFilterTypes[] = [
 
 export interface FilterTypes {
   security_cameras: boolean;
-  "24/7 access": boolean;
+  ALL_DAY_ACCESS: boolean;
   ev_charging: boolean;
   handicap_accessible: boolean;
   storage_type: string;

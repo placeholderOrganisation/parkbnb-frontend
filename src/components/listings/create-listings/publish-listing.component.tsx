@@ -12,6 +12,7 @@ import {
   handleCreateParking,
 } from "../../../utils/parking-utils";
 import { test_user } from "../../../seeds/user";
+import { useNavigate } from "react-router-dom";
 
 interface PublishListingProps {
   shouldMakeApiCall: boolean;
@@ -29,6 +30,7 @@ const PublishListing = (props: PublishListingProps) => {
   } = props;
 
   const user = test_user;
+  const navigate = useNavigate();
   const [isCreatingListing, setIsCreatingListing] = useState(false);
   const [addressWithLatLng, setAddressWithLatLng] = useState({
     lat: 0,
@@ -64,8 +66,8 @@ const PublishListing = (props: PublishListingProps) => {
       );
       handleCreateParking(listingData).then((response) => {
         if (response.success) {
-          console.log("listing created", response);
           setIsCreatingListing(false);
+          navigate("/");
         } else {
           console.log("error creating listing");
         }
@@ -74,34 +76,34 @@ const PublishListing = (props: PublishListingProps) => {
   }, [isCreatingListing]);
 
   return (
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        pt: [0, 10],
+      }}
+    >
+      <Box
+        sx={{
+          py: 2,
+          pr: 2,
+        }}
+      >
+        <CircularProgress />
+      </Box>
       <Box
         sx={{
           display: "flex",
-          justifyContent: "center",
-          pt: [0, 10],
+          flexDirection: "column",
+          width: ["unset", "60%"],
         }}
       >
-        <Box
-          sx={{
-            py: 2,
-            pr: 2,
-          }}
-        >
-          <CircularProgress />
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            width: ["unset", "60%"],
-          }}
-        >
-          <Typography variant="h4">Creating your listing</Typography>
-          <Typography variant="caption">
-            Please do not go back or refresh the page
-          </Typography>
-        </Box>
+        <Typography variant="h4">Creating your listing</Typography>
+        <Typography variant="caption">
+          Please do not go back or refresh the page
+        </Typography>
       </Box>
+    </Box>
   );
 };
 

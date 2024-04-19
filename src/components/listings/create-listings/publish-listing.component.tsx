@@ -1,5 +1,5 @@
 // TODO: add react query remove useeffect.
-import { CircularProgress, Stack, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import {
   StepOneState,
   StepThreeState,
@@ -74,23 +74,34 @@ const PublishListing = (props: PublishListingProps) => {
   }, [isCreatingListing]);
 
   return (
-    <Stack
-      direction="row"
-      justifyContent="center"
-      alignItems="center"
-      spacing={2}
-      sx={{
-        pt: [0, 10],
-      }}
-    >
-      <CircularProgress sx={{ width: "50%" }} />
-      <Stack sx={{ width: "50%" }}>
-        <Typography variant="caption">Creating your listing...</Typography>
-        <Typography variant="caption">
-          Please do not go back or refresh the page
-        </Typography>
-      </Stack>
-    </Stack>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          pt: [0, 10],
+        }}
+      >
+        <Box
+          sx={{
+            py: 2,
+            pr: 2,
+          }}
+        >
+          <CircularProgress />
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            width: ["unset", "60%"],
+          }}
+        >
+          <Typography variant="h4">Creating your listing</Typography>
+          <Typography variant="caption">
+            Please do not go back or refresh the page
+          </Typography>
+        </Box>
+      </Box>
   );
 };
 

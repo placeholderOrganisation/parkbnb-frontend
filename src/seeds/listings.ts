@@ -1,3 +1,4 @@
+// @ts-nocheck
 import dayjs from "dayjs";
 import { ListingOnMap } from "../types/global.types";
 

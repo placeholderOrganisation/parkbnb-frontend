@@ -28,7 +28,7 @@ const Amenities = (props: { parking: Listing }) => {
   const listed_on = getMonthsPassedOrDaysOrHours(parking.listed_on);
   const attributesToShow = [
     FILTER_ENUMS.SECURITY_CAMERAS,
-    FILTER_ENUMS.ALL_DAY_ACCESS,
+    FILTER_ENUMS.FULL_DAY_ACCESS,
   ];
   return (
     <>

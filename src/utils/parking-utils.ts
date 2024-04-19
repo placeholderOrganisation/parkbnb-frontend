@@ -193,7 +193,7 @@ export const assembleCreateListingBody = (
   const { images, description } = stepThreeFormData;
 
   emptyParkingObject.filters = {
-    ALL_DAY_ACCESS: amenities.ALL_DAY_ACCESS,
+    full_day_access: amenities.full_day_access,
     ev_charging: amenities.ev_charging,
     handicap_accessible: amenities.handicap_accessible,
     security_cameras: amenities.security_cameras,
@@ -224,7 +224,7 @@ export const initializeEmptyParking = () => {
   const newParkingObject: Listing = {
     filters: {
       security_cameras: false,
-      ALL_DAY_ACCESS: false,
+      full_day_access: false,
       ev_charging: false,
       handicap_accessible: false,
       storage_type: "",

@@ -11,7 +11,7 @@ export const listingsOnMap: ListingOnMap[] = [
       id: "65ebf60289d2db0b985f35ae",
       filters: {
         security_cameras: false,
-        ALL_DAY_ACCESS: false,
+        full_day_access: false,
         ev_charging: false,
         handicap_accessible: false,
         storage_type: "outdoor",
@@ -48,7 +48,7 @@ export const listingsOnMap: ListingOnMap[] = [
       id: "65ebf60789d2db0b985f35b1",
       filters: {
         security_cameras: false,
-        ALL_DAY_ACCESS: false,
+        full_day_access: false,
         ev_charging: false,
         handicap_accessible: false,
         storage_type: "outdoor",
@@ -85,7 +85,7 @@ export const listingsOnMap: ListingOnMap[] = [
       id: "65f7a5cac7813795ff25f4f8",
       filters: {
         security_cameras: false,
-        ALL_DAY_ACCESS: false,
+        full_day_access: false,
         ev_charging: false,
         handicap_accessible: false,
         storage_type: "outdoor",
@@ -122,7 +122,7 @@ export const listingsOnMap: ListingOnMap[] = [
       id: "65f7a5c6c7813795ff25f4f5",
       filters: {
         security_cameras: false,
-        ALL_DAY_ACCESS: true,
+        full_day_access: true,
         ev_charging: false,
         handicap_accessible: false,
         storage_type: "outdoor",

@@ -13,6 +13,9 @@ import {
 } from "../../../utils/parking-utils";
 import { test_user } from "../../../seeds/user";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/global-store";
+import PublishListingUnAuthedError from "./publish-listing-errors/unauth-error.component";
 
 interface PublishListingProps {
   shouldMakeApiCall: boolean;
@@ -31,6 +34,9 @@ const PublishListing = (props: PublishListingProps) => {
 
   const user = test_user;
   const navigate = useNavigate();
+  const { isAuthed, id, contactNumber } = useSelector(
+    (state: RootState) => state.user
+  );
   const [isCreatingListing, setIsCreatingListing] = useState(false);
   const [addressWithLatLng, setAddressWithLatLng] = useState({
     lat: 0,
@@ -38,7 +44,7 @@ const PublishListing = (props: PublishListingProps) => {
   });
 
   useEffect(() => {
-    if (shouldMakeApiCall) {
+    if (shouldMakeApiCall && isAuthed) {
       const address = `${stepOneFormData.street}, ${stepOneFormData.city}, ${stepOneFormData.province}, ${stepOneFormData.postal}, ${stepOneFormData.country}`;
 
       handleGeocode(address).then((response) => {
@@ -53,7 +59,7 @@ const PublishListing = (props: PublishListingProps) => {
   }, [shouldMakeApiCall]);
 
   useEffect(() => {
-    if (isCreatingListing) {
+    if (isCreatingListing && isAuthed) {
       // make api call to create listing
       const listingData = assembleCreateListingBody(
         stepOneFormData,
@@ -74,6 +80,10 @@ const PublishListing = (props: PublishListingProps) => {
       });
     }
   }, [isCreatingListing]);
+
+  if (!isAuthed) {
+    return <PublishListingUnAuthedError />;
+  }
 
   return (
     <Box

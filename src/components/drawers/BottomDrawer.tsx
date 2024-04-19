@@ -19,7 +19,9 @@ const BottomDrawer = (props: BottomDrawerProps) => {
       open={open}
       onClose={handleClose}
     >
-      <Box sx={{ p: 5 }}>{children}</Box>
+      <Box sx={{ p: 5, height: ["100%", "calc(100vh - 80px)"] }}>
+        {children}
+      </Box>
     </Drawer>
   );
 };

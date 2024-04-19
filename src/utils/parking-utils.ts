@@ -7,7 +7,7 @@ import {
   VEHICLE_TYPE_ENUMS,
   VehicleTypeFilterTypes,
 } from "../types/global.types";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { createParking } from "../api/parking-api";
 import {
   StepOneState,
@@ -126,7 +126,7 @@ export const formatDate = (date: string) => {
   return dayjs(date).format("MM/DD/YYYY");
 };
 
-export const getMonthsPassedOrDaysOrHours = (date: string): string => {
+export const getMonthsPassedOrDaysOrHours = (date: Dayjs): string => {
   const currentDate = dayjs();
   const startDate = dayjs(date);
   const daysPassed = currentDate.diff(startDate, "day");

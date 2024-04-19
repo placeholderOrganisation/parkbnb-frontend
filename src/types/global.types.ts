@@ -1,3 +1,5 @@
+import { Dayjs } from "dayjs";
+
 export const MAX_PRICE = 2000;
 
 // need to manually add to search slice filters.
@@ -111,7 +113,7 @@ export interface Listing {
   };
   is_available: boolean;
   images: string[];
-  listed_on: string;
+  listed_on: Dayjs;
   is_scraped: boolean;
   contact: string;
 }

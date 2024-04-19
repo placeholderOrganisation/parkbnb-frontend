@@ -19,17 +19,17 @@ const ParkingCardContainerForMap = () => {
   }
 
   const handleListingCardOpen = (
-    e: React.MouseEvent<HTMLElement, MouseEvent>,
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     listingId: string
   ) => {
-    e.preventDefault();
+    e.stopPropagation();
     navigate(`/listing/${listingId}`);
   };
 
   const closeParkingCard = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    e.preventDefault();
+    e.stopPropagation();
     dispatch(setUserSelectedListing(null));
   };
 

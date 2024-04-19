@@ -198,7 +198,7 @@ export default function GetListingBottomDrawer(props: Props) {
             ) : (
               sortedListings.map((listing) => (
                 <ParkingCard
-                  key={listing.id}
+                  key={listing._id}
                   parking={listing}
                   showIcon={false}
                 />

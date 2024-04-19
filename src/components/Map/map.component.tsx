@@ -41,7 +41,7 @@ const MapComponent = (props: MapComponentProps) => {
       layers: ["point_fill"],
     });
     const listingIdsInView = listingsInView.map(
-      (listing) => listing.properties?.id
+      (listing) => listing.properties?._id
     );
     handleMoveEnd(listingIdsInView);
   };
@@ -51,7 +51,7 @@ const MapComponent = (props: MapComponentProps) => {
     const features = e.features;
     if (!features || features.length === 0) return;
     const listing = features[0];
-    const listingId = listing.properties?.id;
+    const listingId = listing.properties?._id;
     handleListingClick(listingId);
   };
 

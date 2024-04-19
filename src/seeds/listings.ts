@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { ListingOnMap } from "../types/global.types";
 
 export const listingsOnMap: ListingOnMap[] = [
@@ -8,7 +9,8 @@ export const listingsOnMap: ListingOnMap[] = [
       coordinates: [-79.727397, 43.763645],
     },
     properties: {
-      id: "65ebf60289d2db0b985f35ae",
+      owner_id: "test",
+      _id: "65ebf60289d2db0b985f35ae",
       filters: {
         security_cameras: false,
         full_day_access: false,
@@ -33,7 +35,7 @@ export const listingsOnMap: ListingOnMap[] = [
       price: { daily: 16, monthly: 500 },
       is_available: true,
       images: [""],
-      listed_on: "2023-nov-30",
+      listed_on: dayjs().format("YYYY-MM-DD"),
       is_scraped: true,
       contact: "+1-6474666681",
     },
@@ -45,7 +47,8 @@ export const listingsOnMap: ListingOnMap[] = [
       coordinates: [-79.731989, 43.760685],
     },
     properties: {
-      id: "65ebf60789d2db0b985f35b1",
+      owner_id: "test",
+      _id: "65ebf60789d2db0b985f35b1",
       filters: {
         security_cameras: false,
         full_day_access: false,
@@ -70,7 +73,7 @@ export const listingsOnMap: ListingOnMap[] = [
       price: { daily: 2, monthly: 70 },
       is_available: true,
       images: [""],
-      listed_on: "2023-nov-22",
+      listed_on: dayjs().format("YYYY-MM-DD"),
       is_scraped: true,
       contact: "+1-6474675091",
     },
@@ -82,7 +85,8 @@ export const listingsOnMap: ListingOnMap[] = [
       coordinates: [-79.637292, 43.725185],
     },
     properties: {
-      id: "65f7a5cac7813795ff25f4f8",
+      owner_id: "test",
+      _id: "65f7a5cac7813795ff25f4f8",
       filters: {
         security_cameras: false,
         full_day_access: false,
@@ -107,7 +111,7 @@ export const listingsOnMap: ListingOnMap[] = [
       price: { daily: 3, monthly: 100 },
       is_available: true,
       images: [""],
-      listed_on: "2024-feb-28",
+      listed_on: dayjs().format("YYYY-MM-DD"),
       is_scraped: true,
       contact: "+1-6477066314",
     },
@@ -119,7 +123,8 @@ export const listingsOnMap: ListingOnMap[] = [
       coordinates: [-79.665686, 43.694445],
     },
     properties: {
-      id: "65f7a5c6c7813795ff25f4f5",
+      owner_id: "test",
+      _id: "65f7a5c6c7813795ff25f4f5",
       filters: {
         security_cameras: false,
         full_day_access: true,
@@ -144,7 +149,7 @@ export const listingsOnMap: ListingOnMap[] = [
       price: { daily: 13, monthly: 400 },
       is_available: true,
       images: [""],
-      listed_on: "2024-mar-11",
+      listed_on: dayjs().format("YYYY-MM-DD"),
       is_scraped: true,
       contact: "+1-4376623042",
     },

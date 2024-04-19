@@ -94,8 +94,8 @@ export interface FilterTypes {
 }
 
 export interface Listing {
+  _id: string;
   owner_id: string;
-  id: string;
   filters: FilterTypes;
   address: {
     street: string;

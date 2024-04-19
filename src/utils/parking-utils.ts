@@ -20,7 +20,7 @@ export const getListingFromListingOnMapResultsGivenId = (
   id: string
 ): Listing | null => {
   const listing = listingOnMaps.find(
-    (listingOnMap) => listingOnMap.properties.id === id
+    (listingOnMap) => listingOnMap.properties._id === id
   );
   if (listing) {
     return convertListingOnMapObjToListingObj(listing);
@@ -32,7 +32,7 @@ export const getListingFromListingArrayGivenId = (
   listings: Listing[],
   id: string
 ): Listing | null => {
-  const listing = listings.find((listing) => listing.id === id);
+  const listing = listings.find((listing) => listing._id === id);
   if (listing) {
     return listing;
   }

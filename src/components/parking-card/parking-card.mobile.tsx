@@ -15,12 +15,10 @@ import {
   parseStorageType,
   parseVehicleType,
 } from "../../utils/parking-utils";
-import CloseIcon from "@mui/icons-material/Close";
+
 import VerifiedIcon from "@mui/icons-material/Verified";
 import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
-import { useDispatch } from "react-redux";
-import { setUserSelectedListing } from "../../redux/search-slice";
 
 const Amenities = (props: { parking: Listing }) => {
   const { parking } = props;
@@ -92,16 +90,7 @@ const Title = (props: { parking: Listing }) => {
 };
 
 const ParkingCardMobile = (props: ParkingCardLayoutProps) => {
-  const { parking, showIcon } = props;
-
-  const dispatch = useDispatch();
-
-  const closeParkingCard = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
-    dispatch(setUserSelectedListing(null));
-  };
+  const { parking, showIcon, icon, handleIconClick } = props;
 
   return (
     <Card
@@ -112,8 +101,8 @@ const ParkingCardMobile = (props: ParkingCardLayoutProps) => {
       <CardHeader
         // avatar={<Avatar aria-label="recipe">:)</Avatar>}
         action={
-          <IconButton aria-label="settings" onClick={closeParkingCard}>
-            {showIcon && <CloseIcon />}
+          <IconButton aria-label="settings" onClick={handleIconClick}>
+            {showIcon && icon}
           </IconButton>
         }
         subheader={<Amenities parking={parking} />}

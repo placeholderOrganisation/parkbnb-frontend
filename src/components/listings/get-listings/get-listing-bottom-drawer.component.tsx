@@ -18,6 +18,8 @@ import ParkingCard from "../../parking-card/parking-card.component";
 import SortIcon from "@mui/icons-material/Sort";
 import dayjs from "dayjs";
 import { Listing } from "../../../types/global.types";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import { useNavigate } from "react-router-dom";
 
 const drawerBleeding = 56;
 
@@ -59,11 +61,12 @@ const Puller = styled("div")(({ theme }) => ({
 
 export default function GetListingBottomDrawer(props: Props) {
   const { window } = props;
-  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
   const listingsRenderedInMap = useSelector(
     (state: RootState) => state.search.listingsRenderedInMap
   );
 
+  const [open, setOpen] = useState(false);
   const [sortOption, setSortOption] = useState(SortOption.Date);
   const [sortedListings, setSortedListings] = useState<Listing[]>(
     listingsRenderedInMap
@@ -83,6 +86,13 @@ export default function GetListingBottomDrawer(props: Props) {
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
+  };
+
+  const handleListingCardOpen = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    listingId?: string
+  ) => {
+    navigate(`/listing/${listingId}`);
   };
 
   useEffect(() => {
@@ -200,7 +210,11 @@ export default function GetListingBottomDrawer(props: Props) {
                 <ParkingCard
                   key={listing._id}
                   parking={listing}
-                  showIcon={false}
+                  showIcon
+                  icon={<OpenInNewIcon />}
+                  handleIconClick={(e) => {
+                    handleListingCardOpen(e, listing._id);
+                  }}
                 />
               ))
             )}

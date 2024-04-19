@@ -1,16 +1,27 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/global-store";
 import ParkingCard from "../../parking-card/parking-card.component";
 import { Box } from "@mui/material";
-import { Listing } from "../../../types/global.types";
+import CloseIcon from "@mui/icons-material/Close";
+import { setUserSelectedListing } from "../../../redux/search-slice";
 
 const ParkingCardContainerForMap = () => {
-  const searchState = useSelector((state: RootState) => state.search);
-  const userSelectedListing: Listing | null = searchState.userSelectedListing;
+  const userSelectedListing = useSelector(
+    (state: RootState) => state.search.userSelectedListing
+  );
+
+  const dispatch = useDispatch();
 
   if (!userSelectedListing) {
     return null;
   }
+
+  const closeParkingCard = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    dispatch(setUserSelectedListing(null));
+  };
 
   return (
     <Box
@@ -24,7 +35,12 @@ const ParkingCardContainerForMap = () => {
         borderRadius: 4,
       }}
     >
-      <ParkingCard parking={userSelectedListing} showIcon />
+      <ParkingCard
+        parking={userSelectedListing}
+        showIcon
+        icon={<CloseIcon />}
+        handleIconClick={closeParkingCard}
+      />
     </Box>
   );
 };

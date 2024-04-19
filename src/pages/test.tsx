@@ -2,6 +2,9 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { setUserData } from "../redux/user-slice";
+import { RootState } from "../redux/global-store";
+import { useNavigate } from "react-router-dom";
+import { Box, CircularProgress } from "@mui/material";
 
 export const Test = () => {
   useEffect(() => {
@@ -16,11 +19,21 @@ export const Test = () => {
       })
       .then((response) => {
         dispatch(setUserData(response.data.user));
+        navigate(redirect_to);
       });
   }, []);
 
   const dispatch = useDispatch();
-  // @ts-ignore
-  const user = useSelector((state) => state.user);
-  return <div>hi {user.name}</div>;
+  const navigate = useNavigate();
+  const redirect_to = useSelector((state: RootState) => state.auth.redirect_to);
+  return (
+    <Box
+      sx={{
+        py: 2,
+        pr: 2,
+      }}
+    >
+      <CircularProgress />
+    </Box>
+  );
 };

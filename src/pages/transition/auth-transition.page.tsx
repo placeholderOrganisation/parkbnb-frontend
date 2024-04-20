@@ -1,25 +1,21 @@
-import axios from "axios";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setUserData } from "../../redux/user-slice";
 import { RootState } from "../../redux/global-store";
 import { useNavigate } from "react-router-dom";
 import { Box, CircularProgress } from "@mui/material";
+import { handleCheckIfUserIsAuthenticated } from "../../utils/auth-utils";
 
 export const AuthTransition = () => {
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/v1/auth/login/success", {
-        withCredentials: true,
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Credentials": true,
-        },
-      })
+    handleCheckIfUserIsAuthenticated()
       .then((response) => {
-        dispatch(setUserData(response.data.user));
+        dispatch(setUserData(response.user));
         navigate(redirect_to);
+      })
+      .catch((error) => {
+        console.error("An error occurred during form submission:", error);
+        navigate("/sign-in");
       });
   }, []);
 

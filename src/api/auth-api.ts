@@ -35,3 +35,18 @@ export const signIn = async (userData: UserSigninRequestObject) => {
     throw error;
   }
 };
+
+export const checkIfUserIsAuthenticated = async () => {
+  try {
+    const response = await authClient.get("/login/success");
+    if (response.status === 200) {
+      const user = response.data.user;
+      return user;
+    } else {
+      throw new Error("User is not authenticated");
+    }
+  } catch (error) {
+    console.error("User is not authenticated", error);
+    throw error;
+  }
+}

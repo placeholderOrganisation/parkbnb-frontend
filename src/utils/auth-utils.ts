@@ -1,5 +1,5 @@
 import { baseURL } from "../api/api-config";
-import { signIn, signUp } from "../api/auth-api";
+import { checkIfUserIsAuthenticated, signIn, signUp } from "../api/auth-api";
 import { UserObject } from "../types/user-types";
 
 export interface HandleSignUpResponse {
@@ -64,4 +64,13 @@ export const handleSignIn = async (
 
 export const handleSocialSignIn = async (provider: String) => {
   window.open(`${baseURL}/v1/auth/${provider}`, "_self");
+};
+
+export const handleCheckIfUserIsAuthenticated = async () => {
+  try {
+    const response = await checkIfUserIsAuthenticated();
+    return { user: response, success: true };
+  } catch (error) {
+    return { error, success: false };
+  }
 };

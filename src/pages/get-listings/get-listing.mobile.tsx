@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-// import MapComponent from "../../components/listings/get-listings/Map";
 import MapComponent from "../../components/map/map.component";
 import SearchAndFilter from "../../components/listings/get-listings/search-and-filter.component";
 import { GetListingsPageProps } from "../../types/global.types";

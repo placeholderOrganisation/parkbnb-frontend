@@ -8,7 +8,7 @@ import {
   VehicleTypeFilterTypes,
 } from "../types/global.types";
 import dayjs, { Dayjs } from "dayjs";
-import { createParking, getParkings } from "../api/parking-api";
+import { createParking, getParking, getParkings } from "../api/parking-api";
 import {
   StepOneState,
   StepThreeState,
@@ -275,6 +275,16 @@ export const handleGetParkings = async () => {
     return { data, success: true };
   } catch (error) {
     console.error("Error fetching parkings", error);
+    return { error, success: false };
+  }
+};
+
+export const handleGetParking = async (listingId: string) => {
+  try {
+    const data = await getParking(listingId);
+    return { data, success: true };
+  } catch (error) {
+    console.error("Error fetching parking", error);
     return { error, success: false };
   }
 };

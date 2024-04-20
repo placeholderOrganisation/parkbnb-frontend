@@ -29,3 +29,17 @@ export const getParkings = async () => {
     throw error;
   }
 };
+
+export const getParking = async (listingId: string) => {
+  try {
+    const response = await parkingClient.get(`/${listingId}`);
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error("Error fetching parking");
+    }
+  } catch (error) {
+    console.error("Error fetching parking", error);
+    throw error;
+  }
+};

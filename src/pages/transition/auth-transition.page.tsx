@@ -1,12 +1,12 @@
+import axios from "axios";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
-import { setUserData } from "../redux/user-slice";
-import { RootState } from "../redux/global-store";
+import { setUserData } from "../../redux/user-slice";
+import { RootState } from "../../redux/global-store";
 import { useNavigate } from "react-router-dom";
 import { Box, CircularProgress } from "@mui/material";
 
-export const Test = () => {
+export const AuthTransition = () => {
   useEffect(() => {
     axios
       .get("http://localhost:3001/v1/auth/login/success", {

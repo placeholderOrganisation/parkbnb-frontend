@@ -27,7 +27,7 @@ const SignIn = () => {
     if (response.success) {
       dispatch(setUserData(user));
       // TODO: Redirect to the proper page
-      navigate("/test");
+      navigate("/transition");
     }
   };
 

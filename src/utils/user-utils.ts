@@ -1,4 +1,6 @@
 import libphonenumber from "google-libphonenumber";
+import { updateUserWithId } from "../api/user-api";
+import { UserUpdateRequestObject } from "../types/user-types";
 
 const phoneUtil = libphonenumber.PhoneNumberUtil.getInstance();
 
@@ -28,4 +30,15 @@ export const formatPhoneNumber = (phoneNumber: string) => {
     parsedPhoneNumber,
     libphonenumber.PhoneNumberFormat.E164
   );
+};
+
+// api wrappers
+export const handleUpdateUserWithId = async (userId: string, userData: UserUpdateRequestObject) => {
+  try {
+    const data = await updateUserWithId(userId, userData);
+    return { data, success: true };
+  } catch (error) {
+    console.error("Error updating user", error);
+    return { error, success: false };
+  }
 };

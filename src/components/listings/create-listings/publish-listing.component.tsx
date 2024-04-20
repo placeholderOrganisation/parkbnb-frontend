@@ -11,13 +11,15 @@ import {
   assembleCreateListingBody,
   handleCreateParking,
 } from "../../../utils/parking-utils";
-import { test_user } from "../../../seeds/user";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/global-store";
 import PublishListingUnAuthedError from "./publish-listing-errors/unauth-error.component";
 import PublishListingMissingContacInfoError from "./publish-listing-errors/missing-contact-info-error.component";
-import { isContactNumberValid } from "../../../utils/user-utils";
+import {
+  handleUpdateUserWithId,
+  isContactNumberValid,
+} from "../../../utils/user-utils";
 
 interface PublishListingProps {
   shouldMakeApiCall: boolean;
@@ -90,8 +92,16 @@ const PublishListing = (props: PublishListingProps) => {
 
   useEffect(() => {
     const isUpdatedContactNumberValid = isContactNumberValid(contactNumber);
-    if (isUpdatedContactNumberValid) {
-      setShouldUpdateUser(false);
+    if (isUpdatedContactNumberValid && shouldUpdateUser) {
+      handleUpdateUserWithId(id, { contactNumber: contactNumber! })
+        .then((response) => {
+          if (response.success) {
+            setShouldUpdateUser(false);
+          }
+        })
+        .catch((error) => {
+          console.log("error updating user", error);
+        });
     } else {
       setShouldUpdateUser(true);
     }

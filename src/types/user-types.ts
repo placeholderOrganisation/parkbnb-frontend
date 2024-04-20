@@ -18,3 +18,15 @@ export interface UserSigninRequestObject {
   userEmail: string;
   password: string;
 }
+
+export interface UserUpdateRequestObject {
+  id?: string;
+  name?: string;
+  provider?: string;
+  email?: string;
+  images?: string[];
+  verified?: Boolean;
+  contactNumber?: string;
+  verificationImageLink?: string[];
+  passwordHash?: string;
+}

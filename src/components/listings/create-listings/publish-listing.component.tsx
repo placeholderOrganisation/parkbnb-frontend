@@ -16,6 +16,8 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/global-store";
 import PublishListingUnAuthedError from "./publish-listing-errors/unauth-error.component";
+import PublishListingMissingContacInfoError from "./publish-listing-errors/missing-contact-info-error.component";
+import { isContactNumberValid } from "../../../utils/user-utils";
 
 interface PublishListingProps {
   shouldMakeApiCall: boolean;
@@ -32,19 +34,24 @@ const PublishListing = (props: PublishListingProps) => {
     stepThreeFormData,
   } = props;
 
-  const user = test_user;
   const navigate = useNavigate();
   const { isAuthed, id, contactNumber } = useSelector(
     (state: RootState) => state.user
   );
+
+  const isContactNumberInValid = !isContactNumberValid(contactNumber);
+  const [shouldUpdateUser, setShouldUpdateUser] = useState(
+    isContactNumberInValid
+  );
   const [isCreatingListing, setIsCreatingListing] = useState(false);
+
   const [addressWithLatLng, setAddressWithLatLng] = useState({
     lat: 0,
     lng: 0,
   });
 
   useEffect(() => {
-    if (shouldMakeApiCall && isAuthed) {
+    if (shouldMakeApiCall && isAuthed && !shouldUpdateUser) {
       const address = `${stepOneFormData.street}, ${stepOneFormData.city}, ${stepOneFormData.province}, ${stepOneFormData.postal}, ${stepOneFormData.country}`;
 
       handleGeocode(address).then((response) => {
@@ -56,10 +63,10 @@ const PublishListing = (props: PublishListingProps) => {
         }
       });
     }
-  }, [shouldMakeApiCall]);
+  }, [shouldMakeApiCall, shouldUpdateUser]);
 
   useEffect(() => {
-    if (isCreatingListing && isAuthed) {
+    if (isCreatingListing && isAuthed && !shouldUpdateUser) {
       // make api call to create listing
       const listingData = assembleCreateListingBody(
         stepOneFormData,
@@ -67,8 +74,8 @@ const PublishListing = (props: PublishListingProps) => {
         stepThreeFormData,
         addressWithLatLng.lat,
         addressWithLatLng.lng,
-        user.id,
-        user.contactNumber
+        id,
+        contactNumber!
       );
       handleCreateParking(listingData).then((response) => {
         if (response.success) {
@@ -79,10 +86,23 @@ const PublishListing = (props: PublishListingProps) => {
         }
       });
     }
-  }, [isCreatingListing]);
+  }, [isCreatingListing, shouldUpdateUser]);
+
+  useEffect(() => {
+    const isUpdatedContactNumberValid = isContactNumberValid(contactNumber);
+    if (isUpdatedContactNumberValid) {
+      setShouldUpdateUser(false);
+    } else {
+      setShouldUpdateUser(true);
+    }
+  }, [contactNumber]);
 
   if (!isAuthed) {
     return <PublishListingUnAuthedError />;
+  }
+
+  if (!contactNumber) {
+    return <PublishListingMissingContacInfoError />;
   }
 
   return (

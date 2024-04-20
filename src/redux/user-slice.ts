@@ -22,8 +22,12 @@ export const userSlice = createSlice({
       state.contactNumber = user.contactNumber ? user.contactNumber : null;
       state.isAuthed = true;
     },
+    setUserContactNumber: (state: UserObject, action) => {
+      const contactNumber: string = action.payload;
+      state.contactNumber = contactNumber;
+    },
   },
 });
 
-export const { setUserData } = userSlice.actions;
+export const { setUserData, setUserContactNumber } = userSlice.actions;
 export default userSlice.reducer;

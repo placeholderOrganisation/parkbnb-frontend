@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 // import MapComponent from "../../components/listings/get-listings/Map";
-import MapComponent from "../../components/Map/map.component";
+import MapComponent from "../../components/map/map.component";
 import SearchAndFilter from "../../components/listings/get-listings/search-and-filter.component";
 import { GetListingsPageProps } from "../../types/global.types";
 import GetListingBottomDrawer from "../../components/listings/get-listings/get-listing-bottom-drawer.component";

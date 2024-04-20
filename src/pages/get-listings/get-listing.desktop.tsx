@@ -1,5 +1,5 @@
 // import MapComponent from "../../components/listings/get-listings/Map";
-import MapComponent from "../../components/Map/map.component";
+import MapComponent from "../../components/map/map.component";
 import { GetListingsPageProps } from "../../types/global.types";
 
 const GetListingsDesktopLayout = (props: GetListingsPageProps) => {

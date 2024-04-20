@@ -8,7 +8,8 @@ import SignIn from "./pages/auth/sign-in.page";
 import NewListingForm from "./pages/create-listing/create-listing.page";
 import GetListing from "./pages/get-listings/get-listing.page";
 import NavbarHeader from "./components/navbar/navbar-header.component";
-import { AuthTransition } from "./pages/transition/auth-transition.page";
+import AuthTransition from "./pages/transition/auth-transition.page";
+import ListingCard from "./pages/listing-card-open/listing-card.page";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/transition" element={<AuthTransition />} />
           <Route path="/create-listing" element={<NewListingForm />} />
+          <Route path="/listing/:id" element={<ListingCard />} />
           <Route path="/" element={<GetListing />} />
         </Routes>
       </Router>

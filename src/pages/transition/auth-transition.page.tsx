@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Box, CircularProgress } from "@mui/material";
 import { handleCheckIfUserIsAuthenticated } from "../../utils/auth-utils";
 
-export const AuthTransition = () => {
+const AuthTransition = () => {
   useEffect(() => {
     handleCheckIfUserIsAuthenticated()
       .then((response) => {
@@ -33,3 +33,5 @@ export const AuthTransition = () => {
     </Box>
   );
 };
+
+export default AuthTransition;

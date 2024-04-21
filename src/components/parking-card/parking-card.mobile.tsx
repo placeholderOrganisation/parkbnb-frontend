@@ -40,7 +40,14 @@ const Amenities = (props: { parking: Listing }) => {
 
         {attributesToShow.map((attribute: string) => {
           return (
-            <Stack direction="row" spacing={1} key={attribute}>
+            <Stack
+              direction="row"
+              spacing={1}
+              key={attribute}
+              sx={{
+                alignItems: "center",
+              }}
+            >
               {parking.filters[attribute as keyof FilterTypes] ? (
                 <CheckOutlinedIcon fontSize="small" color="success" />
               ) : (

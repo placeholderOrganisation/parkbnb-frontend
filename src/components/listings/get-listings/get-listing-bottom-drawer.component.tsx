@@ -92,6 +92,7 @@ export default function GetListingBottomDrawer(props: Props) {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     listingId?: string
   ) => {
+    e.stopPropagation();
     navigate(`/listing/${listingId}`);
   };
 

@@ -113,7 +113,7 @@ const CreateListingForm = () => {
             </>
           </Paper>
           <Copyright />
-          <BottomDrawer open={isSubmitting} handleClose={() => {}}>
+          <BottomDrawer open={isSubmitting}>
             <PublishListing
               shouldMakeApiCall={isSubmitting}
               stepOneFormData={stepOneForm}

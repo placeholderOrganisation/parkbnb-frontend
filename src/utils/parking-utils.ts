@@ -139,6 +139,9 @@ export const getMonthsPassedOrDaysOrHours = (date: Dayjs): string => {
     const daysPassed = currentDate.diff(startDate, "day");
     return `${daysPassed} days ago`;
   } else {
+    if (hoursPassed === 0) {
+      return `1 hour ago`;
+    }
     return `${hoursPassed} hours ago`;
   }
 };

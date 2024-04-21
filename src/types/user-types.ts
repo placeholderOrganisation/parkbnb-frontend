@@ -8,6 +8,14 @@ export interface UserObject {
   isAuthed: boolean;
 }
 
+export interface ListingOwnerUserObject {
+  id: string;
+  name: string;
+  images: string[];
+  verified: boolean;
+  contactNumber?: string | null;
+}
+
 export interface UserSignupRequestObject {
   displayName: string;
   userEmail: string;

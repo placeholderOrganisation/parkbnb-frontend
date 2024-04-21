@@ -72,11 +72,14 @@ const CreateListingForm = () => {
   return (
     <>
       {activeStep < steps.length && (
-        <Container component="main" maxWidth="sm">
-          <Paper
-            variant="outlined"
-            sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
-          >
+        <Container
+          component="main"
+          maxWidth="sm"
+          sx={{
+            px: 0,
+          }}
+        >
+          <Paper variant="outlined" sx={{ p: { xs: 2, md: 3 } }}>
             <>
               <Typography component="h1" variant="h4" align="left">
                 New listing
@@ -110,10 +113,7 @@ const CreateListingForm = () => {
             </>
           </Paper>
           <Copyright />
-          <BottomDrawer
-            open={isSubmitting}
-            handleClose={() => {}}
-          >
+          <BottomDrawer open={isSubmitting} handleClose={() => {}}>
             <PublishListing
               shouldMakeApiCall={isSubmitting}
               stepOneFormData={stepOneForm}

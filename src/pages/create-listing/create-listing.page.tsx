@@ -3,7 +3,12 @@ import CreateListingForm from "../../components/listings/create-listings/CreateL
 
 const NewListingForm = () => {
   return (
-    <Box>
+    <Box
+      sx={{
+        my: { xs: 3, md: 6 },
+        mx: { xs: 2, md: 6 },
+      }}
+    >
       <CreateListingForm />
     </Box>
   );

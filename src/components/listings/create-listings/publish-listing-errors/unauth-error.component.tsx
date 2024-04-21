@@ -3,12 +3,20 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setRedirectDestinationAfterAuth } from "../../../../redux/auth-slice";
 
-const PublishListingUnAuthedError = () => {
+interface PublishListingUnAuthedErrorProps {
+  redirectDestinationAfterAuth: string;
+  errorMessage: string;
+}
+
+const PublishListingUnAuthedError = (
+  props: PublishListingUnAuthedErrorProps
+) => {
+  const { redirectDestinationAfterAuth, errorMessage } = props;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleClick = () => {
     // add auth_redirect to redux user state
-    dispatch(setRedirectDestinationAfterAuth("/create-listing"));
+    dispatch(setRedirectDestinationAfterAuth(redirectDestinationAfterAuth));
     navigate("/sign-in");
   };
   return (
@@ -27,7 +35,7 @@ const PublishListingUnAuthedError = () => {
           mb: 3,
         }}
       >
-        You need to be signed in to create a listing.
+        {errorMessage}
       </Typography>
       <Box
         sx={{

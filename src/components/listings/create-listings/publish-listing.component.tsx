@@ -108,7 +108,14 @@ const PublishListing = (props: PublishListingProps) => {
   }, [contactNumber]);
 
   if (!isAuthed) {
-    return <PublishListingUnAuthedError />;
+    const redirectDestinationAfterAuth = "/create-listing";
+    const errorMessage = "You need to be signed in to create a listing.";
+    return (
+      <PublishListingUnAuthedError
+        redirectDestinationAfterAuth={redirectDestinationAfterAuth}
+        errorMessage={errorMessage}
+      />
+    );
   }
 
   if (!contactNumber) {

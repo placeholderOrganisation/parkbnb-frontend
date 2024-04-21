@@ -14,3 +14,17 @@ export const updateUserWithId = async (userId: string, userData: any) => {
     throw error;
   }
 };
+
+export const getUserWithId = async (userId: string) => {
+  try {
+    const response = await userClient.get(`/${userId}`);
+    if (response.status === 200) {    
+      return response.data;
+    } else {
+      throw new Error("Error retrieving user");
+    }
+  } catch (error) {
+    console.error("Error retrieving user", error);
+    throw error;
+  }
+};

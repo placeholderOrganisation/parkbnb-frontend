@@ -21,7 +21,7 @@ const App = () => {
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/transition" element={<AuthTransition />} />
           <Route path="/create-listing" element={<NewListingForm />} />
-          <Route path="/listing/:id" element={<ListingCard />} />
+          <Route path="/listing/:listingId" element={<ListingCard />} />
           <Route path="/" element={<GetListing />} />
         </Routes>
       </Router>

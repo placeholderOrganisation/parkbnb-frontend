@@ -1,3 +1,12 @@
+export const initialUserState: UserObject = {
+  id: "",
+  name: "",
+  images: [],
+  verified: false,
+  contactNumber: null,
+  isAuthed: false,
+};
+
 export interface UserObject {
   id: string;
   name: string;

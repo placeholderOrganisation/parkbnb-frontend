@@ -1,16 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { UserObject } from "../types/user-types";
+import { initialUserState, UserObject } from "../types/user-types";
 
 export const userSlice = createSlice({
   name: "user",
-  initialState: {
-    id: "",
-    name: "",
-    images: [],
-    verified: false,
-    contactNumber: null,
-    isAuthed: false,
-  },
+  initialState: initialUserState,
   reducers: {
     setUserData: (state: UserObject, action) => {
       const user: UserObject = action.payload;

@@ -148,4 +148,5 @@ export interface NavbarLayoutProps {
   linksToRender: NavbarLink[];
   handleLogoClick: () => void;
   isUserAuthed: boolean;
+  logout: () => void;
 }

@@ -71,7 +71,7 @@ const NavbarMobileFooter = (props: NavbarMobileFooterProps) => {
 };
 
 const NavbarHeadersMobileLayout = (props: NavbarLayoutProps) => {
-  const { linksToRender, handleLogoClick, isUserAuthed } = props;
+  const { linksToRender, handleLogoClick, isUserAuthed, logout } = props;
   const [drawerOpen, setDrawerOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -89,8 +89,8 @@ const NavbarHeadersMobileLayout = (props: NavbarLayoutProps) => {
   };
 
   const handleLogout = () => {
-    // todo: make backend api call to logout
-    handleAuthButtonClick("/");
+    logout();
+    closeRightDrawer();
   };
 
   return (

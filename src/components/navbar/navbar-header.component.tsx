@@ -4,8 +4,10 @@ import NavbarHeadersDesktopLayout from "./navbar-header.desktop";
 import NavbarHeadersMobileLayout from "./navbar-header.mobile";
 import { NavbarLink } from "../../types/global.types";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/global-store";
+import { setUserData } from "../../redux/user-slice";
+import { initialUserState } from "../../types/user-types";
 
 export const NAVBAR_HEIGHT_MOBILE = 64;
 const linksToRender: NavbarLink[] = [
@@ -16,12 +18,18 @@ const linksToRender: NavbarLink[] = [
 const NavbarHeader = () => {
   const user = useSelector((state: RootState) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const isDesktopView = isDesktop();
   const Layout = isDesktopView
     ? NavbarHeadersDesktopLayout
     : NavbarHeadersMobileLayout;
 
   const handleLogoClick = () => {
+    navigate("/");
+  };
+
+  const handleLogout = () => {
+    dispatch(setUserData(initialUserState));
     navigate("/");
   };
 
@@ -36,6 +44,7 @@ const NavbarHeader = () => {
         linksToRender={linksToRender}
         handleLogoClick={handleLogoClick}
         isUserAuthed={user.isAuthed}
+        logout={handleLogout}
       />
     </Box>
   );

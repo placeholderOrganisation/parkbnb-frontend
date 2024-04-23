@@ -17,6 +17,8 @@ const DescriptionField = (props: DescriptionFieldProps) => {
     handleDescriptionChange(event);
   }
 
+  const shouldShowHelperText = userDescription.split(" ").length < 5;
+
   return (
     <TextField
       variant="outlined"
@@ -29,6 +31,8 @@ const DescriptionField = (props: DescriptionFieldProps) => {
       rows={5}
       onChange={handleUserDescriptionChange}
       disabled={disabled}
+      helperText={shouldShowHelperText && `${5 - userDescription.split(" ").length} words left`}
+      required
     />
   );
 };

@@ -6,7 +6,7 @@ export const stepThreeSlice = createSlice({
   initialState: {
     images: [],
     description: "",
-    isValid: true,
+    isValid: false,
   },
   reducers: {
     setImages: (state: StepThreeState, action) => {
@@ -30,11 +30,11 @@ export const stepThreeSlice = createSlice({
     setDescription: (state: StepThreeState, action) => {
       state.description = action.payload;
     },
-    setIsValid: (state: StepThreeState, action) => {
-      state.isValid = action.payload;
+    setStepThreeValidity: (state: StepThreeState) => {
+      state.isValid = state.description.split(" ").length >= 5;
     },
   },
 });
 
-export const { setImages, removeImage, setDescription, setIsValid } = stepThreeSlice.actions;
+export const { setImages, removeImage, setDescription, setStepThreeValidity } = stepThreeSlice.actions;
 export default stepThreeSlice.reducer;

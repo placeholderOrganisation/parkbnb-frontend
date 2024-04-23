@@ -2,7 +2,7 @@ import Typography from "@mui/material/Typography";
 import { Box, Grid } from "@mui/material";
 import ImagePicker from "./ImagePicker.component";
 import { useDispatch, useSelector } from "react-redux";
-import { setDescription } from "../../../redux/step-three-slice";
+import { setDescription, setStepThreeValidity } from "../../../redux/step-three-slice";
 import { RootState } from "../../../redux/global-store";
 import DescriptionField from "./DescriptionField.component";
 
@@ -13,10 +13,15 @@ export default function OptionalDetailsForm() {
     images: imagesInRedux,
   } = useSelector((state: RootState) => state.stepThreeForm);
 
+  const updateStepThreeValidity = () => {
+    dispatch(setStepThreeValidity());
+  };
+
   const handleDescriptionChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     dispatch(setDescription(event.target.value));
+    updateStepThreeValidity();
   };
 
   return (

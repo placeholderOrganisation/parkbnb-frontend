@@ -1,6 +1,4 @@
 import { Box } from "@mui/material";
-import { isDesktop } from "../../utils/display-utils";
-import NavbarHeadersDesktopLayout from "./navbar-header.desktop";
 import NavbarHeadersMobileLayout from "./navbar-header.mobile";
 import { NavbarLink } from "../../types/global.types";
 import { useNavigate } from "react-router-dom";
@@ -19,10 +17,7 @@ const NavbarHeader = () => {
   const user = useSelector((state: RootState) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isDesktopView = isDesktop();
-  const Layout = isDesktopView
-    ? NavbarHeadersDesktopLayout
-    : NavbarHeadersMobileLayout;
+  const Layout = NavbarHeadersMobileLayout;
 
   const handleLogoClick = () => {
     navigate("/");

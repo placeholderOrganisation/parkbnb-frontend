@@ -28,7 +28,7 @@ const RightFullPageDrawer = (props: RightFullPageDrawerProps) => {
       {...otherprops}
       sx={{
         "& .MuiDrawer-paper": {
-          width: "-webkit-fill-available",
+          width: ["-webkit-fill-available", "20vw"],
           height: "100vh",
           p: 2,
           overflow: allowOverflow ? "auto" : "visible",
@@ -50,7 +50,12 @@ const RightFullPageDrawer = (props: RightFullPageDrawerProps) => {
           <Typography variant="h4" component="div">
             {drawerTitle}
           </Typography>
-          <CloseIcon onClick={drawerClose} />
+          <CloseIcon
+            onClick={drawerClose}
+            sx={{
+              cursor: "pointer",
+            }}
+          />
         </Stack>
         {/* Drawer header end */}
         {children}

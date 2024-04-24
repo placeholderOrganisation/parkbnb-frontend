@@ -13,6 +13,7 @@ const GetListingsDesktopLayout = (props: GetListingsPageProps) => {
     }}>
       <Grid item xs={4} sx={{
         height: 'inherit',
+        overflow: 'auto',
       }}>
         <Stack
           spacing={2}

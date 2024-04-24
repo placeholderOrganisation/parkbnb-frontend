@@ -33,7 +33,12 @@ const CitySearch = (props: CitySearchProps) => {
               </InputAdornment>
             )}
             {/* open filter drawer with divider icon */}
-            <InputAdornment position="end">
+            <InputAdornment
+              position="end"
+              sx={{
+                cursor: "pointer",
+              }}
+            >
               <Divider
                 orientation="vertical"
                 // flexItem

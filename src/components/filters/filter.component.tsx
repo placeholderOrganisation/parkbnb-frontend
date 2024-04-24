@@ -140,7 +140,6 @@ const Filters = () => {
           {filterOption.component}
         </Stack>
       ))}
-      <Box sx={{ pb: 10 }} />
     </Stack>
   );
 };

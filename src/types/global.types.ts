@@ -150,3 +150,10 @@ export interface NavbarLayoutProps {
   isUserAuthed: boolean;
   logout: () => void;
 }
+
+export interface FiltersContainerProps {
+  isFilterSectionOpen: boolean;
+  handleClosingFilterSection?: () => void;
+  handleApplyFilters: () => void;
+  handleResetFilters: () => void;
+}

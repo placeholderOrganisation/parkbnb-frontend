@@ -2,8 +2,8 @@ import { Box } from "@mui/material";
 import MapComponent from "../../components/map/map.component";
 import SearchAndFilter from "../../components/listings/get-listings/search-and-filter.component";
 import { GetListingsPageProps } from "../../types/global.types";
-import GetListingBottomDrawer from "../../components/listings/get-listings/get-listing-bottom-drawer.component";
 import ParkingCardContainerForMap from "../../components/listings/get-listings/parking-card-container-for-map.mobile";
+import ListviewComponent from "../../components/listings/get-listings/listview/listview.component";
 
 
 const GetListingsMobileLayout = (props: GetListingsPageProps) => {
@@ -31,7 +31,7 @@ const GetListingsMobileLayout = (props: GetListingsPageProps) => {
       </Box>
 
       {/* listview drawer  */}
-      <GetListingBottomDrawer />
+      <ListviewComponent />
     </>
   );
 };

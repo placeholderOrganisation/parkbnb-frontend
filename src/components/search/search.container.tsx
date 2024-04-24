@@ -6,10 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/global-store";
 import { Listing } from "../../types/global.types";
 import CitySearchSuggestionList from "./city-search-suggestions.component";
-import {
-  setSearchQuery,
-  filterSearchResults,
-} from "../../redux/search-slice";
+import { setSearchQuery, filterSearchResults } from "../../redux/search-slice";
 
 interface SearchContainerProps {
   handleEndAdornmentClick: () => void;
@@ -68,12 +65,12 @@ const SearchContainer = (props: SearchContainerProps) => {
   return (
     <Box
       sx={{
-        position: "absolute",
+        position: ["absolute", "inherit"],
         top: 16,
         left: 0,
-        mx: 2,
+        mx: [2, 'auto'],
         zIndex: 100,
-        width: "calc(100% - 32px)",
+        width: ["calc(100% - 32px)", "100%"],
         bgcolor: "white",
       }}
     >

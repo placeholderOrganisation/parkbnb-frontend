@@ -16,6 +16,7 @@ import {
 import { useEffect } from "react";
 import { Listing } from "../../types/global.types";
 import { RootState } from "../../redux/global-store";
+import { NAVBAR_HEIGHT_MOBILE } from "../../components/navbar/navbar-header.component";
 
 const GetListing = () => {
   const dispatch = useDispatch();
@@ -63,7 +64,12 @@ const GetListing = () => {
   };
 
   return (
-    <Box>
+    <Box
+      sx={{
+        height: `calc(100vh - ${NAVBAR_HEIGHT_MOBILE}px)`,
+        overflow: "hidden",
+      }}
+    >
       <Layout
         searchResults={formattedfilteredSearchResults}
         handleListingClickInMap={handleListingClickInMap}

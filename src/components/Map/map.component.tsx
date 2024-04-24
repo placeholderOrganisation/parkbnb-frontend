@@ -59,7 +59,7 @@ const MapComponent = (props: MapComponentProps) => {
     <Box
       sx={{
         height: `calc(100vh - ${NAVBAR_HEIGHT_MOBILE}px)`,
-        width: "100vw",
+        width: "100%",
       }}
     >
       <Map

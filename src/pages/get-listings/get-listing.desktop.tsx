@@ -13,13 +13,13 @@ const GetListingsDesktopLayout = (props: GetListingsPageProps) => {
     }}>
       <Grid item xs={4} sx={{
         height: 'inherit',
-        overflow: 'auto',
       }}>
         <Stack
           spacing={2}
           sx={{
             mt: 2,
             height: 'inherit',
+            overflow: 'auto',
           }}
         >
           {/* search bar  */}

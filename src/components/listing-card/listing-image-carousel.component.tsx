@@ -1,6 +1,7 @@
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 import { Box } from "@mui/material";
+import { isDesktop } from "../../utils/display-utils";
 
 interface ListingImageCarouselProps {
   images: string[];
@@ -13,6 +14,7 @@ const defaultImages = [
 const ListingImageCarousel = (props: ListingImageCarouselProps) => {
   const { images } = props;
 
+  const isDesktopView = isDesktop();
   // todo: instead of checking images[0] check all images
   const hasImages = images && images.length > 0 && images[0] !== "";
   const imagesToDisplay = hasImages ? images : defaultImages;
@@ -25,8 +27,9 @@ const ListingImageCarousel = (props: ListingImageCarouselProps) => {
             src={image}
             alt={"listing image"}
             style={{
+              height: isDesktopView ? "300px" : "100%",
               maxHeight: "70vh",
-              objectFit: "contain",
+              objectFit: isDesktopView ? "cover" : "contain",
             }}
           />
         </Box>

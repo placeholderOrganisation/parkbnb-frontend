@@ -54,6 +54,7 @@ const ListingCard = () => {
   return (
     <Box
       sx={{
+        mt: [0, 6],
         mb: { xs: 3, md: 6 },
       }}
     >

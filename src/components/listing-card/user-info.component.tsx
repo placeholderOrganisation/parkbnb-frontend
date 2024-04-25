@@ -9,7 +9,6 @@ interface UserInfoProps {
 const UserInfo = (props: UserInfoProps) => {
   const { user } = props;
 
-  // todo if user is null use contact number in parking 
   if (!user) {
     return null;
   }

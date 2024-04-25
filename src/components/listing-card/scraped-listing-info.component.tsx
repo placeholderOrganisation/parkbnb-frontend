@@ -10,7 +10,6 @@ const ScrapedListingInfo = (props: ScrapedListingInfoProps) => {
   const { listing } = props;
   const { contact } = listing;
 
-  // todo if user is null use contact number in parking
   if (!contact || contact === "null" || contact === "") {
     return null;
   }

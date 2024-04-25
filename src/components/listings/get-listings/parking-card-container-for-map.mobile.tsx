@@ -40,7 +40,7 @@ const ParkingCardContainerForMap = () => {
         bottom: [90, 50],
         mx: 2,
         zIndex: 100,
-        width: ["calc(100% - 32px)", "25%"],
+        width: ["calc(100% - 32px)", "max-content"],
         bgcolor: "white",
         borderRadius: 4,
       }}

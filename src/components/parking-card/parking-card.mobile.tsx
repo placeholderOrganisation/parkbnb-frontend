@@ -35,6 +35,7 @@ const Amenities = (props: { parking: Listing }) => {
           mt: 1,
           width: "max-content",
         }}
+        spacing={1}
       >
         <Typography variant="subtitle2">{`Can accomodate: ${vehicle_type}`}</Typography>
 

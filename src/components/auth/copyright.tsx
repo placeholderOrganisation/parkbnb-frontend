@@ -1,4 +1,5 @@
 import { Link, Typography } from "@mui/material";
+import { COMPANY_NAME } from "../../constants";
 
 const Copyright = (props: any) => {
   return (
@@ -8,10 +9,7 @@ const Copyright = (props: any) => {
       align="center"
       {...props}
     >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
+      {`Copyright © ${COMPANY_NAME} `}
       {new Date().getFullYear()}
       {"."}
     </Typography>

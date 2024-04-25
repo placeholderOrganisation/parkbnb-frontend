@@ -11,7 +11,6 @@ import Review from "./Review";
 import AddressForm from "./AddressForm";
 import FiltersForm from "./FiltersForm";
 import OptionalDetailsForm from "./OptionalDetailsForm";
-import Copyright from "../../auth/copyright";
 import { steps } from "../../../utils/create-listing-form.utils";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/global-store";
@@ -112,7 +111,6 @@ const CreateListingForm = () => {
               </Box>
             </>
           </Paper>
-          <Copyright />
           <BottomDrawer open={isSubmitting}>
             <PublishListing
               shouldMakeApiCall={isSubmitting}

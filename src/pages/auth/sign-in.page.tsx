@@ -15,6 +15,7 @@ import { setUserData } from "../../redux/user-slice";
 import { HandleSignInResponse, handleSignIn } from "../../utils/auth-utils";
 import SocialAuth from "../../components/auth/social-auth";
 import Copyright from "../../components/auth/copyright";
+import { COMPANY_NAME } from "../../constants";
 
 const SignIn = () => {
   const dispatch = useDispatch();
@@ -50,7 +51,7 @@ const SignIn = () => {
           }}
         >
           <Typography component="h1" variant="h4">
-            Sign in to Your Website
+            {`Sign in to ${COMPANY_NAME}`}
           </Typography>
           <Typography
             variant="body2"

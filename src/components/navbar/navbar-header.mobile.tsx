@@ -8,6 +8,7 @@ import NavLinks from "./NavLinks";
 import { NavbarLayoutProps } from "../../types/global.types";
 import { NAVBAR_HEIGHT_MOBILE } from "./navbar-header.component";
 import { useNavigate } from "react-router-dom";
+import { COMPANY_NAME } from "../../constants";
 
 interface NavbarButtonProps {
   variant: "contained" | "outlined";
@@ -120,7 +121,7 @@ const NavbarHeadersMobileLayout = (props: NavbarLayoutProps) => {
       <RightFullPageDrawer
         open={drawerOpen}
         drawerClose={() => setDrawerOpen(false)}
-        drawerTitle={"Company name"}
+        drawerTitle={COMPANY_NAME}
         footer={
           <NavbarMobileFooter
             isUserAuthed={isUserAuthed}

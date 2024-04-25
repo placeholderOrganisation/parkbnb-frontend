@@ -26,7 +26,11 @@ const ParkingCard = (props: ParkingCardProps) => {
   const { parking, showIcon, icon = null, handleIconClick = () => {} } = props;
 
   return (
-    <Box>
+    <Box
+      sx={{
+        cursor: "pointer",
+      }}
+    >
       <ParkingCardMobile
         parking={parking}
         showIcon={showIcon}

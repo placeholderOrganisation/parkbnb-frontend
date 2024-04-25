@@ -1,7 +1,8 @@
 import { Dayjs } from "dayjs";
-import { Typography } from "@mui/material";
 import { getMonthsPassedOrDaysOrHours } from "../../utils/parking-utils";
-
+import { isDesktop } from "../../utils/display-utils";
+import ListingCardHeaderMobile from "./listing-card-header/listing-card-header.mobile";
+import ListingCardHeaderDesktop from "./listing-card-header/listing-card-header.desktop";
 
 interface ListingCardHeaderProps {
   address: {
@@ -11,6 +12,12 @@ interface ListingCardHeaderProps {
   listed_on: Dayjs;
   spaces: number;
   storage_type: string;
+}
+
+export interface ListingCardHeaderLayoutProps {
+  parsedHeading: string;
+  subheading: string;
+  parsedlistedOn: string;
 }
 
 const ListingCardHeader = (props: ListingCardHeaderProps) => {
@@ -32,22 +39,19 @@ const ListingCardHeader = (props: ListingCardHeaderProps) => {
   }
 
   const parsedlistedOn = getMonthsPassedOrDaysOrHours(listed_on);
-  return (
-    <>
-      <Typography variant="h4">{parsedHeading}</Typography>
-      <Typography
-        variant="h5"
-        sx={{
-          color: "text.secondary",
-          textTransform: "capitalize",
-        }}
-      >
-        {subheading}
-      </Typography>
-      <Typography variant="body2" sx={{ color: "text.secondary" }}>
-        {parsedlistedOn}
-      </Typography>
-    </>
+  const isDesktopView = isDesktop();
+  return isDesktopView ? (
+    <ListingCardHeaderDesktop
+      parsedHeading={parsedHeading}
+      subheading={subheading}
+      parsedlistedOn={parsedlistedOn}
+    />
+  ) : (
+    <ListingCardHeaderMobile
+      parsedHeading={parsedHeading}
+      subheading={subheading}
+      parsedlistedOn={parsedlistedOn}
+    />
   );
 };
 

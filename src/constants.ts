@@ -1,1 +1,1 @@
-export const COMPANY_NAME = "Parking Finder";
+export const COMPANY_NAME = "Parking Now";

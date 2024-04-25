@@ -5,12 +5,14 @@ import { Box } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { setUserSelectedListing } from "../../../redux/search-slice";
 import { useNavigate } from "react-router-dom";
+import { isDesktop } from "../../../utils/display-utils";
 
 const ParkingCardContainerForMap = () => {
   const userSelectedListing = useSelector(
     (state: RootState) => state.search.userSelectedListing
   );
 
+  const isDesktopView = isDesktop();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -23,6 +25,10 @@ const ParkingCardContainerForMap = () => {
     listingId: string
   ) => {
     e.stopPropagation();
+    if (isDesktopView) {
+      window.open(`/listing/${listingId}`, "_blank", "rel=noopener noreferrer");
+      return;
+    }
     navigate(`/listing/${listingId}`);
   };
 

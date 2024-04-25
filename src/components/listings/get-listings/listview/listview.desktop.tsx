@@ -69,15 +69,21 @@ export default function ListviewDesktop(props: ListviewPageLayoutProps) {
             <Skeleton variant="rectangular" height="100%" />
           ) : (
             sortedListings.map((listing) => (
-              <ParkingCard
-                key={listing._id}
-                parking={listing}
-                showIcon
-                icon={<OpenInNewIcon />}
-                handleIconClick={(e) => {
+              <Box
+                onClick={(e) => {
                   handleListingCardOpen(e, listing._id);
                 }}
-              />
+              >
+                <ParkingCard
+                  key={listing._id}
+                  parking={listing}
+                  showIcon
+                  icon={<OpenInNewIcon />}
+                  handleIconClick={(e) => {
+                    handleListingCardOpen(e, listing._id);
+                  }}
+                />
+              </Box>
             ))
           )}
         </Stack>

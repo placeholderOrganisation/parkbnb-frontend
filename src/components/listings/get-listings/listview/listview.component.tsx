@@ -21,7 +21,7 @@ export interface ListviewPageLayoutProps {
   handleClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   handleClose: (option?: number) => void;
   handleListingCardOpen: (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    e: React.MouseEvent<HTMLElement, MouseEvent>,
     listingId?: string
   ) => void;
 }
@@ -50,10 +50,14 @@ const ListviewComponent = () => {
   };
 
   const handleListingCardOpen = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    e: React.MouseEvent<HTMLElement, MouseEvent>,
     listingId?: string
   ) => {
     e.stopPropagation();
+    if (isDesktopView) {
+      window.open(`/listing/${listingId}`, "_blank", "rel=noopener noreferrer");
+      return;
+    }
     navigate(`/listing/${listingId}`);
   };
 

@@ -134,12 +134,18 @@ export const getMonthsPassedOrDaysOrHours = (date: Dayjs): string => {
 
   if (daysPassed > 30) {
     const monthsPassed = currentDate.diff(startDate, "month");
+    if (monthsPassed > 1) {
+      return `${monthsPassed} months ago`;
+    }
     return `${monthsPassed} month ago`;
   } else if (hoursPassed > 24) {
     const daysPassed = currentDate.diff(startDate, "day");
-    return `${daysPassed} days ago`;
+    if (daysPassed > 1) {
+      return `${daysPassed} days ago`;
+    }
+    return `${daysPassed} day ago`;
   } else {
-    if (hoursPassed === 0) {
+    if (hoursPassed <= 1) {
       return `1 hour ago`;
     }
     return `${hoursPassed} hours ago`;

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { initialUserState, UserObject } from "../types/user-types";
 
+// TODO: fix logout functionality
 export const userSlice = createSlice({
   name: "user",
   initialState: initialUserState,

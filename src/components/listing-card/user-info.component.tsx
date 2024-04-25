@@ -16,7 +16,7 @@ const UserInfo = (props: UserInfoProps) => {
 
   return (
     <>
-      <Stack>
+      <Stack spacing={1}>
         <Box
           sx={{
             display: "flex",

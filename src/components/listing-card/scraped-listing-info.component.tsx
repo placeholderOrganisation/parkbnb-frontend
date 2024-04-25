@@ -17,7 +17,7 @@ const ScrapedListingInfo = (props: ScrapedListingInfoProps) => {
 
   return (
     <>
-      <Stack>
+      <Stack spacing={1}>
         <Box
           sx={{
             display: "flex",

@@ -37,10 +37,10 @@ const ParkingCardContainerForMap = () => {
     <Box
       sx={{
         position: "absolute",
-        bottom: 90,
+        bottom: [90, 50],
         mx: 2,
         zIndex: 100,
-        width: "calc(100% - 32px)",
+        width: ["calc(100% - 32px)", "25%"],
         bgcolor: "white",
         borderRadius: 4,
       }}

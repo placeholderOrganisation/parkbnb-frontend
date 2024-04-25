@@ -32,6 +32,10 @@ const GetListing = () => {
     (state: RootState) => state.search.filteredSearchResults
   );
 
+  const searchQuery = useSelector(
+    (state: RootState) => state.search.filters.searchQuery
+  );
+
   const formattedfilteredSearchResults = filteredSearchResults.map(
     convertListingObjToListingOnMapObj
   );
@@ -71,6 +75,7 @@ const GetListing = () => {
       }}
     >
       <Layout
+        searchQuery={searchQuery}
         searchResults={formattedfilteredSearchResults}
         handleListingClickInMap={handleListingClickInMap}
         handleMoveEndInMap={handleMoveEndInMap}

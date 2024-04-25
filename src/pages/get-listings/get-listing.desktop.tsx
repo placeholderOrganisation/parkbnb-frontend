@@ -6,7 +6,7 @@ import ListviewComponent from "../../components/listings/get-listings/listview/l
 import ParkingCardContainerForMap from "../../components/listings/get-listings/parking-card-container-for-map.mobile";
 
 const GetListingsDesktopLayout = (props: GetListingsPageProps) => {
-  const { searchResults, handleListingClickInMap, handleMoveEndInMap } = props;
+  const { searchQuery, searchResults, handleListingClickInMap, handleMoveEndInMap } = props;
 
   return (
     <Grid
@@ -50,6 +50,7 @@ const GetListingsDesktopLayout = (props: GetListingsPageProps) => {
         }}
       >
         <MapComponent
+          city={searchQuery}
           listings={searchResults}
           handleListingClick={handleListingClickInMap}
           handleMoveEnd={handleMoveEndInMap}

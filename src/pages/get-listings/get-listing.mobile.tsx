@@ -5,9 +5,13 @@ import { GetListingsPageProps } from "../../types/global.types";
 import ParkingCardContainerForMap from "../../components/listings/get-listings/parking-card-container-for-map.mobile";
 import ListviewComponent from "../../components/listings/get-listings/listview/listview.component";
 
-
 const GetListingsMobileLayout = (props: GetListingsPageProps) => {
-  const { searchResults, handleMoveEndInMap, handleListingClickInMap } = props;
+  const {
+    searchQuery,
+    searchResults,
+    handleMoveEndInMap,
+    handleListingClickInMap,
+  } = props;
 
   return (
     <>
@@ -24,6 +28,7 @@ const GetListingsMobileLayout = (props: GetListingsPageProps) => {
 
         {/* map  */}
         <MapComponent
+          city={searchQuery}
           listings={searchResults}
           handleListingClick={(listingId) => handleListingClickInMap(listingId)}
           handleMoveEnd={(listingIds) => handleMoveEndInMap(listingIds)}

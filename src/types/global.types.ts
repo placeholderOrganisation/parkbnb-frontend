@@ -128,12 +128,14 @@ export interface ListingOnMap {
 }
 
 export interface GetListingsPageProps {
+  searchQuery: string;
   searchResults: ListingOnMap[];
   handleMoveEndInMap: (listingIds: string[]) => void;
   handleListingClickInMap: (listingId: string) => void;
 }
 
 export interface MapComponentProps {
+  city: string;
   listings: ListingOnMap[];
   handleListingClick: (listingId: string) => void;
   handleMoveEnd: (listingIds: string[]) => void;

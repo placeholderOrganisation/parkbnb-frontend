@@ -2,6 +2,7 @@ import Map, {
   CircleLayer,
   Layer,
   MapLayerMouseEvent,
+  MapRef,
   Source,
   ViewStateChangeEvent,
 } from "react-map-gl";
@@ -11,13 +12,20 @@ import { Box } from "@mui/material";
 import { getCityCoords } from "../../utils/map-utils";
 import { FeatureCollection } from "geojson";
 import { NAVBAR_HEIGHT_MOBILE } from "../navbar/navbar-header.component";
+import { useEffect, useRef } from "react";
 
 const TOKEN =
   "pk.eyJ1IjoiY29kZXJzYmV5b25kIiwiYSI6ImNsc3ZhYmk1NjBobnQya3JxaWoyYXpleXoifQ.igcdok9oqUQAML9i3gyH_w";
 
 const MapComponent = (props: MapComponentProps) => {
-  const { listings, handleListingClick, handleMoveEnd } = props;
-  const { lat, lng, zoom } = getCityCoords("default");
+  const { city, listings, handleListingClick, handleMoveEnd } = props;
+  const { lat, lng, zoom } = getCityCoords(city);
+  const mapRef = useRef<MapRef | undefined>();
+
+
+  useEffect(() => {
+    mapRef.current?.flyTo({ center: [lng, lat], duration: 1000, zoom: zoom });
+  }, [city]);
 
   const geojson: FeatureCollection = {
     type: "FeatureCollection",
@@ -63,6 +71,8 @@ const MapComponent = (props: MapComponentProps) => {
       }}
     >
       <Map
+        // @ts-expect-error
+        ref={mapRef}
         reuseMaps
         onMoveEnd={moveEndHandler}
         onClick={clickHandler}
@@ -73,10 +83,10 @@ const MapComponent = (props: MapComponentProps) => {
         }}
         mapStyle="mapbox://styles/mapbox/streets-v11"
         mapboxAccessToken={TOKEN}
-        interactiveLayerIds={['point_fill']}
+        interactiveLayerIds={["point_fill"]}
       >
         <Source id="my-data" type="geojson" data={geojson}>
-          <Layer {...layerStyle}  />
+          <Layer {...layerStyle} />
         </Source>
       </Map>
     </Box>

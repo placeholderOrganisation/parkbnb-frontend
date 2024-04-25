@@ -2,7 +2,7 @@ export const cityToCoords = {
   default: {
     lat: 43.708266,
     lng: -79.60997,
-    zoom: 9,
+    zoom: 10,
   },
   brampton: {
     lat: 43.7315,

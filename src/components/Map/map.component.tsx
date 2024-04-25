@@ -22,7 +22,6 @@ const MapComponent = (props: MapComponentProps) => {
   const { lat, lng, zoom } = getCityCoords(city);
   const mapRef = useRef<MapRef | undefined>();
 
-
   useEffect(() => {
     mapRef.current?.flyTo({ center: [lng, lat], duration: 1000, zoom: zoom });
   }, [city]);
@@ -37,8 +36,10 @@ const MapComponent = (props: MapComponentProps) => {
     id: "point_fill",
     type: "circle",
     paint: {
-      "circle-radius": 10,
-      "circle-color": "#007cbf",
+      "circle-color": "#4264fb",
+      "circle-radius": 8,
+      "circle-stroke-width": 2,
+      "circle-stroke-color": "#ffffff",
     },
     source: "my-data",
   };

@@ -25,7 +25,7 @@ const GetListingsDesktopLayout = (props: GetListingsPageProps) => {
         <Stack
           spacing={2}
           sx={{
-            mt: 2,
+            pt: 2,
             height: "inherit",
             overflow: "auto",
           }}

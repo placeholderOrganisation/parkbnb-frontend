@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { Listing } from "../../../../types/global.types";
 import dayjs from "dayjs";
 import { setUserSelectedListingUsingListingId } from "../../../../redux/search-slice";
+import { openInNewTab } from "../../../../utils/brower-utils";
 
 export enum SortOption {
   Date,
@@ -58,7 +59,7 @@ const ListviewComponent = () => {
     e.stopPropagation();
     dispatch(setUserSelectedListingUsingListingId(listingId));
     if (isDesktopView) {
-      window.open(`/listing/${listingId}`, "_blank", "rel=noopener noreferrer");
+      openInNewTab(`/listing/${listingId}`);
       return;
     }
     navigate(`/listing/${listingId}`);

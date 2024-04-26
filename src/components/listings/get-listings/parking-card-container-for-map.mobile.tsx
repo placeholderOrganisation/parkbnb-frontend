@@ -6,6 +6,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { setUserSelectedListing } from "../../../redux/search-slice";
 import { useNavigate } from "react-router-dom";
 import { isDesktop } from "../../../utils/display-utils";
+import { openInNewTab } from "../../../utils/brower-utils";
 
 const ParkingCardContainerForMap = () => {
   const userSelectedListing = useSelector(
@@ -26,7 +27,7 @@ const ParkingCardContainerForMap = () => {
   ) => {
     e.stopPropagation();
     if (isDesktopView) {
-      window.open(`/listing/${listingId}`, "_blank", "rel=noopener noreferrer");
+      openInNewTab(`/listing/${listingId}`);
       return;
     }
     navigate(`/listing/${listingId}`);

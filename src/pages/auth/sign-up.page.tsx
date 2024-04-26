@@ -13,7 +13,7 @@ import {
 import Copyright from "../../components/auth/copyright";
 import { HandleSignUpResponse, handleSignUp } from "../../utils/auth-utils";
 import { useDispatch } from "react-redux";
-import { setUserData } from "../../redux/user-slice";
+import { setIsAuthed, setUserData } from "../../redux/user-slice";
 import SocialAuth from "../../components/auth/social-auth";
 
 const SignUp = () => {
@@ -25,6 +25,7 @@ const SignUp = () => {
     const response: HandleSignUpResponse = await handleSignUp(event);
     const { user } = response;
     if (response.success) {
+      dispatch(setIsAuthed(true));
       dispatch(setUserData(user));
       navigate("/transition");
     }

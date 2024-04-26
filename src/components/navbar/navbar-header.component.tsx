@@ -4,8 +4,11 @@ import { NavbarLink } from "../../types/global.types";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/global-store";
-import { setUserData } from "../../redux/user-slice";
+import { setIsAuthed, setUserData } from "../../redux/user-slice";
 import { initialUserState } from "../../types/user-types";
+import { useState } from "react";
+import SuccessSnackBar from "../custom-mui/snackbars/success-snackbar";
+import { removeItemFromCookies } from "../../utils/storage-utils";
 
 export const NAVBAR_HEIGHT_MOBILE = 64;
 const linksToRender: NavbarLink[] = [
@@ -14,9 +17,11 @@ const linksToRender: NavbarLink[] = [
 ];
 
 const NavbarHeader = () => {
-  const user = useSelector((state: RootState) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user);
+  const [showSnackbarOnLogout, setShowSnackbarOnLogout] = useState(false);
+
   const Layout = NavbarHeadersMobileLayout;
 
   const handleLogoClick = () => {
@@ -24,8 +29,11 @@ const NavbarHeader = () => {
   };
 
   const handleLogout = () => {
-    dispatch(setUserData(initialUserState));
     navigate("/");
+    dispatch(setIsAuthed(false));
+    dispatch(setUserData(initialUserState));
+    setShowSnackbarOnLogout(true);
+    removeItemFromCookies("user");
   };
 
   return (
@@ -40,6 +48,15 @@ const NavbarHeader = () => {
         handleLogoClick={handleLogoClick}
         isUserAuthed={user.isAuthed}
         logout={handleLogout}
+      />
+      <SuccessSnackBar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        open={showSnackbarOnLogout}
+        handleClose={() => setShowSnackbarOnLogout(false)}
+        message="Successfully logged out."
       />
     </Box>
   );

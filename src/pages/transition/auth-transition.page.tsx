@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setUserData } from "../../redux/user-slice";
+import { setIsAuthed, setUserData } from "../../redux/user-slice";
 import { useNavigate } from "react-router-dom";
 import { Box, CircularProgress } from "@mui/material";
 import { handleCheckIfUserIsAuthenticated } from "../../utils/auth-utils";
@@ -10,6 +10,7 @@ const AuthTransition = () => {
   useEffect(() => {
     handleCheckIfUserIsAuthenticated()
       .then((response) => {
+        dispatch(setIsAuthed(true));
         dispatch(setUserData(response.user));
         if (redirectToInSessionStorage) {
           navigate(redirectToInSessionStorage);

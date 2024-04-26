@@ -51,3 +51,7 @@ export const setItemInCookies = (key: string, value: string): void => {
 
   document.cookie = `${key}=${value}; expires=${expirationDate}`;
 };
+
+export const removeItemFromCookies = (key: string): void => {
+  document.cookie = `${key}=; expires=${dayjs.utc(0)}`;
+}

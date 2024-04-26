@@ -14,7 +14,10 @@ export const userSlice = createSlice({
       state.images = user.images;
       state.verified = user.verified;
       state.contactNumber = user.contactNumber ? user.contactNumber : null;
-      state.isAuthed = true;
+    },
+    setIsAuthed: (state: UserObject, action) => {
+      const isAuthed: boolean = action.payload;
+      state.isAuthed = isAuthed;
     },
     setUserContactNumber: (state: UserObject, action) => {
       const contactNumber: string = action.payload;
@@ -23,5 +26,5 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setUserData, setUserContactNumber } = userSlice.actions;
+export const { setUserData, setIsAuthed, setUserContactNumber } = userSlice.actions;
 export default userSlice.reducer;

@@ -6,7 +6,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { setUserSelectedListing } from "../../../redux/search-slice";
 import { useNavigate } from "react-router-dom";
 import { isDesktop } from "../../../utils/display-utils";
-import { openInNewTab } from "../../../utils/brower-utils";
+import { openInNewTab } from "../../../utils/browser-utils";
 
 const ParkingCardContainerForMap = () => {
   const userSelectedListing = useSelector(

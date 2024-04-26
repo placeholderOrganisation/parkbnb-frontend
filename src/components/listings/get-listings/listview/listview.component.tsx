@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { Listing } from "../../../../types/global.types";
 import dayjs from "dayjs";
 import { setUserSelectedListingUsingListingId } from "../../../../redux/search-slice";
-import { openInNewTab } from "../../../../utils/brower-utils";
+import { openInNewTab } from "../../../../utils/browser-utils";
 
 export enum SortOption {
   Date,

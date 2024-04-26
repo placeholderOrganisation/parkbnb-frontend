@@ -5,3 +5,7 @@ export const openInNewTab = (href: string) => {
     href: href,
   }).click();
 };
+
+export const copyToClipboard = (text: string) => {
+  navigator.clipboard.writeText(text);
+};

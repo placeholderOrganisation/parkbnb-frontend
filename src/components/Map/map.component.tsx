@@ -13,12 +13,19 @@ import { getCityCoords } from "../../utils/map-utils";
 import { FeatureCollection } from "geojson";
 import { NAVBAR_HEIGHT_MOBILE } from "../navbar/navbar-header.component";
 import { useEffect, useRef } from "react";
+import { highlightedLayerStyle, layerStyle } from "./layer-styling";
 
 const TOKEN =
   "pk.eyJ1IjoiY29kZXJzYmV5b25kIiwiYSI6ImNsc3ZhYmk1NjBobnQya3JxaWoyYXpleXoifQ.igcdok9oqUQAML9i3gyH_w";
 
 const MapComponent = (props: MapComponentProps) => {
-  const { city, listings, handleListingClick, handleMoveEnd } = props;
+  const {
+    city,
+    listings,
+    handleListingClick,
+    handleMoveEnd,
+    userSelectedListing,
+  } = props;
   const { lat, lng, zoom } = getCityCoords(city);
   const mapRef = useRef<MapRef | undefined>();
 
@@ -26,28 +33,28 @@ const MapComponent = (props: MapComponentProps) => {
     mapRef.current?.flyTo({ center: [lng, lat], duration: 1000, zoom: zoom });
   }, [city]);
 
-  const geojson: FeatureCollection = {
+  const listingsRenderedInMap: FeatureCollection = {
     type: "FeatureCollection",
     // @ts-ignore
-    features: listings,
+    features: listings.filter(
+      (listing) =>
+        listing.properties._id !== userSelectedListing?.properties._id
+    ),
   };
 
-  const layerStyle: CircleLayer = {
-    id: "point_fill",
-    type: "circle",
-    paint: {
-      "circle-color": "#4264fb",
-      "circle-radius": 8,
-      "circle-stroke-width": 2,
-      "circle-stroke-color": "#ffffff",
-    },
-    source: "my-data",
+  const currentUserSelection: FeatureCollection = {
+    type: "FeatureCollection",
+    // @ts-ignore
+    features: listings.filter(
+      (listing) =>
+        listing.properties._id === userSelectedListing?.properties._id
+    ),
   };
 
   const moveEndHandler = (e: ViewStateChangeEvent) => {
     const listingsInView = e.target.queryRenderedFeatures({
       // @ts-ignore
-      layers: ["point_fill"],
+      layers: ["listingsRenderedInMap", "currentUserSelection"],
     });
     const listingIdsInView = listingsInView.map(
       (listing) => listing.properties?._id
@@ -84,10 +91,13 @@ const MapComponent = (props: MapComponentProps) => {
         }}
         mapStyle="mapbox://styles/mapbox/streets-v11"
         mapboxAccessToken={TOKEN}
-        interactiveLayerIds={["point_fill"]}
+        interactiveLayerIds={["listingsRenderedInMap", "currentUserSelection"]}
       >
-        <Source id="my-data" type="geojson" data={geojson}>
+        <Source type="geojson" data={listingsRenderedInMap}>
           <Layer {...layerStyle} />
+        </Source>
+        <Source type="geojson" data={currentUserSelection}>
+          <Layer {...highlightedLayerStyle} />
         </Source>
       </Map>
     </Box>

@@ -2,11 +2,12 @@ import { useNavigate } from "react-router-dom";
 import { isDesktop } from "../../../../utils/display-utils";
 import ListviewDesktop from "./listview.desktop";
 import Listviewmobile from "./listview.mobile";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/global-store";
 import { useEffect, useState } from "react";
 import { Listing } from "../../../../types/global.types";
 import dayjs from "dayjs";
+import { setUserSelectedListingUsingListingId } from "../../../../redux/search-slice";
 
 export enum SortOption {
   Date,
@@ -29,6 +30,7 @@ export interface ListviewPageLayoutProps {
 const ListviewComponent = () => {
   const isDesktopView = isDesktop();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const listingsRenderedInMap = useSelector(
     (state: RootState) => state.search.listingsRenderedInMap
   );
@@ -54,6 +56,7 @@ const ListviewComponent = () => {
     listingId?: string
   ) => {
     e.stopPropagation();
+    dispatch(setUserSelectedListingUsingListingId(listingId));
     if (isDesktopView) {
       window.open(`/listing/${listingId}`, "_blank", "rel=noopener noreferrer");
       return;

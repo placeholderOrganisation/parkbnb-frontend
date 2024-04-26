@@ -130,6 +130,7 @@ export interface ListingOnMap {
 export interface GetListingsPageProps {
   searchQuery: string;
   searchResults: ListingOnMap[];
+  userSelectedListing: ListingOnMap | null;
   handleMoveEndInMap: (listingIds: string[]) => void;
   handleListingClickInMap: (listingId: string) => void;
 }
@@ -137,6 +138,7 @@ export interface GetListingsPageProps {
 export interface MapComponentProps {
   city: string;
   listings: ListingOnMap[];
+  userSelectedListing: ListingOnMap | null;
   handleListingClick: (listingId: string) => void;
   handleMoveEnd: (listingIds: string[]) => void;
 }

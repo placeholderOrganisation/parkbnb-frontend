@@ -10,6 +10,7 @@ const GetListingsMobileLayout = (props: GetListingsPageProps) => {
     searchQuery,
     searchResults,
     handleMoveEndInMap,
+    userSelectedListing,
     handleListingClickInMap,
   } = props;
 
@@ -30,6 +31,7 @@ const GetListingsMobileLayout = (props: GetListingsPageProps) => {
         <MapComponent
           city={searchQuery}
           listings={searchResults}
+          userSelectedListing={userSelectedListing}
           handleListingClick={(listingId) => handleListingClickInMap(listingId)}
           handleMoveEnd={(listingIds) => handleMoveEndInMap(listingIds)}
         />

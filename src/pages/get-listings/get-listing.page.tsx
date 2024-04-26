@@ -32,6 +32,10 @@ const GetListing = () => {
     (state: RootState) => state.search.filteredSearchResults
   );
 
+  const userSelectedListing = useSelector(
+    (state: RootState) => state.search.userSelectedListing
+  );
+
   const searchQuery = useSelector(
     (state: RootState) => state.search.filters.searchQuery
   );
@@ -39,6 +43,10 @@ const GetListing = () => {
   const formattedfilteredSearchResults = filteredSearchResults.map(
     convertListingObjToListingOnMapObj
   );
+
+  const formattedUserSelectedListing =
+    userSelectedListing &&
+    convertListingObjToListingOnMapObj(userSelectedListing);
 
   useEffect(() => {
     // fecth listings from backend
@@ -76,6 +84,7 @@ const GetListing = () => {
     >
       <Layout
         searchQuery={searchQuery}
+        userSelectedListing={formattedUserSelectedListing}
         searchResults={formattedfilteredSearchResults}
         handleListingClickInMap={handleListingClickInMap}
         handleMoveEndInMap={handleMoveEndInMap}

@@ -4,6 +4,7 @@ import { UserObject } from "../types/user-types";
 import {
   getItemFromCookies,
   setItemInCookies,
+  setItemInSessionStorage,
 } from "./storage-utils";
 
 export interface HandleSignUpResponse {
@@ -85,4 +86,10 @@ export const handleCheckIfUserIsAuthenticated = async () => {
 export const hasUserAuthenticatedInThisSession = () => {
   const user = getItemFromCookies("user");
   return Boolean(user);
+};
+
+export const setRedirectDestinationAfterAuthInSessionStorage = (
+  redirectDestination: string
+) => {
+  setItemInSessionStorage("auth_redirect", redirectDestination);
 };

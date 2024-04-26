@@ -1,17 +1,21 @@
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setUserData } from "../../redux/user-slice";
-import { RootState } from "../../redux/global-store";
 import { useNavigate } from "react-router-dom";
 import { Box, CircularProgress } from "@mui/material";
 import { handleCheckIfUserIsAuthenticated } from "../../utils/auth-utils";
+import { getItemFromSessionStorage } from "../../utils/storage-utils";
 
 const AuthTransition = () => {
   useEffect(() => {
     handleCheckIfUserIsAuthenticated()
       .then((response) => {
         dispatch(setUserData(response.user));
-        navigate(redirect_to);
+        if (redirectToInSessionStorage) {
+          navigate(redirectToInSessionStorage);
+        } else {
+          navigate("/");
+        }
       })
       .catch((error) => {
         console.error("An error occurred during form submission:", error);
@@ -21,7 +25,7 @@ const AuthTransition = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const redirect_to = useSelector((state: RootState) => state.auth.redirect_to);
+  const redirectToInSessionStorage = getItemFromSessionStorage("auth_redirect");
   return (
     <Box
       sx={{

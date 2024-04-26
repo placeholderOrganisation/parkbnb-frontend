@@ -1,7 +1,6 @@
 import { Stack, Typography, Button, Box } from "@mui/material";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setRedirectDestinationAfterAuth } from "../../../../redux/auth-slice";
+import { setRedirectDestinationAfterAuthInSessionStorage } from "../../../../utils/auth-utils";
 
 interface PublishListingUnAuthedErrorProps {
   redirectDestinationAfterAuth: string;
@@ -13,10 +12,11 @@ const PublishListingUnAuthedError = (
 ) => {
   const { redirectDestinationAfterAuth, errorMessage } = props;
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const handleClick = () => {
-    // add auth_redirect to redux user state
-    dispatch(setRedirectDestinationAfterAuth(redirectDestinationAfterAuth));
+    // add auth_redirect to sessions storage
+    setRedirectDestinationAfterAuthInSessionStorage(
+      redirectDestinationAfterAuth
+    );
     navigate("/sign-in");
   };
   return (

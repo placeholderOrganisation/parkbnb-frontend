@@ -26,7 +26,9 @@ const BottomDrawer = (props: BottomDrawerProps) => {
       open={open}
       onClose={handleClose}
     >
-      <Box sx={{ p: 5, height: ["100%", desktopHeight] }}>
+      <Box
+        sx={{ p: 5, height: ["100%", desktopHeight], width: ["inherit", 400] }}
+      >
         {handleClose && (
           <Box
             sx={{

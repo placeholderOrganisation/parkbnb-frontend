@@ -9,6 +9,7 @@ import { ListingOwnerUserObject } from "../../types/user-types";
 import ScrapedListingInfo from "../../components/listing-card/scraped-listing-info.component";
 import CardFooter from "../../components/listing-card/card-footer.container";
 import ListingFilters from "../../components/listing-card/listing-filters.component";
+import ShareIcon from "../../components/listing-card/share-icon-component";
 
 interface ListingCardLayoutProps {
   listing: Listing;
@@ -23,7 +24,19 @@ const ListingCardMobileLayout = (props: ListingCardLayoutProps) => {
 
   return (
     <>
-      <ListingImageCarousel images={images} />
+      <Box sx={{ position: "relative" }}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: 16,
+            right: 16,
+            zIndex: 1,
+          }}
+        >
+          <ShareIcon circularBorder />
+        </Box>
+        <ListingImageCarousel images={images} />
+      </Box>
       <Stack
         spacing={1}
         sx={{

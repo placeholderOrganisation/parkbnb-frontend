@@ -1,6 +1,10 @@
 import { baseURL } from "../api/api-config";
 import { checkIfUserIsAuthenticated, signIn, signUp } from "../api/auth-api";
 import { UserObject } from "../types/user-types";
+import {
+  getItemFromCookies,
+  setItemInCookies,
+} from "./storage-utils";
 
 export interface HandleSignUpResponse {
   user?: UserObject;
@@ -35,6 +39,7 @@ export const handleSignUp = async (
       userEmail: email,
       password,
     });
+    setItemInCookies("user", JSON.stringify(user.id));
     return { user, success: true };
   } catch (error) {
     console.error("An error occurred during form submission:", error);
@@ -55,6 +60,7 @@ export const handleSignIn = async (
       userEmail: email,
       password,
     });
+    setItemInCookies("user", JSON.stringify(user.id));
     return { user, success: true };
   } catch (error) {
     console.error("An error occurred during form submission:", error);
@@ -69,8 +75,14 @@ export const handleSocialSignIn = async (provider: String) => {
 export const handleCheckIfUserIsAuthenticated = async () => {
   try {
     const response = await checkIfUserIsAuthenticated();
+    setItemInCookies("user", JSON.stringify(response.id));
     return { user: response, success: true };
   } catch (error) {
     return { error, success: false };
   }
+};
+
+export const hasUserAuthenticatedInThisSession = () => {
+  const user = getItemFromCookies("user");
+  return Boolean(user);
 };

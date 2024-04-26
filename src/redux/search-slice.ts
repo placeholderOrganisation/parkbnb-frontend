@@ -41,6 +41,14 @@ export const searchSlice = createSlice({
 
       state.userSelectedListing = listing;
     },
+    setUserSelectedListingUsingListingId: (state: SearchState, action) => {
+      const listingId: string = action.payload;
+      const listing: Listing | undefined = state.searchResults.find(
+        (listing) => listing._id === listingId
+      );
+
+      state.userSelectedListing = listing ? listing : null;
+    },
     setListingsRenderedInMap: (state: SearchState, action) => {
       const listings: Listing[] = action.payload;
 
@@ -186,6 +194,7 @@ export const searchSlice = createSlice({
 export const {
   setSearchResults,
   setUserSelectedListing,
+  setUserSelectedListingUsingListingId,
   setSearchQuery,
   setListingsRenderedInMap,
   filterSearchResults,

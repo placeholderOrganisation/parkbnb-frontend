@@ -5,6 +5,7 @@ import BottomDrawer from "../drawers/BottomDrawer";
 import PublishListingUnAuthedError from "../listings/create-listings/publish-listing-errors/unauth-error.component";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/global-store";
+import { hasUserAuthenticatedInThisSession } from "../../utils/auth-utils";
 
 interface ShowContactInfoComponentProps {
   contactNumber: string;
@@ -20,6 +21,7 @@ const ShowContactInfoComponent = (props: ShowContactInfoComponentProps) => {
   const redirectDestinationAfterAuth = `/listing/${listingId}`;
 
   const isAuthed = useSelector((state: RootState) => state.user.isAuthed);
+  const hasUserAuthenticatedInPastFiveMins = hasUserAuthenticatedInThisSession();
   const [isErrorDrawerOpen, setIsErrorDrawerOpen] = useState(false);
 
   // button is only rendered when user is not authed
@@ -27,7 +29,7 @@ const ShowContactInfoComponent = (props: ShowContactInfoComponentProps) => {
     setIsErrorDrawerOpen(true);
   };
 
-  if (isAuthed) {
+  if (isAuthed || hasUserAuthenticatedInPastFiveMins) {
     return (
       <Box
         sx={{

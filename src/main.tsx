@@ -4,8 +4,7 @@ import { Provider } from "react-redux";
 
 import App from "./App"; // Update the import statement to use the correct file name
 import store from "./redux/global-store";
-// @ts-expect-error unused import
-import dayjs from 'dayjs';
+import "./dayjs"
 
 import "mapbox-gl/dist/mapbox-gl.css";
 

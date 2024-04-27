@@ -1,5 +1,5 @@
 /* eslint-disable func-names */
 import dayjs from 'dayjs';
-import 'dayjs/plugin/utc';
+import * as plugin from 'dayjs/plugin/utc';
 
-dayjs.extend(require('dayjs/plugin/utc'));
+dayjs.extend(plugin);

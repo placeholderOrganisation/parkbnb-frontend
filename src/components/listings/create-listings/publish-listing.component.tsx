@@ -41,7 +41,7 @@ const PublishListing = (props: PublishListingProps) => {
     (state: RootState) => state.user
   );
 
-  const isContactNumberInValid = !isContactNumberValid(contactNumber);
+  const isContactNumberInValid = isContactNumberValid(contactNumber) === false;
   const [shouldUpdateUser, setShouldUpdateUser] = useState(
     isContactNumberInValid
   );
@@ -102,8 +102,6 @@ const PublishListing = (props: PublishListingProps) => {
         .catch((error) => {
           console.log("error updating user", error);
         });
-    } else {
-      setShouldUpdateUser(true);
     }
   }, [contactNumber]);
 

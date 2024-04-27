@@ -7,8 +7,8 @@ import { RootState } from "../../redux/global-store";
 import { setIsAuthed, setUserData } from "../../redux/user-slice";
 import { initialUserState } from "../../types/user-types";
 import { useState } from "react";
-import SuccessSnackBar from "../custom-mui/snackbars/success-snackbar";
 import { removeItemFromCookies } from "../../utils/storage-utils";
+import SnackBar from "../custom-mui/snackbars/snackbar";
 
 export const NAVBAR_HEIGHT_MOBILE = 64;
 const linksToRender: NavbarLink[] = [
@@ -49,7 +49,7 @@ const NavbarHeader = () => {
         isUserAuthed={user.isAuthed}
         logout={handleLogout}
       />
-      <SuccessSnackBar
+      <SnackBar
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "right",
@@ -57,6 +57,7 @@ const NavbarHeader = () => {
         open={showSnackbarOnLogout}
         handleClose={() => setShowSnackbarOnLogout(false)}
         message="Successfully logged out."
+        severity="success"
       />
     </Box>
   );

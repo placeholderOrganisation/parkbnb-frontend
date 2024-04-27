@@ -8,10 +8,11 @@ interface SnackBarProps {
     vertical: "top" | "bottom";
     horizontal: "left" | "center" | "right";
   };
+  severity: "success" | "error" | "warning" | "info";
 }
 
-const SuccessSnackBar = (props: SnackBarProps) => {
-  const { open, handleClose, message, anchorOrigin } = props;
+const SnackBar = (props: SnackBarProps) => {
+  const { open, handleClose, message, anchorOrigin, severity } = props;
   return (
     <Snackbar
       open={open}
@@ -22,7 +23,7 @@ const SuccessSnackBar = (props: SnackBarProps) => {
     >
       <Alert
         onClose={handleClose}
-        severity="success"
+        severity={severity}
         variant="filled"
         sx={{ width: "100%", p: 2 }}
       >
@@ -32,4 +33,4 @@ const SuccessSnackBar = (props: SnackBarProps) => {
   );
 };
 
-export default SuccessSnackBar;
+export default SnackBar;

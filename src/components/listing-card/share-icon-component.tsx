@@ -11,8 +11,8 @@ import {
 } from "@mui/material";
 import BottomDrawer from "../drawers/BottomDrawer";
 import { useState } from "react";
-import SuccessSnackBar from "../custom-mui/snackbars/success-snackbar";
 import { copyToClipboard } from "../../utils/browser-utils";
+import SnackBar from "../custom-mui/snackbars/snackbar";
 
 interface ShareIconProps {
   circularBorder?: boolean;
@@ -29,16 +29,24 @@ const ShareIcon = (props: ShareIconProps) => {
   const [openShareDrawer, setOpenShareDrawer] = useState(false);
   const [openSnackBar, setOpenSnackBar] = useState(false);
 
+  const [errorDuringCopy, setErrorDuringCopy] = useState(false);
+
   const currentUrl = window.location.href;
 
   const handleOpenShareDrawer = () => {
     setOpenShareDrawer(true);
   };
 
-  const handleCopyOptionClick = () => {
-    copyToClipboard(currentUrl);
-    setOpenShareDrawer(false);
-    setOpenSnackBar(true);
+  const handleCopyOptionClick = async () => {
+    const isCopied = await copyToClipboard(currentUrl);
+    if (isCopied) {
+      setOpenShareDrawer(false);
+      setOpenSnackBar(true);
+    } else {
+      setOpenShareDrawer(false);
+      setOpenSnackBar(true);
+      setErrorDuringCopy(true);
+    }
   };
 
   return (
@@ -91,16 +99,17 @@ const ShareIcon = (props: ShareIconProps) => {
           ))}
         </List>
       </BottomDrawer>
-      <SuccessSnackBar
+      <SnackBar
         open={openSnackBar}
         handleClose={() => {
           setOpenSnackBar(false);
         }}
-        message="Copied!"
+        message={errorDuringCopy ? "Something went wrong!" : "Copied!"}
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "right",
         }}
+        severity={errorDuringCopy ? "error" : "success"}
       />
     </>
   );

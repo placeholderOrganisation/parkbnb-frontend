@@ -1,4 +1,4 @@
-import { Link, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { COMPANY_NAME } from "../../constants";
 
 const Copyright = (props: any) => {

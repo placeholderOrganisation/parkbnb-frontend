@@ -1,5 +1,4 @@
 import Map, {
-  CircleLayer,
   Layer,
   MapLayerMouseEvent,
   MapRef,

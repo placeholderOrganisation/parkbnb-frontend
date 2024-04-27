@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import PriceFilter from "./price-filter.component";
 import AmenitiesFilter from "./amenities-filter.component";
 import StorageTypeFilter from "./storage-type-filter.component";

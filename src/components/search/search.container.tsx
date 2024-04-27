@@ -20,7 +20,7 @@ const SearchContainer = (props: SearchContainerProps) => {
     filters: { searchQuery },
   } = useSelector((state: RootState) => state.search);
 
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(searchQuery || "");
   const [isSuggestionListOpen, setIsSuggestionListOpen] = useState(false);
   const [suggestions, setSuggestions] = useState<Listing[]>([]);
 
@@ -68,7 +68,7 @@ const SearchContainer = (props: SearchContainerProps) => {
         position: ["absolute", "inherit"],
         top: 16,
         left: 0,
-        mx: [2, 'auto'],
+        mx: [2, "auto"],
         zIndex: 100,
         width: ["calc(100% - 32px)", "100%"],
         bgcolor: "white",

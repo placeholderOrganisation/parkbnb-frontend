@@ -7,6 +7,11 @@ export const openInNewTab = (href: string) => {
 };
 
 export const copyToClipboard = (text: string) => {
+
+  if (!navigator.clipboard) {
+    return Promise.resolve(false);
+  }
+
   return navigator.clipboard
     .writeText(text)
     .then(() => {

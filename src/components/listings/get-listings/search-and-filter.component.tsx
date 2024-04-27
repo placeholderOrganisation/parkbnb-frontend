@@ -22,14 +22,8 @@ import {
   vehicleTypeInitialState,
 } from "../../../redux/search-slice.util";
 
-
 const SearchAndFilter = () => {
-  const [isFilterDesktopSectionOpen, setIsFilterDesktopSectionOpen] = useState(
-    false
-  );
-  const [isFilterMobileDrawerOpen, setIsFilterMobileDrawerOpen] = useState(
-    false
-  );
+  const [isFilterSectionOpen, setIsFilterSectionOpen] = useState(false);
   const dispatch = useDispatch();
   const isDesktopView = isDesktop();
 
@@ -53,19 +47,11 @@ const SearchAndFilter = () => {
   };
 
   const handleOpeningFilterSection = () => {
-    if (isDesktopView) {
-      setIsFilterDesktopSectionOpen(true);
-      return;
-    }
-    setIsFilterMobileDrawerOpen(true);
+    setIsFilterSectionOpen(true);
   };
 
   const handleClosingFilterSection = () => {
-    if (isDesktopView) {
-      setIsFilterDesktopSectionOpen(false);
-      return;
-    }
-    setIsFilterMobileDrawerOpen(false);
+    setIsFilterSectionOpen(false);
   };
 
   return (
@@ -73,18 +59,21 @@ const SearchAndFilter = () => {
       <SearchContainer
         handleEndAdornmentClick={() => handleOpeningFilterSection()}
       />
-      <MobileFiltersContainer
-        isFilterSectionOpen={isFilterMobileDrawerOpen}
-        handleApplyFilters={handleApplyFilters}
-        handleResetFilters={handleResetFilters}
-        handleClosingFilterSection={handleClosingFilterSection}
-      />
-      <DesktopFiltersContainer
-        isFilterSectionOpen={isFilterDesktopSectionOpen}
-        handleApplyFilters={handleApplyFilters}
-        handleResetFilters={handleResetFilters}
-        handleClosingFilterSection={handleClosingFilterSection}
-      />
+      {isDesktopView ? (
+        <DesktopFiltersContainer
+          isFilterSectionOpen={isFilterSectionOpen}
+          handleApplyFilters={handleApplyFilters}
+          handleResetFilters={handleResetFilters}
+          handleClosingFilterSection={handleClosingFilterSection}
+        />
+      ) : (
+        <MobileFiltersContainer
+          isFilterSectionOpen={isFilterSectionOpen}
+          handleApplyFilters={handleApplyFilters}
+          handleResetFilters={handleResetFilters}
+          handleClosingFilterSection={handleClosingFilterSection}
+        />
+      )}
     </>
   );
 };

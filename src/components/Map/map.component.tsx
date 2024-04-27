@@ -14,8 +14,7 @@ import { NAVBAR_HEIGHT_MOBILE } from "../navbar/navbar-header.component";
 import { useEffect, useRef } from "react";
 import { highlightedLayerStyle, layerStyle } from "./layer-styling";
 
-const TOKEN =
-  "pk.eyJ1IjoiY29kZXJzYmV5b25kIiwiYSI6ImNsc3ZhYmk1NjBobnQya3JxaWoyYXpleXoifQ.igcdok9oqUQAML9i3gyH_w";
+const TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN as string;
 
 export const MapComponent = (props: MapComponentProps) => {
   const {

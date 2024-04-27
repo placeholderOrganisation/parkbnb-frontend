@@ -1,4 +1,5 @@
-import dayjs, { Dayjs } from "dayjs";
+
+import dayjs from "dayjs";
 import * as dayjsPluginUTC from "dayjs/plugin/utc";
 
 // @ts-expect-error

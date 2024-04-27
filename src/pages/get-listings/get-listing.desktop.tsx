@@ -1,5 +1,5 @@
 import { Box, Grid, Stack } from "@mui/material";
-import MapComponent from "../../components/map/map.component";
+import MapComponent from "../../components/map/map.component.tsx";
 import { GetListingsPageProps } from "../../types/global.types";
 import SearchAndFilter from "../../components/listings/get-listings/search-and-filter.component";
 import ListviewComponent from "../../components/listings/get-listings/listview/listview.component";

@@ -1,7 +1,8 @@
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import * as dayjsPluginUTC from "dayjs/plugin/utc";
 
-dayjs.extend(dayjsPluginUTC);
+// @ts-expect-error
+dayjs.extend(dayjsPluginUTC.default);
 
 export const getItemFromSessionStorage = (key: string): string | null => {
   return sessionStorage.getItem(key);

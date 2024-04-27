@@ -17,7 +17,7 @@ import { highlightedLayerStyle, layerStyle } from "./layer-styling";
 const TOKEN =
   "pk.eyJ1IjoiY29kZXJzYmV5b25kIiwiYSI6ImNsc3ZhYmk1NjBobnQya3JxaWoyYXpleXoifQ.igcdok9oqUQAML9i3gyH_w";
 
-const MapComponent = (props: MapComponentProps) => {
+export const MapComponent = (props: MapComponentProps) => {
   const {
     city,
     listings,
@@ -102,5 +102,3 @@ const MapComponent = (props: MapComponentProps) => {
     </Box>
   );
 };
-
-export default MapComponent;

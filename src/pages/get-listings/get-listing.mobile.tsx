@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import MapComponent from "../../components/map/map.component";
+import MapComponent from "../../components/map/map.component.tsx";
 import SearchAndFilter from "../../components/listings/get-listings/search-and-filter.component";
 import { GetListingsPageProps } from "../../types/global.types";
 import ParkingCardContainerForMap from "../../components/listings/get-listings/parking-card-container-for-map.mobile";

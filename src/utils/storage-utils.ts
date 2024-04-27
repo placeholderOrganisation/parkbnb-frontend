@@ -1,8 +1,4 @@
-// @ts-nocheck
 import dayjs from "dayjs";
-import * as dayjsPluginUTC from "dayjs/plugin/utc";
-
-dayjs.extend(dayjsPluginUTC);
 
 export const getItemFromSessionStorage = (key: string): string | null => {
   return sessionStorage.getItem(key);

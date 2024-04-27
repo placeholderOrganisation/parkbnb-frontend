@@ -1,6 +1,6 @@
 import { Box, Stack, Typography } from "@mui/material";
 import { ListingCardHeaderLayoutProps } from "../listing-card-header.component";
-import ShareIcon from "../share-icon-component";
+import ShareIcon from "../../share-icon/share-icon-component";
 
 const ListingCardHeaderDesktop = (props: ListingCardHeaderLayoutProps) => {
   const { parsedHeading, subheading } = props;

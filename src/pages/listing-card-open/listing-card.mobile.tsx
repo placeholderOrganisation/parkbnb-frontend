@@ -9,7 +9,7 @@ import { ListingOwnerUserObject } from "../../types/user-types";
 import ScrapedListingInfo from "../../components/listing-card/scraped-listing-info.component";
 import CardFooter from "../../components/listing-card/card-footer.container";
 import ListingFilters from "../../components/listing-card/listing-filters.component";
-import ShareIcon from "../../components/listing-card/share-icon-component";
+import ShareIcon from "../../components/share-icon/share-icon-component";
 
 interface ListingCardLayoutProps {
   listing: Listing;

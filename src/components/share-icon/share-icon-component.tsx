@@ -1,28 +1,13 @@
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
-import {
-  Box,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Typography,
-} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import BottomDrawer from "../drawers/BottomDrawer";
 import { useState } from "react";
-import { copyToClipboard } from "../../utils/browser-utils";
 import SnackBar from "../custom-mui/snackbars/snackbar";
+import SharingOptions from "./sharing-options.component";
 
 interface ShareIconProps {
   circularBorder?: boolean;
 }
-
-const SNS = [
-  {
-    name: "Copy",
-  },
-];
 
 const ShareIcon = (props: ShareIconProps) => {
   const { circularBorder } = props;
@@ -37,16 +22,15 @@ const ShareIcon = (props: ShareIconProps) => {
     setOpenShareDrawer(true);
   };
 
-  const handleCopyOptionClick = async () => {
-    const isCopied = await copyToClipboard(currentUrl);
-    if (isCopied) {
-      setOpenShareDrawer(false);
-      setOpenSnackBar(true);
-    } else {
-      setOpenShareDrawer(false);
-      setOpenSnackBar(true);
-      setErrorDuringCopy(true);
-    }
+  const handleSuccessCopy = () => {
+    setOpenShareDrawer(false);
+    setOpenSnackBar(true);
+  };
+
+  const handleErrorCopy = () => {
+    setOpenShareDrawer(false);
+    setOpenSnackBar(true);
+    setErrorDuringCopy(true);
   };
 
   return (
@@ -56,8 +40,8 @@ const ShareIcon = (props: ShareIconProps) => {
           circularBorder
             ? {
                 bgcolor: "common.white",
-                width: 40,
-                height: 40,
+                width: 50,
+                height: 50,
                 borderRadius: 50,
                 display: "flex",
                 justifyContent: "center",
@@ -75,29 +59,12 @@ const ShareIcon = (props: ShareIconProps) => {
           setOpenShareDrawer(false);
         }}
       >
-        <Typography variant="h4">Share this listing</Typography>
-        <List>
-          {SNS.map((sns) => (
-            <Box key={sns.name}>
-              <ListItem disablePadding onClick={handleCopyOptionClick}>
-                <ListItemButton
-                  sx={{
-                    px: 0,
-                  }}
-                >
-                  <ListItemText primary={sns.name} />
-                  <ListItemIcon
-                    sx={{
-                      minWidth: "unset",
-                    }}
-                  >
-                    <ChevronRightIcon />
-                  </ListItemIcon>
-                </ListItemButton>
-              </ListItem>
-            </Box>
-          ))}
-        </List>
+        <Typography variant="h4">Share this parking</Typography>
+        <SharingOptions
+          currentUrl={currentUrl}
+          handleSuccessCopy={handleSuccessCopy}
+          handleErrorCopy={handleErrorCopy}
+        />
       </BottomDrawer>
       <SnackBar
         open={openSnackBar}

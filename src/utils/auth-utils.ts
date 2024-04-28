@@ -91,5 +91,5 @@ export const hasUserAuthenticatedInThisSession = () => {
 export const setRedirectDestinationAfterAuthInSessionStorage = (
   redirectDestination: string
 ) => {
-  setItemInSessionStorage("auth_redirect", redirectDestination);
+  setItemInSessionStorage("auth_redirect", redirectDestination, true);
 };

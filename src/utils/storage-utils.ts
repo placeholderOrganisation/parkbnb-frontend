@@ -4,10 +4,14 @@ export const getItemFromSessionStorage = (key: string): string | null => {
   return sessionStorage.getItem(key);
 };
 
-export const setItemInSessionStorage = (key: string, value: string): void => {
+export const setItemInSessionStorage = (
+  key: string,
+  value: string,
+  overRideValue: boolean = false
+): void => {
   const storedValue = getItemFromSessionStorage(key);
 
-  if (storedValue) {
+  if (storedValue && overRideValue === false) {
     return;
   }
 
@@ -22,9 +26,13 @@ export const getItemFromLocalStorage = (key: string): string | null => {
   return localStorage.getItem(key);
 };
 
-export const setItemInLocalStorage = (key: string, value: string): void => {
+export const setItemInLocalStorage = (
+  key: string,
+  value: string,
+  overRideValue: boolean = false
+): void => {
   const storedValue = getItemFromLocalStorage(key);
-  if (storedValue) {
+  if (storedValue && overRideValue === false) {
     return;
   }
   return localStorage.setItem(key, value);
@@ -51,4 +59,4 @@ export const setItemInCookies = (key: string, value: string): void => {
 
 export const removeItemFromCookies = (key: string): void => {
   document.cookie = `${key}=; expires=${dayjs.utc(0)}`;
-}
+};

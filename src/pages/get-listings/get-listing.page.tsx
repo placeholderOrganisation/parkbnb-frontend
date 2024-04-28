@@ -4,6 +4,7 @@ import GetListingsDesktopLayout from "./get-listing.desktop";
 import GetListingsMobileLayout from "./get-listing.mobile";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  filterSearchResults,
   setListingsRenderedInMap,
   setSearchResults,
   setUserSelectedListing,
@@ -49,11 +50,12 @@ const GetListing = () => {
     convertListingObjToListingOnMapObj(userSelectedListing);
 
   useEffect(() => {
-    // fecth listings from backend
+    // fetch listings from backend
     handleGetParkings()
       .then((res) => {
         const fetchedListings: Listing[] = res.data;
         dispatch(setSearchResults(fetchedListings));
+        dispatch(filterSearchResults());
       })
       .catch((error) => {
         console.error("Error fetching listings", error);

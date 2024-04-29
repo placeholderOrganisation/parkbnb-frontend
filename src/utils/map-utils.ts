@@ -18,7 +18,7 @@ export const cityToCoords = {
   },
   toronto: {
     lat: 43.65107,
-    lng: -79.347015,
+    lng: -79.457015,
     zoom: cityZoom,
   },
   vaughan: {

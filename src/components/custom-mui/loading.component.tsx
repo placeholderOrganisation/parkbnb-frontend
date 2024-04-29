@@ -1,25 +1,15 @@
-import { CircularProgress, Container } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 
 const Loading = () => {
   return (
-    <Container
-      maxWidth={false}
+    <CircularProgress
+      color="primary"
+      size="lg"
       sx={{
-        marginTop: "100px",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+        width: "inherit",
+        height: "inherit",
       }}
-    >
-      <CircularProgress
-        color="primary"
-        size="lg"
-        sx={{
-          height: "100px",
-          width: "100px",
-        }}
-      />
-    </Container>
+    />
   );
 };
 

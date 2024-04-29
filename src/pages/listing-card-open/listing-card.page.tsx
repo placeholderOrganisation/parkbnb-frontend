@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { isDesktop } from "../../utils/display-utils";
 import ListingCardDesktopLayout from "./listing-card.desktop";
 import ListingCardMobileLayout from "./listing-card.mobile";
@@ -48,7 +48,26 @@ const ListingCard = () => {
   }, [listingId]);
 
   if (!fetchedListing) {
-    return <Loading />;
+    return (
+      <Container
+        maxWidth={false}
+        sx={{
+          mt: 12,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Box
+          sx={{
+            height: "100px",
+            width: "100px",
+          }}
+        >
+          <Loading />
+        </Box>
+      </Container>
+    );
   }
 
   return (

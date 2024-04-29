@@ -1,6 +1,6 @@
 import Typography from "@mui/material/Typography";
 import { Box, Grid } from "@mui/material";
-import ImagePicker from "./ImagePicker.component";
+import ImagePicker from "./image-picker/ImagePicker.component";
 import { useDispatch, useSelector } from "react-redux";
 import { setDescription, setStepThreeValidity } from "../../../redux/step-three-slice";
 import { RootState } from "../../../redux/global-store";

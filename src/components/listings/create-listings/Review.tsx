@@ -7,7 +7,7 @@ import StorageTypeFilter from "../../filters/storage-type-filter.component";
 import VehicleTypeFilter from "../../filters/vehicle-type-filter.component";
 import DimensionsFilter from "../../filters/dimensions-filter.component";
 import NumSpacesFilter from "../../filters/num-spaces-filter.component";
-import { CustomImage } from "./image-picker-custom-image.component";
+import { CustomImage } from "./image-picker/image-picker-custom-image.component";
 
 const pricingFilterFields = [
   {

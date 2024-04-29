@@ -1,4 +1,4 @@
-import { isDesktop } from "../../../utils/display-utils";
+import { isDesktop } from "../../../../utils/display-utils";
 
 export interface CustomImageProps {
   src: string | null;

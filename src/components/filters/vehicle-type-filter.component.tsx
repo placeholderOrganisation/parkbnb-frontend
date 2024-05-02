@@ -47,7 +47,7 @@ const VehicleTypeFilter = (props: VehicleTypeFilterProps) => {
         disabled={disabled}
       >
         <InputLabel id="vehicle-type-select-label">
-          Your space can accommodate
+          This space can store
         </InputLabel>
         <Select
           labelId="vehicle-type-select-label"
@@ -55,7 +55,7 @@ const VehicleTypeFilter = (props: VehicleTypeFilterProps) => {
           // @ts-ignore
           value={vehicleType}
           onChange={handleVehicleTypeChange}
-          input={<OutlinedInput label="Your space can accommodate*" />}
+          input={<OutlinedInput label="This space can store*" />}
           renderValue={(selected) =>
             Array.isArray(selected) ? selected.join(", ") : selected
           }

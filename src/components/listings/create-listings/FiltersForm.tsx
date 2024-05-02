@@ -1,8 +1,6 @@
 import { Box, Stack, Typography } from "@mui/material";
 import AmenitiesFilter from "../../filters/amenities-filter.component";
 import StorageTypeFilter from "../../filters/storage-type-filter.component";
-import VehicleTypeFilter from "../../filters/vehicle-type-filter.component";
-import DimensionsFilter from "../../filters/dimensions-filter.component";
 import NumSpacesFilter from "../../filters/num-spaces-filter.component";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/global-store";
@@ -15,10 +13,12 @@ import {
   setStorageType,
   setVehicleTypes,
 } from "../../../redux/step-two-slice";
+import VehicleTypeFilterContainer from "./filter-form-components/vehicle-type.container";
+import DimensionTypeFilterContainer from "./filter-form-components/dimension-type.container";
 
 export default function FiltersForm() {
   const dispatch = useDispatch();
-  
+
   const {
     amenities: amenitiesInRedux,
     storageType: storageTypeInRedux,
@@ -91,11 +91,11 @@ export default function FiltersForm() {
             storageTypeInRedux={storageTypeInRedux}
             handleStorageTypeFilterChange={handleStorageTypeChange}
           />
-          <VehicleTypeFilter
+          <VehicleTypeFilterContainer
             vehicleTypesInRedux={vehicleTypesInRedux}
             handleVehicleTypesFilterChange={handleVehicleTypesChange}
           />
-          <DimensionsFilter
+          <DimensionTypeFilterContainer
             dimensionsInRedux={dimensionsInRedux}
             handleDimensionsFilterChange={handleDimensionsChange}
           />

@@ -79,7 +79,18 @@ export const parseVehicleType = (
     return vehicle_type;
   }
 
-  return VEHICLE_TYPE_ENUMS[vehicle_type];
+  return VEHICLE_TYPE_ENUMS[vehicle_type].label;
+};
+
+export const parseVehicleTypeReturnSize = (
+  vehicle_type: keyof VehicleTypeFilterTypes
+) => {
+  if (!VEHICLE_TYPE_ENUMS[vehicle_type]) {
+    // if we do not find the vehicle type in the mapping, we return the max vehicle type size
+    return 5;
+  }
+
+  return VEHICLE_TYPE_ENUMS[vehicle_type].size;
 };
 
 export const parseDimensionsReturnLabel = (

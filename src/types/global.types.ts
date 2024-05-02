@@ -18,19 +18,19 @@ export const FILTER_ENUMS = {
 };
 
 export interface VehicleTypeFilterTypes {
-  bike: string;
-  "sedan / suv": string;
-  "pickup truck": string;
-  "boat / RV": string;
-  "commercial truck / trailer": string;
+  bike: { label: string; size: number };
+  "sedan / suv": { label: string; size: number };
+  "pickup truck": { label: string; size: number };
+  "boat / RV": { label: string; size: number };
+  "commercial truck / trailer": { label: string; size: number };
 }
 
 export const VEHICLE_TYPE_ENUMS: VehicleTypeFilterTypes = {
-  bike: "bike",
-  "sedan / suv": "sedan / suv",
-  "pickup truck": "pickup truck",
-  "boat / RV": "boat / RV",
-  "commercial truck / trailer": "commercial truck / trailer",
+  bike: { label: "bike", size: 1 },
+  "sedan / suv": { label: "sedan / suv", size: 2},
+  "pickup truck": { label: "pickup truck", size: 3 },
+  "boat / RV": { label: "boat / RV", size: 4 },
+  "commercial truck / trailer": { label: "commercial truck / trailer", size: 5 },
 };
 
 export interface DimensionFilterTypes {

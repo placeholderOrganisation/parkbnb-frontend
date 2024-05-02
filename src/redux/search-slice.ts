@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { SearchState } from "../types/search.types";
-import { Listing } from "../types/global.types";
+import { Listing, VehicleTypeFilterTypes } from "../types/global.types";
 import {
   amenitiesInitialState,
   dimensionsInitialState,
@@ -9,6 +9,7 @@ import {
   storageTypeInitialState,
   vehicleTypeInitialState,
 } from "./search-slice.util";
+import { parseVehicleTypeReturnSize } from "../utils/parking-utils";
 
 export const searchSlice = createSlice({
   name: "search",
@@ -77,7 +78,8 @@ export const searchSlice = createSlice({
       state.filters.vehicleTypes = vehicleTypes;
     },
     setDimesionsFilter: (state: SearchState, action) => {
-      const dimensions: { minLength: number; minWidth: number } = action.payload;
+      const dimensions: { minLength: number; minWidth: number } =
+        action.payload;
       state.filters.dimensions = dimensions;
     },
     setNumSpacesFilter: (state: SearchState, action) => {
@@ -129,7 +131,9 @@ export const searchSlice = createSlice({
       }
 
       if (state.filters.amenities.full_day_access) {
-        listings = listings.filter((listing) => listing.filters.full_day_access);
+        listings = listings.filter(
+          (listing) => listing.filters.full_day_access
+        );
       }
 
       if (state.filters.amenities.ev_charging) {
@@ -162,18 +166,30 @@ export const searchSlice = createSlice({
 
       if (state.filters.storageType) {
         listings = listings.filter(
-          (listing) => listing.filters.storage_type === state.filters.storageType
+          (listing) =>
+            listing.filters.storage_type === state.filters.storageType
         );
       }
 
       if (state.filters.vehicleTypes.length > 0) {
-        listings = listings.filter((listing) =>
-          state.filters.vehicleTypes.includes(listing.filters.vehicle_type)
+        const filteredVehicleTypeSize = parseVehicleTypeReturnSize(
+          state.filters.vehicleTypes as keyof VehicleTypeFilterTypes
         );
+        listings = listings.filter((listing) => {
+          const currentListingVehicleTypeSize = parseVehicleTypeReturnSize(
+            listing.filters.vehicle_type
+          );
+          return currentListingVehicleTypeSize >= filteredVehicleTypeSize;
+        });
       }
 
-      if (state.filters.dimensions.minLength > 0 && state.filters.dimensions.minWidth > 0) {
-        const area = state.filters.dimensions.minLength * state.filters.dimensions.minWidth;
+      if (
+        state.filters.dimensions.minLength > 0 &&
+        state.filters.dimensions.minWidth > 0
+      ) {
+        const area =
+          state.filters.dimensions.minLength *
+          state.filters.dimensions.minWidth;
         listings = listings.filter(
           (listing) => listing.filters.length * listing.filters.width >= area
         );
@@ -203,6 +219,6 @@ export const {
   setStorageTypeFilter,
   setVehicleTypesFilter,
   setDimesionsFilter,
-  setNumSpacesFilter
+  setNumSpacesFilter,
 } = searchSlice.actions;
 export default searchSlice.reducer;

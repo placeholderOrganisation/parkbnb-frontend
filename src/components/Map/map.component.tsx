@@ -8,11 +8,13 @@ import Map, {
 
 import { MapComponentProps } from "../../types/global.types";
 import { Box } from "@mui/material";
-import { getCityCoords } from "../../utils/map-utils";
+import { getCityCoords, getListingCoords } from "../../utils/map-utils";
 import { FeatureCollection } from "geojson";
 import { NAVBAR_HEIGHT_MOBILE } from "../navbar/navbar-header.component";
 import { useEffect, useRef } from "react";
 import { highlightedLayerStyle, layerStyle } from "./layer-styling";
+import { getURIParams } from "../../utils/browser-utils";
+import { getListingFromListingOnMapResultsGivenId } from "../../utils/parking-utils";
 
 const TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN as string;
 
@@ -24,12 +26,26 @@ export const MapComponent = (props: MapComponentProps) => {
     handleMoveEnd,
     userSelectedListing,
   } = props;
+
+  const { new_listing } = getURIParams();
+
   const { lat, lng, zoom } = getCityCoords(city);
   const mapRef = useRef<MapRef | undefined>();
 
   useEffect(() => {
     mapRef.current?.flyTo({ center: [lng, lat], duration: 1000, zoom: zoom });
   }, [city]);
+
+  useEffect(() => {
+    if (new_listing) {
+      const newlyCreatedListing = getListingFromListingOnMapResultsGivenId(
+        listings,
+        new_listing
+      );      
+      const { lat, lng, zoom } = getListingCoords(newlyCreatedListing);
+      mapRef.current?.flyTo({ center: [lng, lat], duration: 1000, zoom: zoom });
+    }
+  }, [new_listing, listings]);
 
   const listingsRenderedInMap: FeatureCollection = {
     type: "FeatureCollection",

@@ -8,6 +8,7 @@ import {
   setListingsRenderedInMap,
   setSearchResults,
   setUserSelectedListing,
+  setUserSelectedListingUsingListingId,
 } from "../../redux/search-slice";
 import {
   convertListingObjToListingOnMapObj,
@@ -18,6 +19,7 @@ import { useEffect } from "react";
 import { Listing } from "../../types/global.types";
 import { RootState } from "../../redux/global-store";
 import { NAVBAR_HEIGHT_MOBILE } from "../../components/navbar/navbar-header.component";
+import { getURIParams } from "../../utils/browser-utils";
 
 const GetListing = () => {
   const dispatch = useDispatch();
@@ -49,8 +51,8 @@ const GetListing = () => {
     userSelectedListing &&
     convertListingObjToListingOnMapObj(userSelectedListing);
 
+  // fetch listings from backend
   useEffect(() => {
-    // fetch listings from backend
     handleGetParkings()
       .then((res) => {
         const fetchedListings: Listing[] = res.data;
@@ -61,6 +63,14 @@ const GetListing = () => {
         console.error("Error fetching listings", error);
       });
   }, []);
+
+  // fetch URI params and set user selected listing if applicable
+  useEffect(() => {
+    const { new_listing } = getURIParams();
+    if (new_listing) {
+      dispatch(setUserSelectedListingUsingListingId(new_listing));
+    }
+  }, [searchResults]);
 
   const handleListingClickInMap = (id: string) => {
     const selectedListing = getListingFromListingArrayGivenId(

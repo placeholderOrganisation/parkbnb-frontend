@@ -1,3 +1,5 @@
+import { Listing } from "../types/global.types";
+
 const defaultZoom = 9;
 const cityZoom = 10;
 export const cityToCoords = {
@@ -38,6 +40,8 @@ export const cityToCoords = {
   },
 };
 
+// getCityCoords returns the coordinates of a city given its name
+// if new_listing is not null , return the coordinates of that new_listing
 export const getCityCoords = (cityName: string | null) => {
   if (!cityName) {
     return cityToCoords["default"];
@@ -46,4 +50,19 @@ export const getCityCoords = (cityName: string | null) => {
     return cityToCoords["default"];
   }
   return cityToCoords[cityName as keyof typeof cityToCoords];
+};
+
+export const getListingCoords = (listing: Listing | null) => {
+  if (!listing) {
+    return getCityCoords("default");
+  }
+
+  const parsedLat = parseFloat(listing.address.lat);
+  const parsedLng = parseFloat(listing.address.lng);
+
+  return {
+    lat: parsedLat,
+    lng: parsedLng,
+    zoom: cityZoom,
+  };
 };

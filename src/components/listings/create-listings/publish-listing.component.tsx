@@ -82,7 +82,7 @@ const PublishListing = (props: PublishListingProps) => {
       handleCreateParking(listingData).then((response) => {
         if (response.success) {
           setIsCreatingListing(false);
-          navigate("/");
+          navigate(`/?new_listing=${response.data._id}`);
         } else {
           console.log("error creating listing");
         }

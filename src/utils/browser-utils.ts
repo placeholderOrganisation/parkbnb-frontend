@@ -1,3 +1,5 @@
+import { Location } from "react-router-dom";
+
 export const openInNewTab = (href: string) => {
   Object.assign(document.createElement("a"), {
     target: "_blank",
@@ -7,7 +9,6 @@ export const openInNewTab = (href: string) => {
 };
 
 export const copyToClipboard = (text: string) => {
-
   if (!navigator.clipboard) {
     return Promise.resolve(false);
   }
@@ -20,4 +21,16 @@ export const copyToClipboard = (text: string) => {
     .catch(() => {
       return false;
     });
+};
+
+export const getURIParams = () => {
+  try {
+    const location = window.location;
+    const searchParams = new URLSearchParams(location.search);
+    const params = Object.fromEntries(searchParams.entries());
+    return params;
+  } catch (error) {
+    console.error("Error occurred while getting URI params:", error);
+    return {};
+  }
 };

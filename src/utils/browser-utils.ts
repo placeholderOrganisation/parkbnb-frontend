@@ -1,5 +1,3 @@
-import { Location } from "react-router-dom";
-
 export const openInNewTab = (href: string) => {
   Object.assign(document.createElement("a"), {
     target: "_blank",

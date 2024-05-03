@@ -13,7 +13,8 @@ import Loading from "../../components/custom-mui/loading.component";
 import { handleGetUserWithId } from "../../utils/user-utils";
 import { ListingOwnerUserObject } from "../../types/user-types";
 import { RootState } from "../../redux/global-store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setFetchedListing as setFetchedListingInRedux } from "../../redux/search-slice";
 
 const ListingCard = () => {
   const isDesktopView = isDesktop();
@@ -26,6 +27,7 @@ const ListingCard = () => {
   const [owner, setOwner] = useState<ListingOwnerUserObject | null>(null);
 
   const userId = useSelector((state: RootState) => state.user.id);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!listingId) {
@@ -43,6 +45,7 @@ const ListingCard = () => {
               const owner = response.user;
               setOwner(owner);
               setFetchedListing(listing);
+              dispatch(setFetchedListingInRedux(listing));
             })
             .catch((error) => {
               console.error("Error fetching owner", error);
@@ -62,8 +65,11 @@ const ListingCard = () => {
     );
   }
 
-  const shouldShowEditListingOption = isUserListingOwner(userId, fetchedListing);
-  
+  const shouldShowEditListingOption = isUserListingOwner(
+    userId,
+    fetchedListing
+  );
+
   return (
     <Box
       sx={{

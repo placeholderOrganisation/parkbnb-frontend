@@ -10,8 +10,10 @@ import {
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import DeleteOptionModal from "./edit-listing-modals/delete-option.modal";
 import RentedOptionModal from "./edit-listing-modals/rented-option.modal";
+import SnackBar from "../../custom-mui/snackbars/snackbar";
 
 const EditListingOptions = () => {
+  const [errorInModal, setErrorInModal] = useState(false);
   const [loadingInModal, setLoadingInModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openRentedModal, setOpenRentedModal] = useState(false);
@@ -25,8 +27,9 @@ const EditListingOptions = () => {
     resetLoadingState();
   };
 
-  const confirmDelete = () => {
-    setLoadingInModal(true);
+  const setErrorStateForDeleteOption = () => {
+    setErrorInModal(true);
+    handleDeleteModalClose();
   };
 
   const handleRentedModalOpen = () => {
@@ -38,12 +41,17 @@ const EditListingOptions = () => {
     resetLoadingState();
   };
 
-  const confirmRented = () => {
-    setLoadingInModal(true);
+  const setErrorStateForRentedOption = () => {
+    setErrorInModal(true);
+    handleRentedModalClose();
   };
 
   const resetLoadingState = () => {
-    setLoadingInModal(false);
+    setLoadingStateForOption(false);
+  };
+
+  const setLoadingStateForOption = (value: boolean) => {
+    setLoadingInModal(value);
   };
 
   const SNS = [
@@ -85,13 +93,29 @@ const EditListingOptions = () => {
         loadingInModal={loadingInModal}
         openModal={openDeleteModal}
         handleModalClose={handleDeleteModalClose}
-        confirmAction={confirmDelete}
+        setLoadingStateForOption={(value) => {
+          setLoadingStateForOption(value);
+        }}
+        setErrorStateForOption={setErrorStateForDeleteOption}
       />
       <RentedOptionModal
         loadingInModal={loadingInModal}
         openModal={openRentedModal}
         handleModalClose={handleRentedModalClose}
-        confirmAction={confirmRented}
+        setLoadingStateForOption={(value) => {
+          setLoadingStateForOption(value);
+        }}
+        setErrorStateForOption={setErrorStateForRentedOption}
+      />
+      <SnackBar
+        open={errorInModal}
+        handleClose={() => {setErrorInModal(false)}}
+        message={"Oops! Something went wrong. Please try again."}
+        severity="error"
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
       />
     </>
   );

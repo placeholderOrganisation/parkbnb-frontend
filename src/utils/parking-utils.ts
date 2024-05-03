@@ -8,7 +8,13 @@ import {
   VehicleTypeFilterTypes,
 } from "../types/global.types";
 import dayjs, { Dayjs } from "dayjs";
-import { createParking, getParking, getParkings } from "../api/parking-api";
+import {
+  createParking,
+  deleteParking,
+  getParking,
+  getParkings,
+  markParkingAsRented,
+} from "../api/parking-api";
 import {
   StepOneState,
   StepThreeState,
@@ -322,6 +328,38 @@ export const handleGetParking = async (listingId: string) => {
     return { data, success: true };
   } catch (error) {
     console.error("Error fetching parking", error);
+    return { error, success: false };
+  }
+};
+
+export const handleDeleteParking = async (
+  parkingId: string,
+  ownerId: string | null | ""
+) => {
+  if (!ownerId) {
+    return { error: "Owner Id is not valid", success: false };
+  }
+  try {
+    const data = await deleteParking(parkingId, ownerId);
+    return { data, success: true };
+  } catch (error) {
+    console.error("Error deleting parking", error);
+    return { error, success: false };
+  }
+};
+
+export const handleMarkParkingAsRented = async (
+  parkingId: string,
+  ownerId: string | null | ""
+) => {
+  if (!ownerId) {
+    return { error: "Owner Id is not valid", success: false };
+  }
+  try {
+    const data = await markParkingAsRented(parkingId, ownerId);
+    return { data, success: true };
+  } catch (error) {
+    console.error("Error marking parking as rented", error);
     return { error, success: false };
   }
 };

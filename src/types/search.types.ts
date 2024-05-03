@@ -3,9 +3,9 @@ import { AmenitiesTypeFilterTypes, Listing } from "./global.types";
 export interface SearchState {
   searchResults: Listing[] | [];
   filteredSearchResults: Listing[] | [];
-
   userSelectedListing: Listing | null;
   listingsRenderedInMap: Listing[] | [];
+  fetchedListing: Listing | null;
   filters: {
     searchQuery: string;
     amenities: AmenitiesTypeFilterTypes;

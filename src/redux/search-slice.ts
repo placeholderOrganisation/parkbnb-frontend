@@ -18,6 +18,7 @@ export const searchSlice = createSlice({
     filteredSearchResults: [],
     userSelectedListing: null,
     listingsRenderedInMap: [],
+    fetchedListing: null,
     filters: {
       searchQuery: "",
       amenities: amenitiesInitialState,
@@ -54,6 +55,10 @@ export const searchSlice = createSlice({
       const listings: Listing[] = action.payload;
 
       state.listingsRenderedInMap = listings;
+    },
+    setFetchedListing: (state: SearchState, action) => {
+      const listing: Listing | null = action.payload;
+      state.fetchedListing = listing;
     },
     setSearchQuery: (state: SearchState, action) => {
       // city name
@@ -213,6 +218,7 @@ export const {
   setUserSelectedListingUsingListingId,
   setSearchQuery,
   setListingsRenderedInMap,
+  setFetchedListing,
   filterSearchResults,
   setAmenitiesFilter,
   setMonthlyPriceFilter,

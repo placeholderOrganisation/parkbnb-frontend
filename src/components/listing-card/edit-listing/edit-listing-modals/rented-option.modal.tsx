@@ -1,16 +1,67 @@
 import EditListingOptionModal from "../edit-listing-option.modal";
 import { Button, Stack, Typography } from "@mui/material";
 import DoNotGoBackLoader from "../../../custom-mui/loading-screens/do-not-go-back.loader";
+import { RootState } from "../../../../redux/global-store";
+import { useDispatch, useSelector } from "react-redux";
+import { getItemFromCookies } from "../../../../utils/storage-utils";
+import { handleMarkParkingAsRented } from "../../../../utils/parking-utils";
+import { setUserSelectedListing } from "../../../../redux/search-slice";
+import { useNavigate } from "react-router-dom";
 
 interface RentedOptionModalProps {
   loadingInModal: boolean;
   openModal: boolean;
   handleModalClose: () => void;
-  confirmAction: () => void;
+  setLoadingStateForOption: (value: boolean) => void;
+  setErrorStateForOption: () => void;
 }
 
 const RentedOptionModal = (props: RentedOptionModalProps) => {
-  const { loadingInModal, openModal, handleModalClose, confirmAction } = props;
+  const {
+    loadingInModal,
+    openModal,
+    handleModalClose,
+    setLoadingStateForOption,
+    setErrorStateForOption,
+  } = props;
+
+  const userId = useSelector((state: RootState) => state.user.id);
+  const userIdInCookie = getItemFromCookies("user");
+  const fetchedListing = useSelector(
+    (state: RootState) => state.search.fetchedListing
+  );
+  const userSelectedListing = useSelector(
+    (state: RootState) => state.search.userSelectedListing
+  );
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleConfirmRented = () => {
+    setLoadingStateForOption(true);
+    if (!fetchedListing) {
+      setLoadingStateForOption(false);
+      return;
+    }
+    let dangerousUserId: string | null = userId;
+    if (!userId) {
+      dangerousUserId = userIdInCookie;
+    }
+    handleMarkParkingAsRented(fetchedListing._id, dangerousUserId).then(
+      (response) => {
+        if (response.success) {
+          if (userSelectedListing?._id === fetchedListing._id) {
+            dispatch(setUserSelectedListing(null));
+          }
+          handleModalClose();
+          navigate("/");
+        } else {
+          setErrorStateForOption();
+          console.error("Error marking parking as rented", response.error);
+        }
+      }
+    );
+  };
 
   return (
     <EditListingOptionModal
@@ -38,7 +89,7 @@ const RentedOptionModal = (props: RentedOptionModalProps) => {
             </Typography>
           </Stack>
           <Stack direction="row" spacing={1}>
-            <Button variant="contained" onClick={confirmAction}>
+            <Button variant="contained" onClick={handleConfirmRented}>
               Yes
             </Button>
             <Button onClick={handleModalClose} variant="outlined">

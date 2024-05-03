@@ -80,7 +80,7 @@ export default function ImagePicker(props: ImagePickerProps) {
       case "uploading":
         return (
           <Box sx={{ my: 2 }}>
-            <Loading height={100} width={100} />;
+            <Loading height={100} width={100} />
           </Box>
         );
       default:

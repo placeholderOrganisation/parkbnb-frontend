@@ -10,7 +10,7 @@ import { removeImage, setImages } from "../../../../redux/step-three-slice";
 import ImagePickerCustomImageContainer from "./image-picker-custom-image.container";
 import ImagePickerInitialState from "./image-picker-initial-state.component";
 import SnackBar from "../../../custom-mui/snackbars/snackbar";
-import ImageLoader from "./image-picker-loader.component";
+import Loading from "../../../custom-mui/loading.component";
 
 interface ImagePickerProps {
   imagesInRedux: string[];
@@ -78,7 +78,11 @@ export default function ImagePicker(props: ImagePickerProps) {
           />
         );
       case "uploading":
-        return <ImageLoader />;
+        return (
+          <Box sx={{ my: 2 }}>
+            <Loading height={100} width={100} />;
+          </Box>
+        );
       default:
         throw new Error("Unknown step");
     }

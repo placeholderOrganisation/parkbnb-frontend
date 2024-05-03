@@ -1,15 +1,37 @@
-import { CircularProgress } from "@mui/material";
+import { Box, CircularProgress, Container } from "@mui/material";
 
-const Loading = () => {
+interface LoadingProps {
+  height: number;
+  width: number;
+}
+
+const Loading = (props: LoadingProps) => {
+  const { height, width } = props;
   return (
-    <CircularProgress
-      color="primary"
-      size="lg"
+    <Container
+      maxWidth={false}
       sx={{
-        width: "inherit",
-        height: "inherit",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}
-    />
+    >
+      <Box
+        sx={{
+          height,
+          width,
+        }}
+      >
+        <CircularProgress
+          color="primary"
+          size="lg"
+          sx={{
+            width: "inherit",
+            height: "inherit",
+          }}
+        />
+      </Box>
+    </Container>
   );
 };
 

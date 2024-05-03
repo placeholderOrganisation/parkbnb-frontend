@@ -49,24 +49,9 @@ const ListingCard = () => {
 
   if (!fetchedListing) {
     return (
-      <Container
-        maxWidth={false}
-        sx={{
-          mt: 12,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Box
-          sx={{
-            height: "100px",
-            width: "100px",
-          }}
-        >
-          <Loading />
-        </Box>
-      </Container>
+      <Box sx={{ mt: 12 }}>
+        <Loading height={100} width={100} />;
+      </Box>
     );
   }
 

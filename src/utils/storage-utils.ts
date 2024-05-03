@@ -48,7 +48,7 @@ export const getItemFromCookies = (key: string): string | null => {
   if (!cookie) {
     return null;
   }
-  return cookie.split("=")[1];
+  return cookie.split("=")[1].replace(`"`, "").replace(`"`, "");
 };
 
 export const setItemInCookies = (key: string, value: string): void => {

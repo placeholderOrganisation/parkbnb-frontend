@@ -12,16 +12,18 @@ interface ListingCardHeaderProps {
   listed_on: Dayjs;
   spaces: number;
   storage_type: string;
+  shouldShowEditListingOption?: boolean;
 }
 
 export interface ListingCardHeaderLayoutProps {
   parsedHeading: string;
   subheading: string;
   parsedlistedOn: string;
+  shouldShowEditListingOption?: boolean;
 }
 
 const ListingCardHeader = (props: ListingCardHeaderProps) => {
-  const { address, listed_on, spaces, storage_type } = props;
+  const { address, listed_on, spaces, storage_type, shouldShowEditListingOption = false } = props;
   const { city, state } = address;
 
   let parsedHeading = `${spaces} ${storage_type} parking spot`;
@@ -45,6 +47,7 @@ const ListingCardHeader = (props: ListingCardHeaderProps) => {
       parsedHeading={parsedHeading}
       subheading={subheading}
       parsedlistedOn={parsedlistedOn}
+      shouldShowEditListingOption={shouldShowEditListingOption}
     />
   ) : (
     <ListingCardHeaderMobile

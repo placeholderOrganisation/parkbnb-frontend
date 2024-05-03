@@ -15,10 +15,11 @@ import EditListing from "../../components/listing-card/edit-listing/edit-listing
 interface ListingCardLayoutProps {
   listing: Listing;
   listingOwner: ListingOwnerUserObject | null;
+  shouldShowEditListingOption: boolean;
 }
 
 const ListingCardMobileLayout = (props: ListingCardLayoutProps) => {
-  const { listing, listingOwner } = props;
+  const { listing, listingOwner, shouldShowEditListingOption } = props;
 
   const { filters, address, price, listed_on, description, images } = listing;
   const { spaces, storage_type } = filters;
@@ -36,16 +37,18 @@ const ListingCardMobileLayout = (props: ListingCardLayoutProps) => {
         >
           <ShareIcon circularBorder />
         </Box>
-        <Box
-          sx={{
-            position: "absolute",
-            top: 16,
-            right: 80,
-            zIndex: 1,
-          }}
-        >
-          <EditListing circularBorder />
-        </Box>
+        {shouldShowEditListingOption && (
+          <Box
+            sx={{
+              position: "absolute",
+              top: 16,
+              right: 80,
+              zIndex: 1,
+            }}
+          >
+            <EditListing circularBorder />
+          </Box>
+        )}
         <ListingImageCarousel images={images} />
       </Box>
       <Stack

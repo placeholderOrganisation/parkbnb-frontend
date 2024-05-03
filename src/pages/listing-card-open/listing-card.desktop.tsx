@@ -13,10 +13,11 @@ import ListingCardChips from "../../components/listing-card/listing-card-chips.d
 interface ListingCardLayoutProps {
   listing: Listing;
   listingOwner: ListingOwnerUserObject | null;
+  shouldShowEditListingOption: boolean;
 }
 
 const ListingCardDesktopLayout = (props: ListingCardLayoutProps) => {
-  const { listing, listingOwner } = props;
+  const { listing, listingOwner, shouldShowEditListingOption } = props;
 
   const { filters, address, price, listed_on, description, images } = listing;
   const { spaces, storage_type } = filters;
@@ -29,6 +30,7 @@ const ListingCardDesktopLayout = (props: ListingCardLayoutProps) => {
           listed_on={listed_on}
           spaces={spaces}
           storage_type={storage_type}
+          shouldShowEditListingOption={shouldShowEditListingOption}
         />
         <Box
           sx={{

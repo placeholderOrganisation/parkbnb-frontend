@@ -14,6 +14,7 @@ import {
   StepThreeState,
   StepTwoState,
 } from "../types/create-listing-form.types";
+import { getItemFromCookies } from "./storage-utils";
 
 export const getListingFromListingOnMapResultsGivenId = (
   listingOnMaps: ListingOnMap[],
@@ -276,6 +277,22 @@ export const initializeEmptyParking = () => {
   };
 
   return newParkingObject;
+};
+
+export const isUserListingOwner = (
+  userId: string | null,
+  listing: Listing | null
+): boolean => {
+  if (!listing) {
+    return false;
+  }
+
+  if (!userId) {
+    const userIdInCookie = getItemFromCookies("user");
+    return userIdInCookie === listing.owner_id;
+  }
+
+  return userId === listing.owner_id;
 };
 
 // api wrappers

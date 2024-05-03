@@ -4,11 +4,16 @@ import ListingCardDesktopLayout from "./listing-card.desktop";
 import ListingCardMobileLayout from "./listing-card.mobile";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { handleGetParking } from "../../utils/parking-utils";
+import {
+  handleGetParking,
+  isUserListingOwner,
+} from "../../utils/parking-utils";
 import { Listing } from "../../types/global.types";
 import Loading from "../../components/custom-mui/loading.component";
 import { handleGetUserWithId } from "../../utils/user-utils";
 import { ListingOwnerUserObject } from "../../types/user-types";
+import { RootState } from "../../redux/global-store";
+import { useSelector } from "react-redux";
 
 const ListingCard = () => {
   const isDesktopView = isDesktop();
@@ -19,6 +24,8 @@ const ListingCard = () => {
   const { listingId } = useParams<{ listingId: string }>();
   const [fetchedListing, setFetchedListing] = useState<Listing | null>(null);
   const [owner, setOwner] = useState<ListingOwnerUserObject | null>(null);
+
+  const userId = useSelector((state: RootState) => state.user.id);
 
   useEffect(() => {
     if (!listingId) {
@@ -55,6 +62,8 @@ const ListingCard = () => {
     );
   }
 
+  const shouldShowEditListingOption = isUserListingOwner(userId, fetchedListing);
+  
   return (
     <Box
       sx={{
@@ -62,7 +71,11 @@ const ListingCard = () => {
         mb: { xs: 3, md: 6 },
       }}
     >
-      <Layout listing={fetchedListing} listingOwner={owner} />
+      <Layout
+        listing={fetchedListing}
+        listingOwner={owner}
+        shouldShowEditListingOption={shouldShowEditListingOption}
+      />
     </Box>
   );
 };

@@ -4,7 +4,8 @@ import ShareIcon from "../../share-icon/share-icon-component";
 import EditListing from "../edit-listing/edit-listing.component";
 
 const ListingCardHeaderDesktop = (props: ListingCardHeaderLayoutProps) => {
-  const { parsedHeading, subheading } = props;
+  const { parsedHeading, subheading, shouldShowEditListingOption } = props;
+
   return (
     <Stack spacing={0.5}>
       <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
@@ -20,17 +21,19 @@ const ListingCardHeaderDesktop = (props: ListingCardHeaderLayoutProps) => {
         >
           <ShareIcon />
         </Box>
-        <Box
-          sx={{
-            mt: 0.5,
-            display: "flex",
-            height: 24,
-            width: 42,
-            justifyContent: "center",
-          }}
-        >
-          <EditListing />
-        </Box>
+        {shouldShowEditListingOption && (
+          <Box
+            sx={{
+              mt: 0.5,
+              display: "flex",
+              height: 24,
+              width: 42,
+              justifyContent: "center",
+            }}
+          >
+            <EditListing />
+          </Box>
+        )}
       </Stack>
 
       <Typography

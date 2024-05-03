@@ -1,6 +1,7 @@
 import { Box, Stack, Typography } from "@mui/material";
 import { ListingCardHeaderLayoutProps } from "../listing-card-header.component";
 import ShareIcon from "../../share-icon/share-icon-component";
+import EditListing from "../edit-listing/edit-listing.component";
 
 const ListingCardHeaderDesktop = (props: ListingCardHeaderLayoutProps) => {
   const { parsedHeading, subheading } = props;
@@ -13,11 +14,22 @@ const ListingCardHeaderDesktop = (props: ListingCardHeaderLayoutProps) => {
             mt: 0.5,
             display: "flex",
             height: 24,
-            width: 48,
+            width: 42,
             justifyContent: "center",
           }}
         >
           <ShareIcon />
+        </Box>
+        <Box
+          sx={{
+            mt: 0.5,
+            display: "flex",
+            height: 24,
+            width: 42,
+            justifyContent: "center",
+          }}
+        >
+          <EditListing />
         </Box>
       </Stack>
 

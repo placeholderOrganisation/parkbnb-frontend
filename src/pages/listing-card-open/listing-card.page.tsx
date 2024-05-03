@@ -1,4 +1,4 @@
-import { Box, Container } from "@mui/material";
+import { Box } from "@mui/material";
 import { isDesktop } from "../../utils/display-utils";
 import ListingCardDesktopLayout from "./listing-card.desktop";
 import ListingCardMobileLayout from "./listing-card.mobile";

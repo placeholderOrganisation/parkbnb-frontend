@@ -10,6 +10,7 @@ import ScrapedListingInfo from "../../components/listing-card/scraped-listing-in
 import CardFooter from "../../components/listing-card/card-footer.container";
 import ListingFilters from "../../components/listing-card/listing-filters.component";
 import ShareIcon from "../../components/share-icon/share-icon-component";
+import EditListing from "../../components/listing-card/edit-listing/edit-listing.component";
 
 interface ListingCardLayoutProps {
   listing: Listing;
@@ -34,6 +35,16 @@ const ListingCardMobileLayout = (props: ListingCardLayoutProps) => {
           }}
         >
           <ShareIcon circularBorder />
+        </Box>
+        <Box
+          sx={{
+            position: "absolute",
+            top: 16,
+            right: 80,
+            zIndex: 1,
+          }}
+        >
+          <EditListing circularBorder />
         </Box>
         <ListingImageCarousel images={images} />
       </Box>

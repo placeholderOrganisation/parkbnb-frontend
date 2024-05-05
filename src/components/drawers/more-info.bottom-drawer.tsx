@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useState } from "react";
 import BottomDrawer from "./BottomDrawer";
 import { IconButton, Stack, Typography } from "@mui/material";
 import { InfoOutlined } from "@mui/icons-material";

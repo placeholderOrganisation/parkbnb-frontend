@@ -17,22 +17,35 @@ import SocialAuth from "../../components/auth/social-auth";
 import Copyright from "../../components/auth/copyright";
 import { COMPANY_NAME } from "../../constants";
 import { callAnalytics } from "../../utils/amplitude-utils";
+import { useEffect, useState } from "react";
+import SnackBar from "../../components/custom-mui/snackbars/snackbar";
 
 const SignIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [errorOnSignIn, setErrorOnSignIn] = useState(false);
 
   const onSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const response: HandleSignInResponse = await handleSignIn(event);
     const { user } = response;
     if (response.success) {
-      callAnalytics('user-sign-in')
+      callAnalytics("api_success_sign_in", {
+        strategy: "local",
+      });
       dispatch(setIsAuthed(true));
       dispatch(setUserData(user));
       navigate("/transition");
+    } else {
+      setErrorOnSignIn(true);
+      callAnalytics("api_failure_sign_in");
     }
   };
+
+  useEffect(() => {
+    callAnalytics("sign_in_page_viewed");
+  }, []);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -111,6 +124,12 @@ const SignIn = () => {
         </Box>
       </Box>
       <Copyright sx={{ my: 4 }} />
+      <SnackBar
+        open={errorOnSignIn}
+        severity="error"
+        message="Error signing in. Please try again."
+        handleClose={() => setErrorOnSignIn(false)}
+      />
     </Container>
   );
 };

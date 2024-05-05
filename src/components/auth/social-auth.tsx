@@ -1,9 +1,17 @@
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import { Button, Divider, Stack, Typography } from "@mui/material";
-import { handleSocialSignIn } from "../../utils/auth-utils";
+import { handleSocialSignIn as handleSocialSignInUtilFunc } from "../../utils/auth-utils";
+import { callAnalytics } from "../../utils/amplitude-utils";
 
 const SocialAuth = () => {
+  const handleSocialSignIn = async (provider: string) => {
+    callAnalytics("api_start_social_auth", {
+      strategy: provider,
+    });
+    handleSocialSignInUtilFunc(provider);
+  };
+
   return (
     <>
       <Stack direction="row" spacing={2}>

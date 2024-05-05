@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import {
   Button,
@@ -16,22 +16,34 @@ import { useDispatch } from "react-redux";
 import { setIsAuthed, setUserData } from "../../redux/user-slice";
 import SocialAuth from "../../components/auth/social-auth";
 import { callAnalytics } from "../../utils/amplitude-utils";
+import SnackBar from "../../components/custom-mui/snackbars/snackbar";
 
 const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [errorOnSignUp, setErrorOnSignup] = useState(false);
 
   const onSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const response: HandleSignUpResponse = await handleSignUp(event);
     const { user } = response;
     if (response.success) {
-      callAnalytics('user-sign-up')
+      callAnalytics("api_success_sign_up", {
+        strategy: "local",
+      });
       dispatch(setIsAuthed(true));
       dispatch(setUserData(user));
       navigate("/transition");
+    } else {
+      setErrorOnSignup(true);
+      callAnalytics("api_failure_sign_up");
     }
   };
+
+  useEffect(() => {
+    callAnalytics("sign_up_page_viewed");
+  }, []);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -135,6 +147,12 @@ const SignUp = () => {
         </Box>
       </Box>
       <Copyright sx={{ my: 4 }} />
+      <SnackBar
+        open={errorOnSignUp}
+        severity="error"
+        message="Error signing up. Please try again."
+        handleClose={() => setErrorOnSignup(false)}
+      />
     </Container>
   );
 };

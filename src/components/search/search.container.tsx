@@ -7,6 +7,7 @@ import { RootState } from "../../redux/global-store";
 import { Listing } from "../../types/global.types";
 import CitySearchSuggestionList from "./city-search-suggestions.component";
 import { setSearchQuery, filterSearchResults } from "../../redux/search-slice";
+import { callAnalytics } from "../../utils/amplitude-utils";
 
 interface SearchContainerProps {
   handleEndAdornmentClick: () => void;
@@ -29,6 +30,11 @@ const SearchContainer = (props: SearchContainerProps) => {
       let suggestion: Listing[] = searchResults.filter((listing) =>
         listing.address.city.toLowerCase().startsWith(value.toLowerCase())
       );
+
+      callAnalytics("search query changed", {
+        query: value,
+        suggestionsLength: suggestion.length,
+      });
 
       // Remove duplicates
       suggestion = suggestion.reduce((unique: Listing[], item: Listing) => {
@@ -55,7 +61,8 @@ const SearchContainer = (props: SearchContainerProps) => {
     setValue(value);
   };
 
-  const handleSuggestionClick = (cityName: string) => {
+  const handleSuggestionClick = (cityName: string, index: number) => {
+    callAnalytics("search suggestion clicked", { cityName, index });
     setValue(cityName);
     setIsSuggestionListOpen(false);
     dispatch(setSearchQuery(cityName));
@@ -82,8 +89,8 @@ const SearchContainer = (props: SearchContainerProps) => {
       {isSuggestionListOpen && (
         <CitySearchSuggestionList
           suggestions={suggestions}
-          handleSuggestionClick={(cityName) => {
-            handleSuggestionClick(cityName);
+          handleSuggestionClick={(cityName, index) => {
+            handleSuggestionClick(cityName, index);
           }}
         />
       )}

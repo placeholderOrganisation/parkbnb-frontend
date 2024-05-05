@@ -23,7 +23,7 @@ const DimensionTypeFilterContainer = (
         dimensionsInRedux={dimensionsInRedux}
         handleDimensionsFilterChange={handleDimensionsFilterChange}
       />
-      <MoreInfoDrawer label="Learn more about setting dimensions">
+      <MoreInfoDrawer label="Learn more about setting dimensions" location="dimensions_filter_create_listing">
         <Stack spacing={1}>
           <Box>
             <Typography variant="body1">

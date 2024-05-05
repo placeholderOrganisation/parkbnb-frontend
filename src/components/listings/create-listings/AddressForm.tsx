@@ -12,7 +12,7 @@ import {
   PriceFormTextFields,
 } from "../../../types/create-listing-form.types";
 import ProvincePicker from "./province-picker.component";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setStepOneAddressFormData,
@@ -20,6 +20,7 @@ import {
   setStepOneValidity,
 } from "../../../redux/step-one-slice";
 import { RootState } from "../../../redux/global-store";
+import { callAnalytics } from "../../../utils/amplitude-utils";
 
 const AddressFormTextField = (props: AddressFormTextFieldProps) => {
   const {
@@ -197,6 +198,10 @@ const AddressForm = () => {
     dispatch(setStepOnePricingFormData({ ...pricing, [name]: parsedValue }));
     dispatch(setStepOneValidity());
   };
+
+  useEffect(() => {
+    callAnalytics("address_and_payment_section_viewed");
+  }, []);
 
   return (
     <>

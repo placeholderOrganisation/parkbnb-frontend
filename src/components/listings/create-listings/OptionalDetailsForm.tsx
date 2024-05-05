@@ -2,9 +2,14 @@ import Typography from "@mui/material/Typography";
 import { Box, Grid } from "@mui/material";
 import ImagePicker from "./image-picker/ImagePicker.component";
 import { useDispatch, useSelector } from "react-redux";
-import { setDescription, setStepThreeValidity } from "../../../redux/step-three-slice";
+import {
+  setDescription,
+  setStepThreeValidity,
+} from "../../../redux/step-three-slice";
 import { RootState } from "../../../redux/global-store";
 import DescriptionField from "./DescriptionField.component";
+import { callAnalytics } from "../../../utils/amplitude-utils";
+import { useEffect } from "react";
 
 export default function OptionalDetailsForm() {
   const dispatch = useDispatch();
@@ -23,6 +28,10 @@ export default function OptionalDetailsForm() {
     dispatch(setDescription(event.target.value));
     updateStepThreeValidity();
   };
+
+  useEffect(() => {
+    callAnalytics("images_and_description_section_viewed");
+  }, []);
 
   return (
     <>

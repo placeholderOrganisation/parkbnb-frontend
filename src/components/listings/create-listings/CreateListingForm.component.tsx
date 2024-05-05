@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Container,
@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/global-store";
 import BottomDrawer from "../../drawers/BottomDrawer";
 import PublishListing from "./publish-listing.component";
+import { callAnalytics } from "../../../utils/amplitude-utils";
 
 const getStepContent = (step: number) => {
   switch (step) {
@@ -67,6 +68,10 @@ const CreateListingForm = () => {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+
+  useEffect(() => {
+    callAnalytics("create_listing_page_opened");
+  }, []);
 
   return (
     <>

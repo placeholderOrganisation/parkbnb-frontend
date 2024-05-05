@@ -15,6 +15,8 @@ import {
 } from "../../../redux/step-two-slice";
 import VehicleTypeFilterContainer from "./filter-form-components/vehicle-type.container";
 import DimensionTypeFilterContainer from "./filter-form-components/dimension-type.container";
+import { callAnalytics } from "../../../utils/amplitude-utils";
+import { useEffect } from "react";
 
 export default function FiltersForm() {
   const dispatch = useDispatch();
@@ -58,6 +60,10 @@ export default function FiltersForm() {
     dispatch(setNumSpaces(numSpaces));
     updateStepTwoValidity();
   };
+
+  useEffect(() => {
+    callAnalytics("filters_section_viewed");
+  }, []);
 
   return (
     <>

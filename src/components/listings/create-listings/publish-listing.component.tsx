@@ -20,6 +20,7 @@ import {
   handleUpdateUserWithId,
   isContactNumberValid,
 } from "../../../utils/user-utils";
+import { callAnalytics } from "../../../utils/amplitude-utils";
 
 interface PublishListingProps {
   shouldMakeApiCall: boolean;
@@ -58,10 +59,15 @@ const PublishListing = (props: PublishListingProps) => {
 
       handleGeocode(address).then((response) => {
         if (response.success) {
+          callAnalytics("api_success_geocode", {
+            lat: response.lat,
+            lng: response.lng,
+            address,
+          });
           setAddressWithLatLng({ lat: response.lat!, lng: response.lng! });
           setIsCreatingListing(true);
         } else {
-          console.log("error getting lat lng");
+          callAnalytics("api_failure_geocode");
         }
       });
     }
@@ -82,9 +88,13 @@ const PublishListing = (props: PublishListingProps) => {
       handleCreateParking(listingData).then((response) => {
         if (response.success) {
           setIsCreatingListing(false);
+          callAnalytics("api_success_create_listing");
+          callAnalytics("listing_created", {
+            listing: listingData,
+          });
           navigate(`/?new_listing=${response.data._id}`);
         } else {
-          console.log("error creating listing");
+          callAnalytics("api_failure_create_listing");
         }
       });
     }
@@ -108,6 +118,11 @@ const PublishListing = (props: PublishListingProps) => {
   if (!isAuthed) {
     const redirectDestinationAfterAuth = "/create-listing";
     const errorMessage = "You need to be signed in to create a listing.";
+
+    callAnalytics("error_creating_listing", {
+      code: "unauthed_user_tried_to_create_listing",
+    });
+
     return (
       <PublishListingUnAuthedError
         redirectDestinationAfterAuth={redirectDestinationAfterAuth}
@@ -117,6 +132,10 @@ const PublishListing = (props: PublishListingProps) => {
   }
 
   if (!contactNumber) {
+    callAnalytics("error_creating_listing", {
+      code: "user_missing_contact_info_tried_to_create_listing",
+    });
+
     return <PublishListingMissingContacInfoError />;
   }
 

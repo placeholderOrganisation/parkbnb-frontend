@@ -8,6 +8,8 @@ import VehicleTypeFilter from "../../filters/vehicle-type-filter.component";
 import DimensionsFilter from "../../filters/dimensions-filter.component";
 import NumSpacesFilter from "../../filters/num-spaces-filter.component";
 import { CustomImage } from "./image-picker/image-picker-custom-image.component";
+import { useEffect } from "react";
+import { callAnalytics } from "../../../utils/amplitude-utils";
 
 const pricingFilterFields = [
   {
@@ -126,6 +128,10 @@ const Review = () => {
       ),
     },
   ];
+
+  useEffect(() => {
+    callAnalytics("review_section_viewed");
+  }, []);
 
   return (
     <Stack spacing={3}>

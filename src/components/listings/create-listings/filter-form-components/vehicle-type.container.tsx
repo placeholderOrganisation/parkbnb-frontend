@@ -15,7 +15,7 @@ const VehicleTypeFilterContainer = (props: VehicleTypeFilterContainerProps) => {
         vehicleTypesInRedux={vehicleTypesInRedux}
         handleVehicleTypesFilterChange={handleVehicleTypesFilterChange}
       />
-      <MoreInfoDrawer label="Learn more about setting vehicle types">
+      <MoreInfoDrawer label="Learn more about setting vehicle types" location="vehicle_filter_create_listing">
         <Stack spacing={1}>
           <Box>
             <Typography variant="body1">

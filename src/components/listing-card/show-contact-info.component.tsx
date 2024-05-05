@@ -1,11 +1,14 @@
 import { Box, Button, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BottomDrawer from "../drawers/BottomDrawer";
 import PublishListingUnAuthedError from "../listings/create-listings/publish-listing-errors/unauth-error.component";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/global-store";
 import { hasUserAuthenticatedInThisSession } from "../../utils/auth-utils";
+import { callAnalytics } from "../../utils/amplitude-utils";
+import { openInNewTab } from "../../utils/browser-utils";
+import { interestMessageBody } from "../../constants";
 
 interface ShowContactInfoComponentProps {
   contactNumber: string;
@@ -26,10 +29,31 @@ const ShowContactInfoComponent = (props: ShowContactInfoComponentProps) => {
 
   // button is only rendered when user is not authed
   const handleClick = () => {
+    callAnalytics("error_viewing_contact_info", {
+      code: "unauthed_user_tried_view_contact_info",
+    });
     setIsErrorDrawerOpen(true);
   };
 
+  const handleContactHostClick = () => {
+    const currentUrl = window.location.href;
+    callAnalytics("contact_host_clicked", {
+      listingId,
+    });
+    openInNewTab(
+      `sms:${contactNumber}?&body=${interestMessageBody} ${currentUrl}`
+    );
+  };
+
   if (isAuthed || hasUserAuthenticatedInPastFiveMins) {
+    useEffect(() => {
+      callAnalytics("success_viewing_contact_info", {
+        listingId,
+        hasUserAuthenticatedInPastFiveMins,
+        isAuthed,
+      });
+    }, []);
+
     return (
       <Box
         sx={{
@@ -45,6 +69,7 @@ const ShowContactInfoComponent = (props: ShowContactInfoComponentProps) => {
             fontWeight: "bold",
             ml: 0.5,
           }}
+          onClick={handleContactHostClick}
         >
           {contactNumber}
         </Typography>

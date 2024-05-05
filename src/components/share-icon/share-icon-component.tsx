@@ -4,6 +4,7 @@ import BottomDrawer from "../drawers/BottomDrawer";
 import { useState } from "react";
 import SnackBar from "../custom-mui/snackbars/snackbar";
 import SharingOptions from "./sharing-options.component";
+import { callAnalytics } from "../../utils/amplitude-utils";
 
 interface ShareIconProps {
   circularBorder?: boolean;
@@ -19,16 +20,22 @@ const ShareIcon = (props: ShareIconProps) => {
   const currentUrl = window.location.href;
 
   const handleOpenShareDrawer = () => {
+    callAnalytics("share_icon_drawer_opened");
     setOpenShareDrawer(true);
   };
 
-  const handleSuccessCopy = () => {
+  const handleCloseShareDrawer = () => {
+    callAnalytics("share_icon_drawer_closed");
     setOpenShareDrawer(false);
+  };
+
+  const handleSuccessCopy = () => {
+    handleCloseShareDrawer();
     setOpenSnackBar(true);
   };
 
   const handleErrorCopy = () => {
-    setOpenShareDrawer(false);
+    handleCloseShareDrawer();
     setOpenSnackBar(true);
     setErrorDuringCopy(true);
   };
@@ -53,12 +60,7 @@ const ShareIcon = (props: ShareIconProps) => {
       >
         <ShareOutlinedIcon sx={{ color: "primary.main", cursor: "pointer" }} />
       </Box>
-      <BottomDrawer
-        open={openShareDrawer}
-        handleClose={() => {
-          setOpenShareDrawer(false);
-        }}
-      >
+      <BottomDrawer open={openShareDrawer} handleClose={handleCloseShareDrawer}>
         <Typography variant="h4">Share this parking</Typography>
         <SharingOptions
           currentUrl={currentUrl}

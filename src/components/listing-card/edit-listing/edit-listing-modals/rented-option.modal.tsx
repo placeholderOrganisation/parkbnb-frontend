@@ -7,6 +7,7 @@ import { getItemFromCookies } from "../../../../utils/storage-utils";
 import { handleMarkParkingAsRented } from "../../../../utils/parking-utils";
 import { setUserSelectedListing } from "../../../../redux/search-slice";
 import { useNavigate } from "react-router-dom";
+import { callAnalytics } from "../../../../utils/amplitude-utils";
 
 interface RentedOptionModalProps {
   loadingInModal: boolean;
@@ -53,10 +54,12 @@ const RentedOptionModal = (props: RentedOptionModalProps) => {
           if (userSelectedListing?._id === fetchedListing._id) {
             dispatch(setUserSelectedListing(null));
           }
+          callAnalytics("api_success_rented_listing");
           handleModalClose();
           navigate("/");
         } else {
           setErrorStateForOption();
+          callAnalytics("api_failure_rented_listing");
           console.error("Error marking parking as rented", response.error);
         }
       }

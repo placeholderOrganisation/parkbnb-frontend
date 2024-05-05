@@ -3,6 +3,7 @@ import { useState } from "react";
 import EditOutlined from "@mui/icons-material/EditOutlined";
 import BottomDrawer from "../../drawers/BottomDrawer";
 import EditListingOptions from "./edit-listing-options.component";
+import { callAnalytics } from "../../../utils/amplitude-utils";
 
 interface EditListingProps {
   circularBorder?: boolean;
@@ -13,10 +14,12 @@ const EditListing = (props: EditListingProps) => {
   const [openDrawer, setOpenDrawer] = useState(false);
 
   const handleOpenDrawer = () => {
+    callAnalytics("edit_listing_drawer_opened");
     setOpenDrawer(true);
   };
 
   const handleCloseDrawer = () => {
+    callAnalytics("edit_listing_drawer_closed");
     setOpenDrawer(false);
   };
 

@@ -9,6 +9,7 @@ import {
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { copyToClipboard, openInNewTab } from "../../utils/browser-utils";
 import { shareableMessaBody } from "../../constants";
+import { callAnalytics } from "../../utils/amplitude-utils";
 
 interface SharingOptionsProps {
   currentUrl: string;
@@ -22,18 +23,34 @@ const SharingOptions = (props: SharingOptionsProps) => {
   const handleCopyOptionClick = async () => {
     const isCopied = await copyToClipboard(currentUrl);
     if (isCopied) {
+      callAnalytics("share_icon_drawer_option_clicked", {
+        option: "copy",
+        staus: "success",
+      });
       handleSuccessCopy();
     } else {
+      callAnalytics("share_icon_drawer_option_clicked", {
+        option: "copy",
+        staus: "failed",
+      });
       handleErrorCopy();
     }
   };
 
   const handleSmsOptionClick = () => {
+    callAnalytics("share_icon_drawer_option_clicked", {
+      option: "sms",
+    });
     openInNewTab(`sms:?&body=${shareableMessaBody} ${currentUrl}`);
   };
 
   const handleWhatsappOptionClick = () => {
-    openInNewTab(`https://wa.me//send?text=${shareableMessaBody} ${currentUrl}`);
+    callAnalytics("share_icon_drawer_option_clicked", {
+      option: "whatsapp",
+    });
+    openInNewTab(
+      `https://wa.me//send?text=${shareableMessaBody} ${currentUrl}`
+    );
   };
 
   const SNS = [

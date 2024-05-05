@@ -15,6 +15,7 @@ import { ListingOwnerUserObject } from "../../types/user-types";
 import { RootState } from "../../redux/global-store";
 import { useDispatch, useSelector } from "react-redux";
 import { setFetchedListing as setFetchedListingInRedux } from "../../redux/search-slice";
+import { callAnalytics } from "../../utils/amplitude-utils";
 
 const ListingCard = () => {
   const isDesktopView = isDesktop();
@@ -46,14 +47,28 @@ const ListingCard = () => {
               setOwner(owner);
               setFetchedListing(listing);
               dispatch(setFetchedListingInRedux(listing));
+              callAnalytics("api_success_fetch_listing_owner", {
+                listingId,
+              });
             })
             .catch((error) => {
-              console.error("Error fetching owner", error);
+              callAnalytics("api_failure_fetch_listing_owner", {
+                listingId,
+                error,
+              });
             });
         }
+        callAnalytics("api_success_fetch_listing", {
+          listingId,
+          listing,
+          isScraped: listing.is_scraped,
+        });
       })
       .catch((error) => {
-        console.error("Error fetching parking", error);
+        callAnalytics("api_failure_fetch_listing", {
+          listingId,
+          error,
+        });
       });
   }, [listingId]);
 

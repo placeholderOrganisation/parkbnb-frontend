@@ -7,6 +7,7 @@ import { setUserSelectedListing } from "../../../redux/search-slice";
 import { useNavigate } from "react-router-dom";
 import { isDesktop } from "../../../utils/display-utils";
 import { openInNewTab } from "../../../utils/browser-utils";
+import { callAnalytics } from "../../../utils/amplitude-utils";
 
 const ParkingCardContainerForMap = () => {
   const userSelectedListing = useSelector(
@@ -26,6 +27,10 @@ const ParkingCardContainerForMap = () => {
     listingId: string
   ) => {
     e.stopPropagation();
+    callAnalytics("listing_card_clicked", {
+      userSelectedListing,
+      location: "map",
+    });
     if (isDesktopView) {
       openInNewTab(`/listing/${listingId}`);
       return;

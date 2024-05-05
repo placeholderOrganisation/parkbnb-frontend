@@ -9,6 +9,7 @@ import { Listing } from "../../../../types/global.types";
 import dayjs from "dayjs";
 import { setUserSelectedListingUsingListingId } from "../../../../redux/search-slice";
 import { openInNewTab } from "../../../../utils/browser-utils";
+import { callAnalytics } from "../../../../utils/amplitude-utils";
 
 export enum SortOption {
   Date,
@@ -58,6 +59,9 @@ const ListviewComponent = () => {
   ) => {
     e.stopPropagation();
     dispatch(setUserSelectedListingUsingListingId(listingId));
+    callAnalytics("listing_card_clicked", {
+      location: "listview",
+    });
     if (isDesktopView) {
       openInNewTab(`/listing/${listingId}`);
       return;

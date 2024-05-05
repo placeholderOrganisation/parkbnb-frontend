@@ -21,6 +21,7 @@ import {
   storageTypeInitialState,
   vehicleTypeInitialState,
 } from "../../../redux/search-slice.util";
+import { callAnalytics } from "../../../utils/amplitude-utils";
 
 const SearchAndFilter = () => {
   const [isFilterSectionOpen, setIsFilterSectionOpen] = useState(false);
@@ -28,6 +29,7 @@ const SearchAndFilter = () => {
   const isDesktopView = isDesktop();
 
   const handleResetFilters = () => {
+    callAnalytics("filters_reset");
     // reset filters in redux to default
     dispatch(setAmenitiesFilter(amenitiesInitialState));
     dispatch(setMonthlyPriceFilter(monthlyPriceInitialState));
@@ -42,15 +44,18 @@ const SearchAndFilter = () => {
 
   const handleApplyFilters = () => {
     // filters are already set in redux via individual filter components
+    callAnalytics("filters_applied");
     dispatch(filterSearchResults());
     handleClosingFilterSection();
   };
 
   const handleOpeningFilterSection = () => {
+    callAnalytics("filter_section_opened");
     setIsFilterSectionOpen(true);
   };
 
   const handleClosingFilterSection = () => {
+    callAnalytics("filter_section_closed");
     setIsFilterSectionOpen(false);
   };
 

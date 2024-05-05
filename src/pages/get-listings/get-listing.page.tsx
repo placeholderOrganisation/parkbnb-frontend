@@ -20,6 +20,7 @@ import { Listing } from "../../types/global.types";
 import { RootState } from "../../redux/global-store";
 import { NAVBAR_HEIGHT_MOBILE } from "../../components/navbar/navbar-header.component";
 import { getURIParams } from "../../utils/browser-utils";
+import { callAnalytics } from "../../utils/amplitude-utils";
 
 const GetListing = () => {
   const dispatch = useDispatch();
@@ -78,6 +79,9 @@ const GetListing = () => {
       id
     );
     dispatch(setUserSelectedListing(selectedListing));
+    callAnalytics("listing_icon_clicked_in_map", {
+      userSelectedListing: selectedListing,
+    });
   };
 
   const handleMoveEndInMap = (listingIds: string[]) => {

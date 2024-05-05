@@ -30,6 +30,7 @@ const ListingImageCarousel = (props: ListingImageCarouselProps) => {
               height: isDesktopView ? "300px" : "100%",
               maxHeight: "70vh",
               objectFit: isDesktopView ? "cover" : "contain",
+              borderRadius: isDesktopView ? "25px" : "0px"
             }}
           />
         </Box>

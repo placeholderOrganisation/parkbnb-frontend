@@ -16,6 +16,7 @@ import { HandleSignInResponse, handleSignIn } from "../../utils/auth-utils";
 import SocialAuth from "../../components/auth/social-auth";
 import Copyright from "../../components/auth/copyright";
 import { COMPANY_NAME } from "../../constants";
+import { callAnalytics } from "../../utils/amplitude-utils";
 
 const SignIn = () => {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ const SignIn = () => {
     const response: HandleSignInResponse = await handleSignIn(event);
     const { user } = response;
     if (response.success) {
+      callAnalytics('user-sign-in')
       dispatch(setIsAuthed(true));
       dispatch(setUserData(user));
       navigate("/transition");

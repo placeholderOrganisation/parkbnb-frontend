@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import defaultTheme from "./theme/theme";
@@ -10,8 +11,13 @@ import GetListing from "./pages/get-listings/get-listing.page";
 import NavbarHeader from "./components/navbar/navbar-header.component";
 import AuthTransition from "./pages/transition/auth-transition.page";
 import ListingCard from "./pages/listing-card-open/listing-card.page";
+import { initAmplitude } from "./utils/amplitude-utils";
 
 const App = () => {
+  useEffect(() => {
+    initAmplitude();
+  }, []);
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Router>

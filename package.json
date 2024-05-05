@@ -12,6 +12,7 @@
     "deploy": "cp -r dist/* /var/www/netflix/client/"
   },
   "dependencies": {
+    "@amplitude/analytics-browser": "^2.7.1",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.10",

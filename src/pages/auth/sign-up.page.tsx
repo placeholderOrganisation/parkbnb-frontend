@@ -15,6 +15,7 @@ import { HandleSignUpResponse, handleSignUp } from "../../utils/auth-utils";
 import { useDispatch } from "react-redux";
 import { setIsAuthed, setUserData } from "../../redux/user-slice";
 import SocialAuth from "../../components/auth/social-auth";
+import { callAnalytics } from "../../utils/amplitude-utils";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const SignUp = () => {
     const response: HandleSignUpResponse = await handleSignUp(event);
     const { user } = response;
     if (response.success) {
+      callAnalytics('user-sign-up')
       dispatch(setIsAuthed(true));
       dispatch(setUserData(user));
       navigate("/transition");

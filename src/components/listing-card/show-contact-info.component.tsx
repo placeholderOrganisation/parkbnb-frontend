@@ -68,6 +68,7 @@ const ShowContactInfoComponent = (props: ShowContactInfoComponentProps) => {
           sx={{
             fontWeight: "bold",
             ml: 0.5,
+            cursor: "pointer",
           }}
           onClick={handleContactHostClick}
         >

@@ -16,6 +16,7 @@ import { RootState } from "../../redux/global-store";
 import { useDispatch, useSelector } from "react-redux";
 import { setFetchedListing as setFetchedListingInRedux } from "../../redux/search-slice";
 import { callAnalytics } from "../../utils/amplitude-utils";
+import { getURIParams } from "../../utils/browser-utils";
 
 const ListingCard = () => {
   const isDesktopView = isDesktop();
@@ -23,6 +24,8 @@ const ListingCard = () => {
     ? ListingCardDesktopLayout
     : ListingCardMobileLayout;
 
+  const uriParams = getURIParams();
+  const { channel } = uriParams;
   const { listingId } = useParams<{ listingId: string }>();
   const [fetchedListing, setFetchedListing] = useState<Listing | null>(null);
   const [owner, setOwner] = useState<ListingOwnerUserObject | null>(null);
@@ -71,6 +74,12 @@ const ListingCard = () => {
         });
       });
   }, [listingId]);
+
+  useEffect(() => {
+    callAnalytics("listing_card_opened_via_share", {
+      channel,
+    });
+  }, []);
 
   if (!fetchedListing) {
     return (

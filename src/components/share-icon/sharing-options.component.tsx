@@ -21,7 +21,8 @@ const SharingOptions = (props: SharingOptionsProps) => {
   const { currentUrl, handleSuccessCopy, handleErrorCopy } = props;
 
   const handleCopyOptionClick = async () => {
-    const isCopied = await copyToClipboard(currentUrl);
+    const currentUrlWithChannel = `${currentUrl}?channel=copy`;
+    const isCopied = await copyToClipboard(currentUrlWithChannel);
     if (isCopied) {
       callAnalytics("share_icon_drawer_option_clicked", {
         option: "copy",
@@ -38,18 +39,20 @@ const SharingOptions = (props: SharingOptionsProps) => {
   };
 
   const handleSmsOptionClick = () => {
+    const currentUrlWithChannel = `${currentUrl}?channel=sms`;
     callAnalytics("share_icon_drawer_option_clicked", {
       option: "sms",
     });
-    openInNewTab(`sms:?&body=${shareableMessaBody} ${currentUrl}`);
+    openInNewTab(`sms:?&body=${shareableMessaBody} ${currentUrlWithChannel}`);
   };
 
   const handleWhatsappOptionClick = () => {
+    const currentUrlWithChannel = `${currentUrl}?channel=whatsapp`;
     callAnalytics("share_icon_drawer_option_clicked", {
       option: "whatsapp",
     });
     openInNewTab(
-      `https://wa.me//send?text=${shareableMessaBody} ${currentUrl}`
+      `https://wa.me//send?text=${shareableMessaBody} ${currentUrlWithChannel}`
     );
   };
 

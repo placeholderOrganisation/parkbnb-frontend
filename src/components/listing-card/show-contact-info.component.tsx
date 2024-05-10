@@ -36,12 +36,12 @@ const ShowContactInfoComponent = (props: ShowContactInfoComponentProps) => {
   };
 
   const handleContactHostClick = () => {
-    // const currentUrl = window.location.href;
+    const currentUrl = window.location.href;
     callAnalytics("contact_host_clicked", {
       listingId,
     });
     openInNewTab(
-      `sms:${contactNumber}?&body=${interestMessageBody}`
+      `sms:${contactNumber}?&body=${interestMessageBody} ${currentUrl}`
     );
   };
 

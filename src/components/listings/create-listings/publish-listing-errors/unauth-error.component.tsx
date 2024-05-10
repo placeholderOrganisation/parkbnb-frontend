@@ -27,7 +27,7 @@ const PublishListingUnAuthedError = (
         position: "relative",
       }}
     >
-      <Typography variant="h4">Something went wrong</Typography>
+      <Typography variant="h4">Sign in to proceed</Typography>
       <Typography
         variant="body1"
         sx={{

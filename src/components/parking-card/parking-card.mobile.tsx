@@ -71,6 +71,7 @@ const Amenities = (props: { parking: Listing }) => {
 const Title = (props: { parking: Listing }) => {
   const { parking } = props;
   const storage_type = parseStorageType(parking.filters.storage_type);
+  const isNotScraped = Boolean(parking.is_scraped) === false;
   return (
     <Stack>
       <Stack
@@ -81,9 +82,7 @@ const Title = (props: { parking: Listing }) => {
         }}
       >
         <Typography variant="body1">${parking.price.monthly}/month</Typography>
-        {/* <Typography variant="body1">•</Typography>
-        <Typography variant="body1">${parking.price.daily}/day</Typography> */}
-        <VerifiedIcon fontSize="small" color="info" sx={{ ml: 1 }} />
+        {isNotScraped && <VerifiedIcon fontSize="small" color="info" sx={{ ml: 1 }} />}
       </Stack>
       <Stack
         direction="row"

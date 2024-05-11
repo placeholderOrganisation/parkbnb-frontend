@@ -8,7 +8,9 @@ interface ListingCardChipsProps {
 
 const ListingCardChips = (props: ListingCardChipsProps) => {
   const { listed_on } = props;
-  const parsedlistedOn = getMonthsPassedOrDaysOrHours(listed_on);
+  const getMonthsPassedOrDaysOrHoursString = getMonthsPassedOrDaysOrHours(listed_on);
+  const parsedlistedOn = `Posted ${getMonthsPassedOrDaysOrHoursString}`;
+
   return (
     <Stack direction="row">
       <Chip label={parsedlistedOn} variant="filled" color="primary" />

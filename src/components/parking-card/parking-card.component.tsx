@@ -10,6 +10,7 @@ export interface ParkingCardProps {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     listingId?: string
   ) => void;
+  fromParkingCardContainer?: boolean;
 }
 
 export interface ParkingCardLayoutProps {
@@ -20,10 +21,11 @@ export interface ParkingCardLayoutProps {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     listingId?: string
   ) => void;
+  fromParkingCardContainer: boolean;
 }
 
 const ParkingCard = (props: ParkingCardProps) => {
-  const { parking, showIcon, icon = null, handleIconClick = () => {} } = props;
+  const { parking, showIcon, icon = null, handleIconClick = () => {}, fromParkingCardContainer = false } = props;
 
   return (
     <Box
@@ -36,6 +38,7 @@ const ParkingCard = (props: ParkingCardProps) => {
         showIcon={showIcon}
         icon={icon}
         handleIconClick={handleIconClick}
+        fromParkingCardContainer={fromParkingCardContainer}
       />
     </Box>
   );

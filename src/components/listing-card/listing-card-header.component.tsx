@@ -40,7 +40,8 @@ const ListingCardHeader = (props: ListingCardHeaderProps) => {
     subheading = state;
   }
 
-  const parsedlistedOn = getMonthsPassedOrDaysOrHours(listed_on);
+  const getMonthsPassedOrDaysOrHoursString = getMonthsPassedOrDaysOrHours(listed_on);
+  const parsedlistedOn = `Posted ${getMonthsPassedOrDaysOrHoursString}`;
   const isDesktopView = isDesktop();
   return isDesktopView ? (
     <ListingCardHeaderDesktop

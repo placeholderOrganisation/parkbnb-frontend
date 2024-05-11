@@ -17,13 +17,20 @@ import {
 } from "../../utils/parking-utils";
 
 import VerifiedIcon from "@mui/icons-material/Verified";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 
-const Amenities = (props: { parking: Listing }) => {
-  const { parking } = props;
+const Amenities = (props: {
+  parking: Listing;
+  fromParkingCardContainer: boolean;
+}) => {
+  const { parking, fromParkingCardContainer } = props;
   const vehicle_type = parseVehicleType(parking.filters.vehicle_type);
-  const listed_on = getMonthsPassedOrDaysOrHours(parking.listed_on);
+  const getMonthsPassedOrDaysOrHoursString = getMonthsPassedOrDaysOrHours(
+    parking.listed_on
+  );
+  const parsedlistedOn = `Posted ${getMonthsPassedOrDaysOrHoursString}`;
   const attributesToShow = [
     FILTER_ENUMS.SECURITY_CAMERAS,
     FILTER_ENUMS.FULL_DAY_ACCESS,
@@ -60,9 +67,19 @@ const Amenities = (props: { parking: Listing }) => {
             </Stack>
           );
         })}
-        <Typography variant="subtitle2" color="black">
-          {listed_on}
-        </Typography>
+        <Stack spacing={1}>
+          <Typography variant="subtitle2" color="black">
+            {parsedlistedOn}
+          </Typography>
+          {fromParkingCardContainer ? (
+            <Stack direction="row" spacing={0.5}>
+              <Typography variant="subtitle2" color="primary">
+                View Details
+              </Typography>
+              <ArrowForwardIcon color="primary" fontSize="small" />
+            </Stack>
+          ) : null}
+        </Stack>
       </Stack>
     </>
   );
@@ -82,7 +99,9 @@ const Title = (props: { parking: Listing }) => {
         }}
       >
         <Typography variant="body1">${parking.price.monthly}/month</Typography>
-        {isNotScraped && <VerifiedIcon fontSize="small" color="info" sx={{ ml: 1 }} />}
+        {isNotScraped && (
+          <VerifiedIcon fontSize="small" color="info" sx={{ ml: 1 }} />
+        )}
       </Stack>
       <Stack
         direction="row"
@@ -97,7 +116,13 @@ const Title = (props: { parking: Listing }) => {
 };
 
 const ParkingCardMobile = (props: ParkingCardLayoutProps) => {
-  const { parking, showIcon, icon, handleIconClick } = props;
+  const {
+    parking,
+    showIcon,
+    icon,
+    handleIconClick,
+    fromParkingCardContainer,
+  } = props;
 
   return (
     <Card
@@ -112,7 +137,12 @@ const ParkingCardMobile = (props: ParkingCardLayoutProps) => {
             {showIcon && icon}
           </IconButton>
         }
-        subheader={<Amenities parking={parking} />}
+        subheader={
+          <Amenities
+            parking={parking}
+            fromParkingCardContainer={fromParkingCardContainer}
+          />
+        }
         title={<Title parking={parking} />}
       />
     </Card>

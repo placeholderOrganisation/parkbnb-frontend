@@ -65,6 +65,7 @@ const ParkingCardContainerForMap = () => {
         showIcon
         icon={<CloseIcon />}
         handleIconClick={closeParkingCard}
+        fromParkingCardContainer={true}
       />
     </Box>
   );

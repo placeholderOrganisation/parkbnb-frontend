@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { setUserLocation } from "../../redux/search-slice";
 import { useState } from "react";
 import SnackBar from "../custom-mui/snackbars/snackbar";
+import { callAnalytics } from "../../utils/amplitude-utils";
 
 interface NearMeSuggestionProps {
   handleCloseSuggestionList: () => void;
@@ -33,6 +34,10 @@ const NearMeSuggestion = (props: NearMeSuggestionProps) => {
 
   const handleNearMeSuccessCallback = (pos: GeolocationPosition) => {
     const crd = pos.coords;
+    callAnalytics("near me search clicked", {
+      crd,
+      success: true,
+    });
     dispatch(
       setUserLocation({ latitude: crd.latitude, longitude: crd.longitude })
     );
@@ -40,7 +45,11 @@ const NearMeSuggestion = (props: NearMeSuggestionProps) => {
     setSuccess(true);
   };
 
-  const handleNearMeErrorCallback = () => {
+  const handleNearMeErrorCallback = (error: any) => {
+    callAnalytics("near me search clicked", {
+      error,
+      success: false,
+    });
     setError(true);
     setLoading(false);
   };
@@ -130,7 +139,7 @@ const NearMeSuggestion = (props: NearMeSuggestionProps) => {
         handleClose={() => handleCloseSuggestionListAndSnackBar("error")}
         severity="error"
         message="Error while fetching your location. Please check your browser settings."
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         autoHideDuration={4000}
       />
       <SnackBar
@@ -138,7 +147,7 @@ const NearMeSuggestion = (props: NearMeSuggestionProps) => {
         handleClose={() => handleCloseSuggestionListAndSnackBar("success")}
         severity="success"
         message="Location fetched successfully."
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         autoHideDuration={2000}
       />
     </>

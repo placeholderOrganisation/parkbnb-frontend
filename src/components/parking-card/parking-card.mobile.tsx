@@ -74,7 +74,7 @@ const Amenities = (props: {
           {fromParkingCardContainer ? (
             <Stack direction="row" spacing={0.5}>
               <Typography variant="subtitle2" color="primary">
-                View Details
+                View details
               </Typography>
               <ArrowForwardIcon color="primary" fontSize="small" />
             </Stack>

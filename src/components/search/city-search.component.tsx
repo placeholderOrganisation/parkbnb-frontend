@@ -56,6 +56,9 @@ const CitySearch = (props: CitySearchProps) => {
           </>
         ),
       }}
+      inputProps={{
+        autoComplete: "off",
+      }}
     />
   );
 };

@@ -20,3 +20,7 @@ export const dimensionsInitialState = {
 };
 
 export const numSpacesFilterInitialState = 1;
+
+export const userLocationLatitudeInitialState = -1;
+
+export const userLocationLongitudeInitialState = -1;

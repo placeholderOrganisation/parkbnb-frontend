@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 
 import { Box } from "@mui/material";
 import CitySearch from "./city-search.component";
@@ -39,7 +39,8 @@ const SearchContainer = (props: SearchContainerProps) => {
       // Remove duplicates
       suggestion = suggestion.reduce((unique: Listing[], item: Listing) => {
         return unique.findIndex(
-          (uItem) => uItem.address.city === item.address.city
+          (uItem) =>
+            uItem.address.city.toLowerCase() === item.address.city.toLowerCase()
         ) >= 0
           ? unique
           : [...unique, item];
@@ -69,6 +70,19 @@ const SearchContainer = (props: SearchContainerProps) => {
     dispatch(filterSearchResults());
   };
 
+  const onCitySearchFocus = () => {
+    setIsSuggestionListOpen(true);
+  };
+
+  const handleCloseSuggestionList = (
+    e?: MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    if (e) {
+      e.stopPropagation();
+    }
+    setIsSuggestionListOpen(false);
+  };
+
   return (
     <Box
       sx={{
@@ -80,6 +94,7 @@ const SearchContainer = (props: SearchContainerProps) => {
         width: ["calc(100% - 32px)", "100%"],
         bgcolor: "white",
       }}
+      onClick={onCitySearchFocus}
     >
       <CitySearch
         value={value}
@@ -92,6 +107,7 @@ const SearchContainer = (props: SearchContainerProps) => {
           handleSuggestionClick={(cityName, index) => {
             handleSuggestionClick(cityName, index);
           }}
+          handleCloseSuggestionList={handleCloseSuggestionList}
         />
       )}
     </Box>

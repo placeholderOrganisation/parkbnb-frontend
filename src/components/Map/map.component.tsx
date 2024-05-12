@@ -15,6 +15,9 @@ import { useEffect, useRef } from "react";
 import { highlightedLayerStyle, layerStyle } from "./layer-styling";
 import { getURIParams } from "../../utils/browser-utils";
 import { getListingFromListingOnMapResultsGivenId } from "../../utils/parking-utils";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/global-store";
+import { userLocationLatitudeInitialState, userLocationLongitudeInitialState } from "../../redux/search-slice.util";
 
 const TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN as string;
 
@@ -41,11 +44,26 @@ export const MapComponent = (props: MapComponentProps) => {
       const newlyCreatedListing = getListingFromListingOnMapResultsGivenId(
         listings,
         new_listing
-      );      
+      );
       const { lat, lng, zoom } = getListingCoords(newlyCreatedListing);
       mapRef.current?.flyTo({ center: [lng, lat], duration: 1000, zoom: zoom });
     }
   }, [new_listing, listings]);
+
+  const userLocation = useSelector(
+    (state: RootState) => state.search.userLocation
+  );
+
+  useEffect(() => {
+    if (!userLocation) return;
+    if (userLocation.latitude !== userLocationLatitudeInitialState && userLocation.longitude !== userLocationLongitudeInitialState) {
+      mapRef.current?.flyTo({
+        center: [userLocation.longitude, userLocation.latitude],
+        duration: 1000,
+        zoom: 14,
+      });
+    }
+  }, [userLocation]);
 
   const listingsRenderedInMap: FeatureCollection = {
     type: "FeatureCollection",

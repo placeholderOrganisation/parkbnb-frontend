@@ -9,17 +9,17 @@ interface SnackBarProps {
     horizontal: "left" | "center" | "right";
   };
   severity: "success" | "error" | "warning" | "info";
+  autoHideDuration?: number;
 }
 
 const SnackBar = (props: SnackBarProps) => {
-  const { open, handleClose, message, anchorOrigin, severity } = props;
+  const { open, handleClose, message, anchorOrigin, severity, autoHideDuration = 3000 } = props;
   return (
     <Snackbar
       open={open}
-      autoHideDuration={3000}
+      autoHideDuration={autoHideDuration}
       onClose={handleClose}
       anchorOrigin={anchorOrigin}
-
     >
       <Alert
         onClose={handleClose}

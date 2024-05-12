@@ -21,4 +21,8 @@ export interface SearchState {
     };
     numSpaces: number;
   };
+  userLocation: {
+    latitude: number;
+    longitude: number;
+  };
 }

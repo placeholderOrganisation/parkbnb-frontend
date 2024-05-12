@@ -7,6 +7,8 @@ import {
   monthlyPriceInitialState,
   numSpacesFilterInitialState,
   storageTypeInitialState,
+  userLocationLatitudeInitialState,
+  userLocationLongitudeInitialState,
   vehicleTypeInitialState,
 } from "./search-slice.util";
 import { parseVehicleTypeReturnSize } from "../utils/parking-utils";
@@ -28,6 +30,7 @@ export const searchSlice = createSlice({
       dimensions: dimensionsInitialState,
       numSpaces: numSpacesFilterInitialState,
     },
+    userLocation: { latitude: userLocationLatitudeInitialState, longitude: userLocationLongitudeInitialState },
   },
   reducers: {
     // this function should only be invoked once when get-listings page mounts
@@ -65,6 +68,10 @@ export const searchSlice = createSlice({
       const searchQuery: string = action.payload.toLowerCase();
 
       state.filters.searchQuery = searchQuery;
+    },
+    setUserLocation: (state: SearchState, action) => {
+      const location: { latitude: number; longitude: number } = action.payload;
+      state.userLocation = location;
     },
     setAmenitiesFilter: (state: SearchState, action) => {
       const updatedAmenities = action.payload;
@@ -226,5 +233,6 @@ export const {
   setVehicleTypesFilter,
   setDimesionsFilter,
   setNumSpacesFilter,
+  setUserLocation,
 } = searchSlice.actions;
 export default searchSlice.reducer;

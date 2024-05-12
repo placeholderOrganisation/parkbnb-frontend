@@ -2,7 +2,10 @@ import { Stack, Typography, Button, Box, TextField } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { ChangeEvent, useState } from "react";
 import { setUserContactNumber } from "../../../../redux/user-slice";
-import { formatPhoneNumber, isContactNumberValid } from "../../../../utils/user-utils";
+import {
+  formatPhoneNumber,
+  isContactNumberValid,
+} from "../../../../utils/user-utils";
 
 const contactNumberFieldErrorText = "Please enter a valid contact number";
 
@@ -40,7 +43,7 @@ const PublishListingMissingContacInfoError = () => {
         position: "relative",
       }}
     >
-      <Typography variant="h4">Something went wrong</Typography>
+      <Typography variant="h4">Missing Contact Number</Typography>
       <Stack
         spacing={2}
         sx={{
@@ -49,7 +52,8 @@ const PublishListingMissingContacInfoError = () => {
         }}
       >
         <Typography variant="body1">
-          Please add your contact information to proceed.
+          Potential renters will need to contact you to book your space. Please
+          provide a valid contact number.
         </Typography>
         <TextField
           label="Contact Number"

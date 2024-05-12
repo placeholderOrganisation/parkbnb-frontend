@@ -18,9 +18,7 @@ export const stepThreeSlice = createSlice({
     },
     removeImage: (state: StepThreeState, action) => {
       const fileUrl: string = action.payload;
-      const updatedImageList = state.images.filter(
-        (url) => url !== fileUrl
-      );
+      const updatedImageList = state.images.filter((url) => url !== fileUrl);
       if (updatedImageList.length === 0) {
         state.images = [];
       } else {
@@ -33,8 +31,20 @@ export const stepThreeSlice = createSlice({
     setStepThreeValidity: (state: StepThreeState) => {
       state.isValid = state.description.split(" ").length >= 5;
     },
+    setStepThreeData: (state: StepThreeState, action) => {
+      const stepThreeData: StepThreeState = action.payload;
+
+      state.images = stepThreeData.images;
+      state.description = stepThreeData.description;
+    },
   },
 });
 
-export const { setImages, removeImage, setDescription, setStepThreeValidity } = stepThreeSlice.actions;
+export const {
+  setImages,
+  removeImage,
+  setDescription,
+  setStepThreeValidity,
+  setStepThreeData,
+} = stepThreeSlice.actions;
 export default stepThreeSlice.reducer;

@@ -46,6 +46,15 @@ export const stepTwoSlice = createSlice({
         state.dimensions.minLength > 0 &&
         state.dimensions.minWidth > 0;
     },
+    setStepTwoData: (state: StepTwoState, action) => {
+      const stepTwoData: StepTwoState = action.payload;
+
+      state.amenities = stepTwoData.amenities;
+      state.storageType = stepTwoData.storageType;
+      state.vehicleTypes = stepTwoData.vehicleTypes;
+      state.dimensions = stepTwoData.dimensions;
+      state.numSpaces = stepTwoData.numSpaces;
+    },
   },
 });
 
@@ -56,5 +65,6 @@ export const {
   setDimensions,
   setNumSpaces,
   setStepTwoValidity,
+  setStepTwoData,
 } = stepTwoSlice.actions;
 export default stepTwoSlice.reducer;

@@ -21,6 +21,7 @@ import {
   isContactNumberValid,
 } from "../../../utils/user-utils";
 import { callAnalytics } from "../../../utils/amplitude-utils";
+import { saveFormToLocalStorage } from "../../../utils/create-listing-form.utils";
 
 interface PublishListingProps {
   shouldMakeApiCall: boolean;
@@ -52,6 +53,10 @@ const PublishListing = (props: PublishListingProps) => {
     lat: 0,
     lng: 0,
   });
+
+  useEffect(() => {
+    saveFormToLocalStorage(stepOneFormData, stepTwoFormData, stepThreeFormData);
+  }, [stepOneFormData, stepTwoFormData, stepThreeFormData]);
 
   useEffect(() => {
     if (shouldMakeApiCall && isAuthed && !shouldUpdateUser) {

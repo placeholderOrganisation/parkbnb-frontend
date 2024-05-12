@@ -39,6 +39,17 @@ export const stepOneSlice = createSlice({
         state.dailyRate > 0 &&
         state.monthlyRate > 0;
     },
+    setStepOneData: (state: StepOneState, action) => {
+      const stepOneData: StepOneState = action.payload;
+
+      state.street = stepOneData.street;
+      state.city = stepOneData.city;
+      state.province = stepOneData.province;
+      state.postal = stepOneData.postal;
+      state.country = stepOneData.country;
+      state.dailyRate = stepOneData.dailyRate;
+      state.monthlyRate = stepOneData.monthlyRate;
+    },
   },
 });
 
@@ -46,5 +57,6 @@ export const {
   setStepOneAddressFormData,
   setStepOnePricingFormData,
   setStepOneValidity,
+  setStepOneData,
 } = stepOneSlice.actions;
 export default stepOneSlice.reducer;

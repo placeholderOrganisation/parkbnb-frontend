@@ -33,6 +33,7 @@ const RightFullPageDrawer = (props: RightFullPageDrawerProps) => {
           p: 2,
           overflow: allowOverflow ? "auto" : "visible",
         },
+        zIndex: 9999,
       }}
       transitionDuration={300}
     >

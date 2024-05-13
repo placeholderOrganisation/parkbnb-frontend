@@ -90,7 +90,7 @@ const SearchContainer = (props: SearchContainerProps) => {
         top: 16,
         left: 0,
         mx: [2, "auto"],
-        zIndex: 9999,
+        zIndex: 1400,
         width: ["calc(100% - 32px)", "100%"],
         bgcolor: "white",
       }}

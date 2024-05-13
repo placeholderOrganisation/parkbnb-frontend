@@ -90,7 +90,7 @@ const SearchContainer = (props: SearchContainerProps) => {
         top: 16,
         left: 0,
         mx: [2, "auto"],
-        zIndex: 1400,
+        zIndex: isSuggestionListOpen ? 1400 : 100,
         width: ["calc(100% - 32px)", "100%"],
         bgcolor: "white",
       }}

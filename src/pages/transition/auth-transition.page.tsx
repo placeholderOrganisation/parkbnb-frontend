@@ -12,6 +12,11 @@ import {
   setStepThreeData,
   setStepThreeValidity,
 } from "../../redux/step-three-slice";
+import {
+  StepOneState,
+  StepThreeState,
+  StepTwoState,
+} from "../../types/create-listing-form.types";
 
 const AuthTransition = () => {
   useEffect(() => {
@@ -33,28 +38,40 @@ const AuthTransition = () => {
       });
   }, []);
 
-  const restoreStepOneFormData = () => {
-    const { stepOneFormData } = getFormStateFromLocalStorage();
+  const restoreStepOneFormData = (stepOneFormData: StepOneState) => {
     dispatch(setStepOneData(stepOneFormData));
     dispatch(setStepOneValidity());
   };
 
-  const restoreStepTwoFormData = () => {
-    const { stepTwoFormData } = getFormStateFromLocalStorage();
+  const restoreStepTwoFormData = (stepTwoFormData: StepTwoState) => {
+    const {} = getFormStateFromLocalStorage();
     dispatch(setStepTwoData(stepTwoFormData));
     dispatch(setStepTwoValidity());
   };
 
-  const restoreStepThreeFormData = () => {
-    const { stepThreeFormData } = getFormStateFromLocalStorage();
+  const restoreStepThreeFormData = (stepThreeFormData: StepThreeState) => {
     dispatch(setStepThreeData(stepThreeFormData));
     dispatch(setStepThreeValidity());
   };
 
   const restoreCreateListingFormData = () => {
-    restoreStepOneFormData();
-    restoreStepTwoFormData();
-    restoreStepThreeFormData();
+    const {
+      stepOneFormData,
+      stepTwoFormData,
+      stepThreeFormData,
+    } = getFormStateFromLocalStorage();
+
+    if (
+      Object.keys(stepOneFormData).length === 0 ||
+      Object.keys(stepTwoFormData).length === 0 ||
+      Object.keys(stepThreeFormData).length === 0
+    ) {
+      return;
+    }
+
+    restoreStepOneFormData(stepOneFormData);
+    restoreStepTwoFormData(stepTwoFormData);
+    restoreStepThreeFormData(stepThreeFormData);
   };
 
   const dispatch = useDispatch();

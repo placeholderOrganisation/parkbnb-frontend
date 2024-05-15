@@ -12,11 +12,11 @@ import { storageTypeInitialState } from "../../redux/search-slice.util";
 const StorageTypesOptions = [
   {
     value: "indoor",
-    label: "Indoor storage",
+    label: "garage / covered lot",
   },
   {
     value: "outdoor",
-    label: "Outdoor storage",
+    label: "driveway / uncovered lot",
   },
 ];
 

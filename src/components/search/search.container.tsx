@@ -75,7 +75,7 @@ const SearchContainer = (props: SearchContainerProps) => {
   };
 
   const handleCloseSuggestionList = (
-    e?: MouseEvent<HTMLDivElement, MouseEvent>
+    e?: MouseEvent<Element | MouseEvent> | undefined
   ) => {
     if (e) {
       e.stopPropagation();
@@ -90,7 +90,7 @@ const SearchContainer = (props: SearchContainerProps) => {
         top: 16,
         left: 0,
         mx: [2, "auto"],
-        zIndex: isSuggestionListOpen ? 1400 : 100,
+        zIndex: 100,
         width: ["calc(100% - 32px)", "100%"],
         bgcolor: "white",
       }}

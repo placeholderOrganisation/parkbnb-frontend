@@ -27,7 +27,13 @@ const CitySearch = (props: CitySearchProps) => {
             {value && (
               <InputAdornment
                 position="end"
-                onClick={() => handleSearchQueryChange("")}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleSearchQueryChange("");
+                }}
+                sx={{
+                  cursor: "pointer",
+                }}
               >
                 <CloseIcon />
               </InputAdornment>
@@ -38,6 +44,10 @@ const CitySearch = (props: CitySearchProps) => {
               sx={{
                 cursor: "pointer",
               }}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleEndAdornmentClick(true);
+              }}
             >
               <Divider
                 orientation="vertical"
@@ -47,11 +57,7 @@ const CitySearch = (props: CitySearchProps) => {
                   mx: 1,
                 }}
               />
-              <TuneIcon
-                onClick={() => {
-                  handleEndAdornmentClick(true);
-                }}
-              />
+              <TuneIcon />
             </InputAdornment>
           </>
         ),

@@ -10,12 +10,14 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import NearMeOutlinedIcon from "@mui/icons-material/NearMeOutlined";
 import { useDispatch } from "react-redux";
 import { setUserLocation } from "../../redux/search-slice";
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 import SnackBar from "../custom-mui/snackbars/snackbar";
 import { callAnalytics } from "../../utils/amplitude-utils";
 
 interface NearMeSuggestionProps {
-  handleCloseSuggestionList: () => void;
+  handleCloseSuggestionList: (
+    e?: MouseEvent<Element | MouseEvent> | undefined
+  ) => void;
 }
 
 export const NearMeOptions = {
@@ -100,7 +102,7 @@ const NearMeSuggestion = (props: NearMeSuggestionProps) => {
     <>
       <ListItem
         sx={{
-          pl: [2, 0],
+          px: [2, 0],
           cursor: "pointer",
         }}
         onClick={handleNearMeClick}
@@ -123,7 +125,11 @@ const NearMeSuggestion = (props: NearMeSuggestionProps) => {
             }}
           />
         ) : (
-          <ListItemSecondaryAction>
+          <ListItemSecondaryAction
+            sx={{
+              right: [16, 0],
+            }}
+          >
             <IconButton
               edge="end"
               aria-label="click me"
@@ -138,17 +144,23 @@ const NearMeSuggestion = (props: NearMeSuggestionProps) => {
         open={error}
         handleClose={() => handleCloseSuggestionListAndSnackBar("error")}
         severity="error"
-        message="Error while fetching your location. Please check your browser settings."
+        message="Error while fetching your location. Please check your location settings."
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         autoHideDuration={4000}
+        otherSx={{
+          bottom: 80,
+        }}
       />
       <SnackBar
         open={success}
         handleClose={() => handleCloseSuggestionListAndSnackBar("success")}
         severity="success"
-        message="Location fetched successfully."
+        message="Location updated successfully."
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         autoHideDuration={2000}
+        otherSx={{
+          bottom: 80,
+        }}
       />
     </>
   );

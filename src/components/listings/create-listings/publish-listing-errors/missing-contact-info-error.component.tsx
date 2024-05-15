@@ -43,7 +43,7 @@ const PublishListingMissingContacInfoError = () => {
         position: "relative",
       }}
     >
-      <Typography variant="h4">Missing Contact Number</Typography>
+      <Typography variant="h4">Missing Contact Information</Typography>
       <Stack
         spacing={2}
         sx={{

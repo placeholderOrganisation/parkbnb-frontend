@@ -7,17 +7,21 @@ import {
   ListItemSecondaryAction,
   ListItemText,
   Stack,
+  Typography,
 } from "@mui/material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { Listing } from "../../types/global.types";
 import NearMeSuggestion from "./near-me-suggestions.component";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import CloseIcon from "@mui/icons-material/Close";
+import { MouseEvent } from "react";
 
 interface CitySearchSuggestionsProps {
   suggestions: Listing[];
   handleSuggestionClick: (cityName: string, index: number) => void;
-  handleCloseSuggestionList: () => void;
+  handleCloseSuggestionList: (
+    e?: MouseEvent<Element | MouseEvent> | undefined
+  ) => void;
 }
 
 const CitySearchSuggestionList = (props: CitySearchSuggestionsProps) => {
@@ -33,11 +37,12 @@ const CitySearchSuggestionList = (props: CitySearchSuggestionsProps) => {
         return (
           <ListItem
             key={index}
-            onClick={() =>
-              handleSuggestionClick(suggestion.address.city, index)
-            }
+            onClick={(e) => {
+              handleCloseSuggestionList(e);
+              handleSuggestionClick(suggestion.address.city, index);
+            }}
             sx={{
-              pl: [2, 0],
+              px: [2, 0],
               cursor: "pointer",
             }}
           >
@@ -48,14 +53,24 @@ const CitySearchSuggestionList = (props: CitySearchSuggestionsProps) => {
             >
               <PlaceOutlinedIcon />
             </ListItemIcon>
-            <ListItemText primary={suggestion.address.city} />
-            <ListItemSecondaryAction>
+            <ListItemText
+              sx={{
+                textTransform: "capitalize",
+              }}
+              primary={suggestion.address.city}
+            />
+            <ListItemSecondaryAction
+              sx={{
+                right: [16, 0],
+              }}
+            >
               <IconButton
                 edge="end"
                 aria-label="click me"
-                onClick={() =>
-                  handleSuggestionClick(suggestion.address.city, index)
-                }
+                onClick={(e) => {
+                  handleCloseSuggestionList(e);
+                  handleSuggestionClick(suggestion.address.city, index);
+                }}
               >
                 <ChevronRightIcon />
               </IconButton>
@@ -71,12 +86,14 @@ const CitySearchSuggestionList = (props: CitySearchSuggestionsProps) => {
       <Stack
         direction="row"
         sx={{
-          justifyContent: "end",
-          pr: 2,
+          justifyContent: "space-between",
+          alignItems: "center",
+          px: [2, 0],
           py: 4,
           pb: 2,
         }}
       >
+        <Typography variant="h6">Search results</Typography>
         <InputAdornment
           position="end"
           sx={{

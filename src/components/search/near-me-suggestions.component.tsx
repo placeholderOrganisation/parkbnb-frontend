@@ -144,7 +144,7 @@ const NearMeSuggestion = (props: NearMeSuggestionProps) => {
         open={error}
         handleClose={() => handleCloseSuggestionListAndSnackBar("error")}
         severity="error"
-        message="Error while fetching your location. Please check your location settings."
+        message="Could not access your location. Please check your location settings."
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         autoHideDuration={4000}
         otherSx={{

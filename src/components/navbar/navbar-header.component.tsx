@@ -46,7 +46,7 @@ const NavbarHeader = () => {
       <Layout
         linksToRender={linksToRender}
         handleLogoClick={handleLogoClick}
-        isUserAuthed={user.isAuthed}
+        user={user}
         logout={handleLogout}
       />
       <SnackBar

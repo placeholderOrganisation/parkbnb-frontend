@@ -1,4 +1,5 @@
 import { Dayjs } from "dayjs";
+import { UserObject } from "./user-types";
 
 export const MAX_PRICE = 2000;
 
@@ -151,8 +152,8 @@ export interface NavbarLink {
 export interface NavbarLayoutProps {
   linksToRender: NavbarLink[];
   handleLogoClick: () => void;
-  isUserAuthed: boolean;
   logout: () => void;
+  user: UserObject;
 }
 
 export interface FiltersContainerProps {

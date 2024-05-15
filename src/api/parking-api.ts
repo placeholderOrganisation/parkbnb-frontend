@@ -79,3 +79,17 @@ export const markParkingAsRented = async (
     throw error;
   }
 };
+
+export const getParkingsUsingUserId = async (userId: string) => {
+  try {
+    const response = await parkingClient.get(`/user/${userId}`);
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error("Error fetching parkings");
+    }
+  } catch (error) {
+    console.error("Error fetching parkings", error);
+    throw error;
+  }
+};

@@ -9,6 +9,8 @@ import { NavbarLayoutProps } from "../../types/global.types";
 import { NAVBAR_HEIGHT_MOBILE } from "./navbar-header.component";
 import { useNavigate } from "react-router-dom";
 import { COMPANY_NAME } from "../../constants";
+import UserProfile from "./user-profile.component";
+import UserImage from "./user-image.component";
 
 interface NavbarButtonProps {
   variant: "contained" | "outlined";
@@ -72,8 +74,10 @@ const NavbarMobileFooter = (props: NavbarMobileFooterProps) => {
 };
 
 const NavbarHeadersMobileLayout = (props: NavbarLayoutProps) => {
-  const { linksToRender, handleLogoClick, isUserAuthed, logout } = props;
+  const { linksToRender, handleLogoClick, user, logout } = props;
+  const { isAuthed: isUserAuthed } = user;
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [isUserDrawerOpen, setIsUserDrawerOpen] = useState(false);
   const navigate = useNavigate();
 
   const openRightDrawer = () => {
@@ -84,6 +88,14 @@ const NavbarHeadersMobileLayout = (props: NavbarLayoutProps) => {
     setDrawerOpen(false);
   };
 
+  const openUserDrawer = () => {
+    setIsUserDrawerOpen(true);
+  };
+
+  const closeUserDrawer = () => {
+    setIsUserDrawerOpen(false);
+  };
+
   const handleAuthButtonClick = (path: string) => {
     navigate(path);
     closeRightDrawer();
@@ -91,7 +103,12 @@ const NavbarHeadersMobileLayout = (props: NavbarLayoutProps) => {
 
   const handleLogout = () => {
     logout();
-    closeRightDrawer();
+    if (isUserDrawerOpen) {
+      closeUserDrawer();
+    }
+    if (drawerOpen) {
+      closeRightDrawer();
+    }
   };
 
   return (
@@ -113,14 +130,25 @@ const NavbarHeadersMobileLayout = (props: NavbarLayoutProps) => {
           >
             <img src={logo} alt="" />
           </IconButton>
-          <IconButton color="inherit" onClick={openRightDrawer}>
-            <MenuIcon />
-          </IconButton>
+          <Stack
+            direction="row"
+            spacing={1}
+            sx={{
+              alignItems: "center",
+            }}
+          >
+            {isUserAuthed && (
+              <UserImage user={user} handleClick={openUserDrawer} />
+            )}
+            <IconButton color="inherit" onClick={openRightDrawer}>
+              <MenuIcon />
+            </IconButton>
+          </Stack>
         </Toolbar>
       </AppBar>
       <RightFullPageDrawer
         open={drawerOpen}
-        drawerClose={() => setDrawerOpen(false)}
+        drawerClose={closeRightDrawer}
         drawerTitle={COMPANY_NAME}
         footer={
           <NavbarMobileFooter
@@ -134,6 +162,20 @@ const NavbarHeadersMobileLayout = (props: NavbarLayoutProps) => {
           linksToRender={linksToRender}
           handleNavLinkClick={closeRightDrawer}
         />
+      </RightFullPageDrawer>
+      <RightFullPageDrawer
+        open={isUserDrawerOpen}
+        drawerClose={closeUserDrawer}
+        drawerTitle="User Profile"
+        footer={
+          <NavbarMobileFooter
+            isUserAuthed={isUserAuthed}
+            handleAuthButtonClick={handleAuthButtonClick}
+            handleLogout={handleLogout}
+          />
+        }
+      >
+        <UserProfile user={user} closeUserDrawer={closeUserDrawer} />
       </RightFullPageDrawer>
     </Box>
   );

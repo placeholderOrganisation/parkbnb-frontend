@@ -11,6 +11,7 @@ import GetListing from "./pages/get-listings/get-listing.page";
 import NavbarHeader from "./components/navbar/navbar-header.component";
 import AuthTransition from "./pages/transition/auth-transition.page";
 import ListingCard from "./pages/listing-card-open/listing-card.page";
+import UserListings from "./pages/user/user-listings.page";
 import { initAmplitude } from "./utils/amplitude-utils";
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
           <Route path="/transition" element={<AuthTransition />} />
           <Route path="/create-listing" element={<NewListingForm />} />
           <Route path="/listing/:listingId" element={<ListingCard />} />
+          <Route path="/user/:userId/listing" element={<UserListings />} />
           <Route path="/" element={<GetListing />} />
         </Routes>
       </Router>

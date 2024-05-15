@@ -13,6 +13,7 @@ import {
   deleteParking,
   getParking,
   getParkings,
+  getParkingsUsingUserId,
   markParkingAsRented,
 } from "../api/parking-api";
 import {
@@ -360,6 +361,16 @@ export const handleMarkParkingAsRented = async (
     return { data, success: true };
   } catch (error) {
     console.error("Error marking parking as rented", error);
+    return { error, success: false };
+  }
+};
+
+export const handleGetParkingUsingUserId = async (userId: string) => {
+  try {
+    const data = await getParkingsUsingUserId(userId);
+    return { data, success: true };
+  } catch (error) {
+    console.error("Error fetching parkings", error);
     return { error, success: false };
   }
 };

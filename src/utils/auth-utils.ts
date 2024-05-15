@@ -88,6 +88,17 @@ export const hasUserAuthenticatedInThisSession = () => {
   return Boolean(user);
 };
 
+export const verifyUserCanTakePriveligedAction = (
+  userIdToCheckAgainst: string,
+  userIdInRedux?: string
+) => {
+  const userIdInCookie = getItemFromCookies("user");
+  if (userIdInRedux) {
+    return userIdInRedux === userIdToCheckAgainst;
+  }
+  return userIdInCookie === userIdToCheckAgainst;
+};
+
 export const setRedirectDestinationAfterAuthInSessionStorage = (
   redirectDestination: string
 ) => {

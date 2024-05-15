@@ -71,9 +71,9 @@ export const convertListingObjToListingOnMapObj = (
 
 export const parseStorageType = (storage_type: string) => {
   if (storage_type === "outdoor") {
-    return "Outdoor storage";
+    return "Driveway / uncovered lot";
   } else if (storage_type === "indoor") {
-    return "Indoor storage";
+    return "Garage / covered lot";
   }
   return "";
 };

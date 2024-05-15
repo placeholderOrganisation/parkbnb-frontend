@@ -69,15 +69,15 @@ export interface NumSpacesFilterTypes {
 export const numSpacesOptions: NumSpacesFilterTypes[] = [
   {
     value: 1,
-    label: "One or more",
+    label: "one or more",
   },
   {
     value: 2,
-    label: "Two or more",
+    label: "two or more",
   },
   {
     value: 3,
-    label: "Three or more",
+    label: "three or more",
   },
 ];
 

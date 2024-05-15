@@ -90,13 +90,12 @@ export const hasUserAuthenticatedInThisSession = () => {
 
 export const verifyUserCanTakePriveligedAction = (
   userIdToCheckAgainst: string,
-  userIdInRedux?: string
+  userIdInRedux: string
 ) => {
-  const userIdInCookie = getItemFromCookies("user");
   if (userIdInRedux) {
     return userIdInRedux === userIdToCheckAgainst;
   }
-  return userIdInCookie === userIdToCheckAgainst;
+  return false;
 };
 
 export const setRedirectDestinationAfterAuthInSessionStorage = (

@@ -32,6 +32,7 @@ const RightFullPageDrawer = (props: RightFullPageDrawerProps) => {
           height: "100vh",
           p: 2,
           overflow: allowOverflow ? "auto" : "visible",
+          maxHeight: "100dvh",
         },
       }}
       transitionDuration={300}

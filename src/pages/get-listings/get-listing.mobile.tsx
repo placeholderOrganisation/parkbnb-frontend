@@ -4,6 +4,7 @@ import SearchAndFilter from "../../components/listings/get-listings/search-and-f
 import { GetListingsPageProps } from "../../types/global.types";
 import ParkingCardContainerForMap from "../../components/listings/get-listings/parking-card-container-for-map.mobile";
 import ListviewComponent from "../../components/listings/get-listings/listview/listview.component";
+import { NAVBAR_HEIGHT_MOBILE } from "../../components/navbar/navbar-header.component";
 
 const GetListingsMobileLayout = (props: GetListingsPageProps) => {
   const {
@@ -19,6 +20,7 @@ const GetListingsMobileLayout = (props: GetListingsPageProps) => {
       <Box
         sx={{
           position: "relative",
+          maxHeight: `calc(100dvh - ${NAVBAR_HEIGHT_MOBILE}px)`,
         }}
       >
         {/* search bar  */}

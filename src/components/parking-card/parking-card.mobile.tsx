@@ -1,4 +1,5 @@
 import {
+  Button,
   // Avatar,
   Card,
   CardHeader,
@@ -73,10 +74,17 @@ const Amenities = (props: {
           </Typography>
           {fromParkingCardContainer ? (
             <Stack direction="row" spacing={0.5}>
-              <Typography variant="subtitle2" color="primary">
-                View details
-              </Typography>
-              <ArrowForwardIcon color="primary" fontSize="small" />
+              <Button
+                variant="contained"
+                sx={{
+                  borderRadius: 4,
+                }}
+              >
+                <Typography variant="subtitle2" sx={{ pr: 1 }}>
+                  View Details
+                </Typography>
+                <ArrowForwardIcon fontSize="small" />
+              </Button>
             </Stack>
           ) : null}
         </Stack>

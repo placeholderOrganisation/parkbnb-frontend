@@ -13,6 +13,7 @@ import AuthTransition from "./pages/transition/auth-transition.page";
 import ListingCard from "./pages/listing-card-open/listing-card.page";
 import UserListings from "./pages/user/user-listings.page";
 import { initAmplitude } from "./utils/amplitude-utils";
+import LandingPage from "./pages/landing/landing.page";
 
 const App = () => {
   useEffect(() => {
@@ -28,9 +29,10 @@ const App = () => {
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/transition" element={<AuthTransition />} />
           <Route path="/create-listing" element={<NewListingForm />} />
+          <Route path="/listings/" element={<GetListing />} />
           <Route path="/listing/:listingId" element={<ListingCard />} />
           <Route path="/user/:userId/listing" element={<UserListings />} />
-          <Route path="/" element={<GetListing />} />
+          <Route path="/" element={<LandingPage />} />
         </Routes>
       </Router>
     </ThemeProvider>

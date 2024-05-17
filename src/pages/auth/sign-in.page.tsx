@@ -19,6 +19,7 @@ import { COMPANY_NAME } from "../../constants";
 import { callAnalytics } from "../../utils/amplitude-utils";
 import { useEffect, useState } from "react";
 import SnackBar from "../../components/custom-mui/snackbars/snackbar";
+import Footer from "../../components/footer/footer.component";
 
 const SignIn = () => {
   const dispatch = useDispatch();
@@ -48,89 +49,94 @@ const SignIn = () => {
   }, []);
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Box
-        sx={{
-          marginTop: 20,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
+    <>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
         <Box
           sx={{
-            width: "100%",
+            marginTop: 20,
             display: "flex",
-            justifyContent: "start",
             flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Typography component="h1" variant="h4">
-            {`Sign in to ${COMPANY_NAME}`}
-          </Typography>
-          <Typography
-            variant="body2"
+          <Box
             sx={{
-              mt: 2,
+              width: "100%",
+              display: "flex",
+              justifyContent: "start",
+              flexDirection: "column",
             }}
           >
-            Don't have an account?{" "}
-            <RouterLink to="/sign-up">
-              <Link variant="body2">{"Get started"}</Link>
-            </RouterLink>
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            mt: 4,
-            width: "100%",
-          }}
-        >
-          <SocialAuth />
-        </Box>
-        <Box component="form" onSubmit={onSubmitHandler} noValidate>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            <Typography component="h1" variant="h4">
+              {`Sign in to ${COMPANY_NAME}`}
+            </Typography>
+            <Typography
+              variant="body2"
+              sx={{
+                mt: 2,
+              }}
+            >
+              Don't have an account?{" "}
+              <RouterLink to="/sign-up">
+                <Link variant="body2">{"Get started"}</Link>
+              </RouterLink>
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              mt: 4,
+              width: "100%",
+            }}
           >
-            Sign in
-          </Button>
+            <SocialAuth />
+          </Box>
+          <Box component="form" onSubmit={onSubmitHandler} noValidate>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign in
+            </Button>
+          </Box>
         </Box>
+        <Copyright sx={{ my: 4 }} />
+        <SnackBar
+          open={errorOnSignIn}
+          severity="error"
+          message="Error signing in. Please try again."
+          handleClose={() => setErrorOnSignIn(false)}
+        />
+      </Container>
+      <Box>
+        <Footer />
       </Box>
-      <Copyright sx={{ my: 4 }} />
-      <SnackBar
-        open={errorOnSignIn}
-        severity="error"
-        message="Error signing in. Please try again."
-        handleClose={() => setErrorOnSignIn(false)}
-      />
-    </Container>
+    </>
   );
 };
 

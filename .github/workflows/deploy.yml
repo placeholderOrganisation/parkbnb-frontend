@@ -24,6 +24,9 @@ jobs:
     - name: Build the project
       run: yarn build
 
+    - name: move files to dist
+      run: cp sitemap.xml dist/
+
     - name: Copy files via SSH
       env:
         SSH_PRIVATE_KEY: ${{ secrets.PARKBNB_GH_ACTION_SSHKEY_V2 }}

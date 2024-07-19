@@ -3,7 +3,7 @@ name: Deploy React App to DigitalOcean
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build-and-deploy:

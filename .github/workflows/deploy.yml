@@ -22,6 +22,11 @@ jobs:
       run: yarn
 
     - name: Build the project
+      env:
+        MODE: production
+        VITE_REACT_APP_CLIENT_URL: https://rentaparking.ca/api
+        VITE_MAPBOX_ACCESS_TOKEN: pk.eyJ1IjoiY29kZXJzYmV5b25kIiwiYSI6ImNsc3ZhYmk1NjBobnQya3JxaWoyYXpleXoifQ.igcdok9oqUQAML9i3gyH_w
+        VITE_AMPLITUDE_KEY: f664e4e6176d2e3252569402be95bc56
       run: yarn build
 
     - name: move files to dist

@@ -32,4 +32,4 @@ jobs:
         echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan -H 209.38.8.8 >> ~/.ssh/known_hosts
-        scp -r dist/* root@209.38.8.8:/app
+        scp -r dist/* root@209.38.8.8:/root/app

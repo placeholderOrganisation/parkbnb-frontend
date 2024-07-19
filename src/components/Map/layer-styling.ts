@@ -1,5 +1,6 @@
 import { CircleLayer } from "mapbox-gl";
 
+// @ts-ignore
 export const layerStyle: CircleLayer = {
   id: "listingsRenderedInMap",
   type: "circle",
@@ -11,6 +12,8 @@ export const layerStyle: CircleLayer = {
   },
 };
 
+
+// @ts-ignore
 export const highlightedLayerStyle: CircleLayer = {
   id: "currentUserSelection",
   type: "circle",

@@ -27,7 +27,7 @@ jobs:
     - name: move files to dist
       run: cp sitemap.xml dist/
 
-    - name: Copy files via SSH
+    - name: Set up SSH
       env:
         SSH_PRIVATE_KEY: ${{ secrets.PARKBNB_GH_ACTION_SSHKEY_V2 }}
       run: |
@@ -35,4 +35,11 @@ jobs:
         echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan -H 209.38.8.8 >> ~/.ssh/known_hosts
+
+    - name: Copy build files to server
+      run: |
         scp -r dist/* root@209.38.8.8:/var/www/netflix/client/
+
+    - name: Restart Nginx on server
+      run: |
+        ssh root@209.38.8.8 "systemctl restart nginx"

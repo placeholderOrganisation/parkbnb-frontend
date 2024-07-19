@@ -26,7 +26,7 @@ jobs:
 
     - name: Copy files via SSH
       env:
-        SSH_PRIVATE_KEY: ${{ secrets.PARKBNB_GH_ACTION_SSHKEY }}
+        SSH_PRIVATE_KEY: ${{ secrets.PARKBNB_GH_ACTION_SSHKEY_V2 }}
       run: |
         mkdir -p ~/.ssh
         echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa

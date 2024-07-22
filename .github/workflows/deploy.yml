@@ -39,12 +39,12 @@ jobs:
         mkdir -p ~/.ssh
         echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H 209.38.8.8 >> ~/.ssh/known_hosts
+        ssh-keyscan -H ${{ secrets.PARKBNB_MACHINE_IP }} >> ~/.ssh/known_hosts
 
     - name: Copy build files to server
       run: |
-        scp -r dist/* root@209.38.8.8:/var/www/netflix/client/
+        scp -r dist/* root@${{ secrets.PARKBNB_MACHINE_IP }}:/var/www/netflix/client/
 
     - name: Restart Nginx on server
       run: |
-        ssh root@209.38.8.8 "systemctl restart nginx"
+        ssh root@${{ secrets.PARKBNB_MACHINE_IP }} "systemctl restart nginx"

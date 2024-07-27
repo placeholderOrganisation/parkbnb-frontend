@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { AppBar, Box, Toolbar, IconButton, Button, Stack } from "@mui/material";
 
-import logo from "/vite.svg";
+import logo from "/rentaparking.png";
 import MenuIcon from "@mui/icons-material/Menu";
 import RightFullPageDrawer from "../drawers/full-page-right-drawer.component";
 import NavLinks from "./NavLinks";
@@ -125,10 +125,9 @@ const NavbarHeadersMobileLayout = (props: NavbarLayoutProps) => {
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2 }}
             onClick={handleLogoClick}
           >
-            <img src={logo} alt="" />
+            <img style={{ height: "40px" }} src={logo} alt="" />
           </IconButton>
           <Stack
             direction="row"

@@ -13,7 +13,7 @@ import SnackBar from "../custom-mui/snackbars/snackbar";
 export const NAVBAR_HEIGHT_MOBILE = 64;
 const linksToRender: NavbarLink[] = [
   { name: "Post a listing", path: "/create-listing" },
-  { name: "Search listings", path: "/" },
+  { name: "Search listings", path: "/listings" },
 ];
 
 const NavbarHeader = () => {

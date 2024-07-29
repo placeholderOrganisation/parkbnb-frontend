@@ -88,6 +88,27 @@ export const hasUserAuthenticatedInThisSession = () => {
   return Boolean(user);
 };
 
+export const getNumberOfListingsViewedThisSession = () => {
+  const numberOfListingsViewed = getItemFromCookies(
+    "number_of_listings_viewed"
+  );
+
+  if (!numberOfListingsViewed) {
+    return 0;
+  }
+  const numberOfListingsViewedInt = parseInt(numberOfListingsViewed, 10);
+  return numberOfListingsViewedInt;
+};
+
+export const incrementNumberOfListingsViewedThisSession = () => {
+  const numberOfListingsViewed = getNumberOfListingsViewedThisSession();
+  const newNumberOfListingsViewed = numberOfListingsViewed + 1;
+  setItemInCookies(
+    "number_of_listings_viewed",
+    newNumberOfListingsViewed.toString()
+  );
+};
+
 export const verifyUserCanTakePriveligedAction = (
   userIdToCheckAgainst: string,
   userIdInRedux: string

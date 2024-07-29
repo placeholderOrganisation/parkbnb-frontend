@@ -54,6 +54,26 @@ export const convertListingOnMapObjToListingObj = (
   return properties;
 };
 
+export const sortAndFilterParkings = (
+  parkings: (Listing | null)[]
+): (Listing | null)[] => {
+  const sortedParkings = parkings.sort((a, b) => {
+    if (!a || !b) {
+      return 0;
+    }
+
+    if (a.is_scraped && !b.is_scraped) {
+      return 1;
+    }
+    if (!a.is_scraped && b.is_scraped) {
+      return -1;
+    }
+    return 0;
+  });
+
+  return sortedParkings;
+};
+
 export const convertListingObjToListingOnMapObj = (
   listing: Listing
 ): ListingOnMap => {

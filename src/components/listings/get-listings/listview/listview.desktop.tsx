@@ -73,9 +73,9 @@ export default function ListviewDesktop(props: ListviewPageLayoutProps) {
                 onClick={(e) => {
                   handleListingCardOpen(e, listing._id);
                 }}
+                key={listing._id}
               >
                 <ParkingCard
-                  key={listing._id}
                   parking={listing}
                   showIcon
                   icon={<OpenInNewIcon />}

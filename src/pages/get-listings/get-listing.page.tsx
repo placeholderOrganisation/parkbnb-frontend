@@ -14,6 +14,7 @@ import {
   convertListingObjToListingOnMapObj,
   getListingFromListingArrayGivenId,
   handleGetParkings,
+  sortAndFilterParkings,
 } from "../../utils/parking-utils";
 import { useEffect } from "react";
 import { Listing } from "../../types/global.types";
@@ -88,7 +89,8 @@ const GetListing = () => {
     const listings = listingIds.map((id) =>
       getListingFromListingArrayGivenId(searchResults, id)
     );
-    dispatch(setListingsRenderedInMap(listings));
+    const sortedListings = sortAndFilterParkings(listings);
+    dispatch(setListingsRenderedInMap(sortedListings));
   };
 
   return (

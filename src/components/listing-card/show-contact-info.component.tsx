@@ -5,7 +5,11 @@ import BottomDrawer from "../drawers/BottomDrawer";
 import PublishListingUnAuthedError from "../listings/create-listings/publish-listing-errors/unauth-error.component";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/global-store";
-import { getNumberOfListingsViewedThisSession, hasUserAuthenticatedInThisSession, incrementNumberOfListingsViewedThisSession } from "../../utils/auth-utils";
+import {
+  getNumberOfListingsViewedThisSession,
+  hasUserAuthenticatedInThisSession,
+  incrementNumberOfListingsViewedThisSession,
+} from "../../utils/auth-utils";
 import { callAnalytics } from "../../utils/amplitude-utils";
 import { openInNewTab } from "../../utils/browser-utils";
 import { interestMessageBody } from "../../constants";
@@ -25,7 +29,11 @@ const ShowContactInfoComponent = (props: ShowContactInfoComponentProps) => {
 
   const isAuthed = useSelector((state: RootState) => state.user.isAuthed);
   const hasUserAuthenticatedInPastFiveMins = hasUserAuthenticatedInThisSession();
-  const numberOfListingsViewed = getNumberOfListingsViewedThisSession();
+  const numberOfListingsViewedInCookie = getNumberOfListingsViewedThisSession();
+  const showContactInfo =
+    isAuthed ||
+    hasUserAuthenticatedInPastFiveMins ||
+    numberOfListingsViewedInCookie <= 2;
   const [isErrorDrawerOpen, setIsErrorDrawerOpen] = useState(false);
 
   // button is only rendered when user is not authed
@@ -46,16 +54,21 @@ const ShowContactInfoComponent = (props: ShowContactInfoComponentProps) => {
     );
   };
 
-  if (isAuthed || hasUserAuthenticatedInPastFiveMins || numberOfListingsViewed <= 3) {
-    useEffect(() => {
+  useEffect(() => {
+    if (showContactInfo) {
       callAnalytics("success_viewing_contact_info", {
         listingId,
         hasUserAuthenticatedInPastFiveMins,
         isAuthed,
       });
-      incrementNumberOfListingsViewedThisSession();
-    }, []);
 
+      return () => {
+        incrementNumberOfListingsViewedThisSession();
+      };
+    }
+  }, []);
+
+  if (showContactInfo) {
     return (
       <Box
         sx={{

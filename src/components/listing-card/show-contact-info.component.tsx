@@ -13,6 +13,7 @@ import {
 import { callAnalytics } from "../../utils/amplitude-utils";
 import { openInNewTab } from "../../utils/browser-utils";
 import { interestMessageBody } from "../../constants";
+import SnackBar from "../custom-mui/snackbars/snackbar";
 
 interface ShowContactInfoComponentProps {
   contactNumber: string;
@@ -33,8 +34,11 @@ const ShowContactInfoComponent = (props: ShowContactInfoComponentProps) => {
   const showContactInfo =
     isAuthed ||
     hasUserAuthenticatedInPastFiveMins ||
-    numberOfListingsViewedInCookie <= 2;
+    numberOfListingsViewedInCookie <= 1;
   const [isErrorDrawerOpen, setIsErrorDrawerOpen] = useState(false);
+  const [showSnackBar, setShowSnackBar] = useState(
+    numberOfListingsViewedInCookie >= 1
+  );
 
   // button is only rendered when user is not authed
   const handleClick = () => {
@@ -118,6 +122,14 @@ const ShowContactInfoComponent = (props: ShowContactInfoComponentProps) => {
           errorMessage={errorMessage}
         />
       </BottomDrawer>
+      <SnackBar
+        open={showSnackBar}
+        message={"Please sign in to view contact information"}
+        severity="error"
+        handleClose={() => {
+          setShowSnackBar(false);
+        }}
+      />
     </>
   );
 };

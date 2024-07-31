@@ -1,6 +1,6 @@
 export const parkingAppDomain = "rentaparking.ca";
 
-export const COMPANY_NAME = "Rent a parking";
+export const COMPANY_NAME = "Rent a Parking";
 
 export const shareableMessaBody = `Check out this parking spot on ${COMPANY_NAME}!`;
 

@@ -54,7 +54,7 @@ const SignIn = () => {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 20,
+            my: 5,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -125,7 +125,7 @@ const SignIn = () => {
             </Button>
           </Box>
         </Box>
-        <Copyright sx={{ my: 4 }} />
+        <Copyright sx={{ my: 2 }} />
         <SnackBar
           open={errorOnSignIn}
           severity="error"

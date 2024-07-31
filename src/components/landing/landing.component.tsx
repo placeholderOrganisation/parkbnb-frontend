@@ -12,15 +12,16 @@ import {
 } from "@mui/material";
 import { callAnalytics } from "../../utils/amplitude-utils";
 import { useNavigate } from "react-router-dom";
-import GradientText from "../custom-mui/graident-text.component";
+import GradientText from "../custom-mui/gradient-text.component";
 import ParkingCardList from "./parking-card.list";
 import { isDesktop } from "../../utils/display-utils";
+import AboutUsCard from "./about-us.card";
 
 const aboutUsCards = [
   {
     title: "Powerful Search",
     description:
-      "Our easy search tool lets you filter by location, price, and lease to quickly find the ideal parking spot.",
+      "Our map lets you filter by location, amenities and price to quickly find the ideal parking spot.",
   },
   {
     title: "Trusted by Many",
@@ -93,7 +94,7 @@ const Landing = () => {
                   fullWidth
                   onClick={card.actionHandler}
                   sx={{
-                    borderRadius: 5
+                    borderRadius: 5,
                   }}
                 >
                   {card.action}
@@ -121,22 +122,13 @@ const Landing = () => {
             spacing={2}
             sx={{ pb: 4 }}
           >
-            {aboutUsCards.map((card) => (
+            {aboutUsCards.map((card, index) => (
               <Box key={card.title}>
-                <Card
-                  sx={{
-                    borderRadius: 4,
-                  }}
-                >
-                  <CardContent>
-                    <GradientText typographyVariant="h5">
-                      {card.title}
-                    </GradientText>
-                    <Typography variant="body2" color="text.secondary">
-                      {card.description}
-                    </Typography>
-                  </CardContent>
-                </Card>
+                <AboutUsCard
+                  title={card.title}
+                  description={card.description}
+                  variant={index > 0 ? "light" : "dark"}
+                />
               </Box>
             ))}
           </Stack>

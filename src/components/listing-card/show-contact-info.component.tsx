@@ -8,7 +8,9 @@ import { RootState } from "../../redux/global-store";
 import {
   getNumberOfListingsViewedThisSession,
   hasUserAuthenticatedInThisSession,
+  hasUserSeenErrorSnackBar,
   incrementNumberOfListingsViewedThisSession,
+  setHasUserSeenErrorSnackBar,
 } from "../../utils/auth-utils";
 import { callAnalytics } from "../../utils/amplitude-utils";
 import { openInNewTab } from "../../utils/browser-utils";
@@ -31,13 +33,14 @@ const ShowContactInfoComponent = (props: ShowContactInfoComponentProps) => {
   const isAuthed = useSelector((state: RootState) => state.user.isAuthed);
   const hasUserAuthenticatedInPastFiveMins = hasUserAuthenticatedInThisSession();
   const numberOfListingsViewedInCookie = getNumberOfListingsViewedThisSession();
+  const hasUserSeenErrorSnackBarThisSession = hasUserSeenErrorSnackBar();
   const showContactInfo =
     isAuthed ||
     hasUserAuthenticatedInPastFiveMins ||
     numberOfListingsViewedInCookie <= 1;
   const [isErrorDrawerOpen, setIsErrorDrawerOpen] = useState(false);
   const [showSnackBar, setShowSnackBar] = useState(
-    numberOfListingsViewedInCookie >= 1
+    numberOfListingsViewedInCookie >= 1 && !hasUserSeenErrorSnackBarThisSession
   );
 
   // button is only rendered when user is not authed
@@ -56,6 +59,11 @@ const ShowContactInfoComponent = (props: ShowContactInfoComponentProps) => {
     openInNewTab(
       `sms:${contactNumber}?&body=${interestMessageBody} ${currentUrl}`
     );
+  };
+
+  const handleCloseSnackBar = () => {
+    setShowSnackBar(false);
+    setHasUserSeenErrorSnackBar();
   };
 
   useEffect(() => {
@@ -126,9 +134,7 @@ const ShowContactInfoComponent = (props: ShowContactInfoComponentProps) => {
         open={showSnackBar}
         message={"Please sign in to view contact information"}
         severity="error"
-        handleClose={() => {
-          setShowSnackBar(false);
-        }}
+        handleClose={handleCloseSnackBar}
       />
     </>
   );

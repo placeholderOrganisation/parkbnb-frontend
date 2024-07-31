@@ -3,6 +3,7 @@ import { checkIfUserIsAuthenticated, signIn, signUp } from "../api/auth-api";
 import { UserObject } from "../types/user-types";
 import {
   getItemFromCookies,
+  getItemFromSessionStorage,
   setItemInCookies,
   setItemInSessionStorage,
 } from "./storage-utils";
@@ -99,6 +100,15 @@ export const getNumberOfListingsViewedThisSession = () => {
   const numberOfListingsViewedInt = parseInt(numberOfListingsViewed, 10);
   return numberOfListingsViewedInt;
 };
+
+export const hasUserSeenErrorSnackBar = () => {
+  const hasSeenErrorSnackBar = getItemFromSessionStorage("has_seen_error_snackbar");
+  return Boolean(hasSeenErrorSnackBar);
+}
+
+export const setHasUserSeenErrorSnackBar = () => {
+  setItemInSessionStorage("has_seen_error_snackbar", "true", true);
+}
 
 export const incrementNumberOfListingsViewedThisSession = () => {
   const numberOfListingsViewed = getNumberOfListingsViewedThisSession();

@@ -55,15 +55,20 @@ const GetListing = () => {
 
   // fetch listings from backend
   useEffect(() => {
-    handleGetParkings()
-      .then((res) => {
-        const fetchedListings: Listing[] = res.data;
-        dispatch(setSearchResults(fetchedListings));
-        dispatch(filterSearchResults());
-      })
-      .catch((error) => {
-        console.error("Error fetching listings", error);
-      });
+    if (searchResults && searchResults.length > 0) {
+      dispatch(filterSearchResults());
+      return;
+    } else {
+      handleGetParkings()
+        .then((res) => {
+          const fetchedListings: Listing[] = res.data;
+          dispatch(setSearchResults(fetchedListings));
+          dispatch(filterSearchResults());
+        })
+        .catch((error) => {
+          console.error("Error fetching listings", error);
+        });
+    }
   }, []);
 
   // fetch URI params and set user selected listing if applicable

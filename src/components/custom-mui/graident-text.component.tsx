@@ -27,7 +27,7 @@ const GradientText = (props: GradientTextProps) => {
       variant={typographyVariant}
       sx={{
         background:
-          "linear-gradient(90deg, rgba(0,212,255,1) 0%, rgba(14,33,124,1) 50%, rgba(13,24,117,1) 100%)",
+          "linear-gradient(90deg, rgba(13,24,117,1) 0%, rgba(27,126,163,1) 51%, rgba(0,212,255,1) 100%)",
         WebkitBackgroundClip: "text",
         WebkitTextFillColor: "transparent",
         display: "inline",

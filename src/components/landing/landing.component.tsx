@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Card,
   CardActions,
@@ -6,17 +7,36 @@ import {
   Container,
   Divider,
   Grid,
-  List,
-  ListItem,
-  ListItemText,
   Stack,
   Typography,
 } from "@mui/material";
 import { callAnalytics } from "../../utils/amplitude-utils";
 import { useNavigate } from "react-router-dom";
+import GradientText from "../custom-mui/graident-text.component";
+import ParkingCardList from "./parking-card.list";
+import { isDesktop } from "../../utils/display-utils";
+
+const aboutUsCards = [
+  {
+    title: "Powerful Search",
+    description:
+      "Our easy search tool lets you filter by location, price, and lease to quickly find the ideal parking spot.",
+  },
+  {
+    title: "Trusted by Many",
+    description:
+      "We have helped thousands of renters find parking near their postal code that they can afford.",
+  },
+  {
+    title: "Free to Use",
+    description:
+      "Whether you're looking for a parking spot or want to rent one out, there are no fees.",
+  },
+];
 
 const Landing = () => {
   const navigate = useNavigate();
+  const isDesktopView = isDesktop();
 
   const handleFindParkingAction = () => {
     callAnalytics("find_parking_click");
@@ -35,6 +55,7 @@ const Landing = () => {
         "We help renters find parking near their postal code that they can afford.",
       action: "Find a parking",
       actionHandler: handleFindParkingAction,
+      buttonVariant: "contained",
     },
     {
       title: "Are you looking to rent your parking space?",
@@ -42,22 +63,20 @@ const Landing = () => {
         "We help hosts safely rent out extra parking to like-minded people.",
       action: "List your parking",
       actionHandler: handleListParkingAction,
+      buttonVariant: "outlined",
     },
   ];
 
   return (
     <Container maxWidth="md">
-      <Stack spacing={1}>
-        <Typography variant="h3">The Parking Rental Website</Typography>
-        <Typography variant="body1">
-          Free site for posting ads for car, pickup truck, RV, boat and
-          commercial truck trailer parking rentals.
-        </Typography>
+      <Stack>
+        <GradientText typographyVariant="h3">Rent A Parking</GradientText>
+        <Typography variant="body1">The Parking Rental Website</Typography>
       </Stack>
       <Grid container spacing={2} sx={{ py: 4 }}>
         {cards.map((card) => (
-          <Grid item xs={12} md={6}>
-            <Card>
+          <Grid item xs={12} md={6} key={card.title}>
+            <Card sx={{ borderRadius: 4 }}>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
                   {card.title}
@@ -68,10 +87,14 @@ const Landing = () => {
               </CardContent>
               <CardActions>
                 <Button
-                  variant="contained"
+                  // @ts-ignore - buttonVariant is not a valid prop for Button
+                  variant={card.buttonVariant}
                   color="primary"
                   fullWidth
                   onClick={card.actionHandler}
+                  sx={{
+                    borderRadius: 5
+                  }}
                 >
                   {card.action}
                 </Button>
@@ -81,30 +104,42 @@ const Landing = () => {
         ))}
       </Grid>
       <Stack spacing={2}>
+        <Divider />
         <Stack spacing={1}>
-          <Divider />
-          <Typography variant="h4">Rent A Parking</Typography>
-          <Typography variant="body1">
-            Welcome to Rent a Parking, your source for easy and affordable
-            parking. Whether you're a homeowner wanting to make money from your
-            driveway or garage, or a driver looking for a dependable parking
-            spot to rent, Rent a Parking is here for you.
-          </Typography>
+          <Typography variant="h5">Hot parkings in Brampton</Typography>
+          <ParkingCardList city="Brampton" />
+        </Stack>
+        <Stack spacing={1}>
+          <Typography variant="h5">Hot parkings in Toronto</Typography>
+          <ParkingCardList city="Toronto" />
         </Stack>
         <Stack spacing={1}>
           <Divider />
-          <Typography variant="h4">Why Choose Us</Typography>
-          <List sx={{ py: 0 }}>
-            <ListItem sx={{ px: 0 }}>
-              <ListItemText primary="Easy Search and Booking: Our easy search tool lets you filter by location, price, and lease to quickly find the ideal parking spot. It's very straightforward!" />
-            </ListItem>
-            <ListItem sx={{ px: 0 }}>
-              <ListItemText primary="Free to use: Rent a Parking is completely free. Whether you're looking for a parking spot or want to rent one out, there are no fees" />
-            </ListItem>
-            <ListItem sx={{ px: 0 }}>
-              <ListItemText primary="Parking Spot Owners: If you own a parking spot and want to monetize it, Rent a Parking makes it easy to do so." />
-            </ListItem>
-          </List>
+          <Typography variant="h4">About Us</Typography>
+          <Stack
+            direction={isDesktopView ? "row" : "column"}
+            spacing={2}
+            sx={{ pb: 4 }}
+          >
+            {aboutUsCards.map((card) => (
+              <Box key={card.title}>
+                <Card
+                  sx={{
+                    borderRadius: 4,
+                  }}
+                >
+                  <CardContent>
+                    <GradientText typographyVariant="h5">
+                      {card.title}
+                    </GradientText>
+                    <Typography variant="body2" color="text.secondary">
+                      {card.description}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Box>
+            ))}
+          </Stack>
         </Stack>
       </Stack>
     </Container>

@@ -14,10 +14,28 @@ import ListingCard from "./pages/listing-card-open/listing-card.page";
 import UserListings from "./pages/user/user-listings.page";
 import { initAmplitude } from "./utils/amplitude-utils";
 import LandingPage from "./pages/landing/landing.page";
+import { handleGetParkings } from "./utils/parking-utils";
+import { Listing } from "./types/global.types";
+import { useDispatch } from "react-redux";
+import { setSearchResults } from "./redux/search-slice";
 
 const App = () => {
+  const dispatch = useDispatch();
+
   useEffect(() => {
     initAmplitude();
+  }, []);
+
+  // fetch listings from backend
+  useEffect(() => {
+    handleGetParkings()
+      .then((res) => {
+        const fetchedListings: Listing[] = res.data;
+        dispatch(setSearchResults(fetchedListings));
+      })
+      .catch((error) => {
+        console.error("Error fetching listings", error);
+      });
   }, []);
 
   return (

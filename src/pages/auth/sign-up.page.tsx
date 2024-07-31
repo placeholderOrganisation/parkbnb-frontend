@@ -87,7 +87,7 @@ const SignUp = () => {
               width: "100%",
             }}
           >
-            <SocialAuth />
+            <SocialAuth location="sign_up_page" />
           </Box>
           <Box
             component="form"

@@ -89,7 +89,7 @@ const SignIn = () => {
               width: "100%",
             }}
           >
-            <SocialAuth />
+            <SocialAuth location="sign_in_page" />
           </Box>
           <Box component="form" onSubmit={onSubmitHandler} noValidate>
             <TextField

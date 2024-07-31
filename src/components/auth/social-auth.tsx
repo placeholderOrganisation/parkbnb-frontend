@@ -4,10 +4,16 @@ import { Button, Divider, Stack, Typography } from "@mui/material";
 import { handleSocialSignIn as handleSocialSignInUtilFunc } from "../../utils/auth-utils";
 import { callAnalytics } from "../../utils/amplitude-utils";
 
-const SocialAuth = () => {
+interface SocialAuthProps {
+  location?: string;
+}
+
+const SocialAuth = (props: SocialAuthProps) => {
+  const { location } = props;
   const handleSocialSignIn = async (provider: string) => {
     callAnalytics("api_start_social_auth", {
       strategy: provider,
+      location,
     });
     handleSocialSignInUtilFunc(provider);
   };

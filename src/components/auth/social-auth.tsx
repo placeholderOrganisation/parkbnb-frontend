@@ -6,15 +6,17 @@ import { callAnalytics } from "../../utils/amplitude-utils";
 
 interface SocialAuthProps {
   location?: string;
+  prepAuthRedirect?: () => void; // function to set the redirect destination in session storage
 }
 
 const SocialAuth = (props: SocialAuthProps) => {
-  const { location } = props;
+  const { location, prepAuthRedirect = () => {} } = props;
   const handleSocialSignIn = async (provider: string) => {
     callAnalytics("api_start_social_auth", {
       strategy: provider,
       location,
     });
+    prepAuthRedirect();
     handleSocialSignInUtilFunc(provider);
   };
 

@@ -15,11 +15,16 @@ const PublishListingUnAuthedError = (
   const navigate = useNavigate();
   const handleClick = () => {
     // add auth_redirect to sessions storage
+    updateAuthRedirectLink();
+    navigate("/sign-in");
+  };
+
+  const updateAuthRedirectLink = () => {
     setRedirectDestinationAfterAuthInSessionStorage(
       redirectDestinationAfterAuth
     );
-    navigate("/sign-in");
   };
+
   return (
     <Stack
       sx={{
@@ -47,7 +52,10 @@ const PublishListingUnAuthedError = (
           display: ["contents", "unset"],
         }}
       >
-        <SocialAuth location="unauth_drawer" />
+        <SocialAuth
+          location="unauth_drawer"
+          prepAuthRedirect={updateAuthRedirectLink}
+        />
         <Button
           variant="contained"
           color="primary"

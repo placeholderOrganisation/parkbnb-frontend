@@ -35,6 +35,8 @@ const aboutUsCards = [
   },
 ];
 
+const cities = ["Brampton", "Toronto", "Mississauga", "Vaughan"];
+
 const Landing = () => {
   const navigate = useNavigate();
   const isDesktopView = isDesktop();
@@ -106,14 +108,12 @@ const Landing = () => {
       </Grid>
       <Stack spacing={2}>
         <Divider />
-        <Stack spacing={1}>
-          <Typography variant="h5">Hot parkings in Brampton</Typography>
-          <ParkingCardList city="Brampton" />
-        </Stack>
-        <Stack spacing={1}>
-          <Typography variant="h5">Hot parkings in Toronto</Typography>
-          <ParkingCardList city="Toronto" />
-        </Stack>
+        {cities.map((city) => (
+          <Stack key={city} spacing={1}>
+            <Typography variant="h5">Hot parkings in {city}</Typography>
+            <ParkingCardList city={city} />
+          </Stack>
+        ))}
         <Stack spacing={1}>
           <Divider />
           <Typography variant="h4">About Us</Typography>

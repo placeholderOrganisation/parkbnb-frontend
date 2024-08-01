@@ -71,8 +71,17 @@ const ParkingCardList = (props: ParkingCardListProps) => {
         },
       }}
     >
-      {sortedAndFilteredSearchResults.length === 0 ? (
-        <Skeleton variant="rectangular" height="100%" />
+      {!sortedAndFilteredSearchResults ||
+      sortedAndFilteredSearchResults.length === 0 ? (
+        <Skeleton
+          variant="rectangular"
+          sx={{
+            width: "100%",
+            height: "100px",
+            borderRadius: 4,
+            flexDirection: "column",
+          }}
+        />
       ) : (
         sortedAndFilteredSearchResults
           .slice(0, numberOfResultsToShow)

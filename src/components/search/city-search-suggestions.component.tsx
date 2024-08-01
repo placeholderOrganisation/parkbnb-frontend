@@ -9,14 +9,16 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { Listing } from "../../types/global.types";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import NearMeSuggestion from "./near-me-suggestions.component";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import CloseIcon from "@mui/icons-material/Close";
 import { MouseEvent } from "react";
+import NoSearchResultSuggestion from "./no-result-suggestions.component";
 
 interface CitySearchSuggestionsProps {
+  searchQuery: string;
   suggestions: Listing[];
   handleSuggestionClick: (cityName: string, index: number) => void;
   handleCloseSuggestionList: (
@@ -26,60 +28,68 @@ interface CitySearchSuggestionsProps {
 
 const CitySearchSuggestionList = (props: CitySearchSuggestionsProps) => {
   const {
+    searchQuery,
     suggestions = [],
     handleSuggestionClick,
     handleCloseSuggestionList,
   } = props;
 
-  const SuggestionsComponent = suggestions && suggestions.length > 0 && (
-    <>
-      {suggestions.map((suggestion, index) => {
-        return (
-          <ListItem
-            key={index}
-            onClick={(e) => {
-              handleCloseSuggestionList(e);
-              handleSuggestionClick(suggestion.address.city, index);
-            }}
-            sx={{
-              px: [2, 0],
-              cursor: "pointer",
-            }}
-          >
-            <ListItemIcon
+  const SuggestionsComponent =
+    suggestions && suggestions.length > 0 ? (
+      <>
+        {suggestions.map((suggestion, index) => {
+          return (
+            <ListItem
+              key={index}
+              onClick={(e) => {
+                handleCloseSuggestionList(e);
+                handleSuggestionClick(suggestion.address.city, index);
+              }}
               sx={{
-                minWidth: 32,
+                px: [2, 0],
+                cursor: "pointer",
               }}
             >
-              <PlaceOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText
-              sx={{
-                textTransform: "capitalize",
-              }}
-              primary={suggestion.address.city}
-            />
-            <ListItemSecondaryAction
-              sx={{
-                right: [16, 0],
-              }}
-            >
-              <IconButton
-                edge="end"
-                aria-label="click me"
-                onClick={(e) => {
-                  handleCloseSuggestionList(e);
-                  handleSuggestionClick(suggestion.address.city, index);
+              <ListItemIcon
+                sx={{
+                  minWidth: 32,
                 }}
               >
-                <ChevronRightIcon />
-              </IconButton>
-            </ListItemSecondaryAction>
-          </ListItem>
-        );
-      })}
-    </>
-  );
+                <PlaceOutlinedIcon
+                  sx={{
+                    color: "primary.main",
+                  }}
+                />
+              </ListItemIcon>
+              <ListItemText
+                sx={{
+                  textTransform: "capitalize",
+                }}
+                primary={suggestion.address.city}
+              />
+              <ListItemSecondaryAction
+                sx={{
+                  right: [16, 0],
+                }}
+              >
+                <IconButton
+                  edge="end"
+                  aria-label="click me"
+                  onClick={(e) => {
+                    handleCloseSuggestionList(e);
+                    handleSuggestionClick(suggestion.address.city, index);
+                  }}
+                >
+                  <ChevronRightIcon />
+                </IconButton>
+              </ListItemSecondaryAction>
+            </ListItem>
+          );
+        })}
+      </>
+    ) : (
+      <NoSearchResultSuggestion searchQuery={searchQuery} />
+    );
 
   return (
     <>

@@ -103,6 +103,7 @@ const SearchContainer = (props: SearchContainerProps) => {
       />
       {isSuggestionListOpen && (
         <CitySearchSuggestionList
+          searchQuery={value}
           suggestions={suggestions}
           handleSuggestionClick={(cityName, index) => {
             handleSuggestionClick(cityName, index);

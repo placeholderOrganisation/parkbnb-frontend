@@ -112,7 +112,11 @@ const NearMeSuggestion = (props: NearMeSuggestionProps) => {
             minWidth: 32,
           }}
         >
-          <NearMeOutlinedIcon />
+          <NearMeOutlinedIcon
+            sx={{
+              color: "primary.main",
+            }}
+          />
         </ListItemIcon>
         <ListItemText primary="Near me" />
         {loading ? (

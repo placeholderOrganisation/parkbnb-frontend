@@ -55,7 +55,7 @@ const NoSearchResultSuggestion = (props: NoSearchResultSuggestionProps) => {
         </ListItemIcon>
         <ListItemText
           primary={`No search results found for '${searchQuery}'`}
-          secondary={"Report a missing location"}
+          secondary={"Report a missing city"}
         />
         <ListItemSecondaryAction
           sx={{

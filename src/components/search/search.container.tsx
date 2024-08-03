@@ -1,4 +1,4 @@
-import { MouseEvent, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 
 import { Box } from "@mui/material";
 import CitySearch from "./city-search.component";
@@ -8,6 +8,7 @@ import { Listing } from "../../types/global.types";
 import CitySearchSuggestionList from "./city-search-suggestions.component";
 import { setSearchQuery, filterSearchResults } from "../../redux/search-slice";
 import { callAnalytics } from "../../utils/amplitude-utils";
+import { deleteURIParam } from "../../utils/browser-utils";
 
 interface SearchContainerProps {
   handleEndAdornmentClick: () => void;
@@ -58,6 +59,7 @@ const SearchContainer = (props: SearchContainerProps) => {
         dispatch(setSearchQuery(""));
         dispatch(filterSearchResults());
       }
+      deleteURIParam("city");
     }
     setValue(value);
   };
@@ -82,6 +84,12 @@ const SearchContainer = (props: SearchContainerProps) => {
     }
     setIsSuggestionListOpen(false);
   };
+
+  useEffect(() => {
+    if (searchQuery !== value) {
+      setValue(searchQuery);
+    }
+  }, [searchQuery]);
 
   return (
     <Box

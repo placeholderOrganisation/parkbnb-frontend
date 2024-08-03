@@ -13,9 +13,9 @@ import {
 import { callAnalytics } from "../../utils/amplitude-utils";
 import { useNavigate } from "react-router-dom";
 import GradientText from "../custom-mui/gradient-text.component";
-import ParkingCardList from "./parking-card.list";
 import { isDesktop } from "../../utils/display-utils";
 import AboutUsCard from "./about-us.card";
+import CitySearchCard from "./city-search.card";
 
 const aboutUsCards = [
   {
@@ -35,7 +35,7 @@ const aboutUsCards = [
   },
 ];
 
-const cities = ["Brampton", "Toronto", "Mississauga", "Vaughan"];
+const cities = ["Brampton", "Toronto", "Mississauga"];
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -108,12 +108,12 @@ const Landing = () => {
       </Grid>
       <Stack spacing={2}>
         <Divider />
-        {cities.map((city) => (
-          <Stack key={city} spacing={1}>
-            <Typography variant="h5">Hot parkings in {city}</Typography>
-            <ParkingCardList city={city} />
-          </Stack>
-        ))}
+        <Typography variant="h4">Popular Cities</Typography>
+        <Stack direction={isDesktopView ? "row" : "column"} spacing={2}>
+          {cities.map((city) => (
+            <CitySearchCard key={city} city={city} />
+          ))}
+        </Stack>
         <Stack spacing={1}>
           <Divider />
           <Typography variant="h4">About Us</Typography>

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   filterSearchResults,
   setListingsRenderedInMap,
+  setSearchQuery,
   setSearchResults,
   setUserSelectedListing,
   setUserSelectedListingUsingListingId,
@@ -76,6 +77,15 @@ const GetListing = () => {
     const { new_listing } = getURIParams();
     if (new_listing) {
       dispatch(setUserSelectedListingUsingListingId(new_listing));
+    }
+  }, [searchResults]);
+
+  // fetch URI params and set user selected listing if applicable
+  useEffect(() => {
+    const { city } = getURIParams();
+    if (city) {
+      dispatch(setSearchQuery(city));
+      dispatch(filterSearchResults());
     }
   }, [searchResults]);
 

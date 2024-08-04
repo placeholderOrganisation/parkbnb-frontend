@@ -18,6 +18,8 @@ const getImgForCity = (city: string) => {
       return "https://media.cntraveler.com/photos/5b2be6938b842c3b35c5d30c/16:9/w_1280,c_limit/Toronto_getty-Images_748610951.jpg";
     case "Mississauga":
       return "https://www.ontarioconstructionnews.com/wp-content/uploads/2023/11/mississauga.jpg";
+    case "Vaughan":
+      return "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Vaughan_Metropolitan_Centre_aerial_view_2022.jpg/800px-Vaughan_Metropolitan_Centre_aerial_view_2022.jpg";
     default:
       return "https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg";
   }

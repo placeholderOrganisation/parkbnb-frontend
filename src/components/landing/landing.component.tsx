@@ -5,7 +5,6 @@ import {
   CardActions,
   CardContent,
   Container,
-  Divider,
   Grid,
   Stack,
   Typography,
@@ -16,6 +15,7 @@ import GradientText from "../custom-mui/gradient-text.component";
 import { isDesktop } from "../../utils/display-utils";
 import AboutUsCard from "./about-us.card";
 import CitySearchCard from "./city-search.card";
+import ParkingCardList from "./parking-card.list";
 
 const aboutUsCards = [
   {
@@ -35,7 +35,7 @@ const aboutUsCards = [
   },
 ];
 
-const cities = ["Brampton", "Toronto", "Mississauga"];
+const cities = ["Brampton", "Toronto", "Mississauga", "Vaughan"];
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -107,15 +107,21 @@ const Landing = () => {
         ))}
       </Grid>
       <Stack spacing={2}>
-        <Divider />
         <Typography variant="h4">Popular Cities</Typography>
         <Stack direction={isDesktopView ? "row" : "column"} spacing={2}>
           {cities.map((city) => (
             <CitySearchCard key={city} city={city} />
           ))}
         </Stack>
+        {cities.map((city) => (
+          <>
+            <Typography variant="h5">Popular listings in {city}</Typography>
+            <Stack direction={isDesktopView ? "row" : "column"} spacing={2}>
+              <ParkingCardList city={city} />
+            </Stack>
+          </>
+        ))}
         <Stack spacing={1}>
-          <Divider />
           <Typography variant="h4">About Us</Typography>
           <Stack
             direction={isDesktopView ? "row" : "column"}

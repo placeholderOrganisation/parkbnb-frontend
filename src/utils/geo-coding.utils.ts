@@ -1,5 +1,5 @@
 import { autocompleteAddress, geocodeAddress } from "../api/geocoding-api";
-import { AutocompleteResponse, AutocompleteUtilFunctionResponse } from "../types/global.types";
+import { AutocompleteResponse } from "../types/global.types";
 
 export interface HandleGeocodeResponse {
   lat?: number;

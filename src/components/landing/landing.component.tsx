@@ -35,7 +35,7 @@ const aboutUsCards = [
   },
 ];
 
-const cities = ["Brampton", "Toronto", "Mississauga", "Vaughan"];
+const cities = ["Toronto", "Brampton", "Mississauga", "Vaughan"];
 
 const Landing = () => {
   const navigate = useNavigate();

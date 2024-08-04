@@ -9,7 +9,6 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import NotListedLocationOutlinedIcon from "@mui/icons-material/NotListedLocationOutlined";
 import { useState } from "react";
 import SnackBar from "../custom-mui/snackbars/snackbar";
-import { callAnalytics } from "../../utils/amplitude-utils";
 
 interface NoSearchResultSuggestionProps {
   searchQuery: string;

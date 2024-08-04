@@ -27,10 +27,12 @@ const NoSearchResultSuggestion = (props: NoSearchResultSuggestionProps) => {
   }
 
   const reportMissingPlace = () => {
-    setMissingPlaceSnackbarOpen(true);
-    callAnalytics("missing place reported", {
-      query: searchQuery,
-    });
+    // will be implemented in the future
+    
+    // setMissingPlaceSnackbarOpen(true);
+    // callAnalytics("missing place reported", {
+    //   query: searchQuery,
+    // });
   };
 
   return (
@@ -55,7 +57,6 @@ const NoSearchResultSuggestion = (props: NoSearchResultSuggestionProps) => {
         </ListItemIcon>
         <ListItemText
           primary={`No search results found for '${searchQuery}'`}
-          secondary={"Report a missing city"}
         />
         <ListItemSecondaryAction
           sx={{

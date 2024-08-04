@@ -28,10 +28,13 @@ export interface VehicleTypeFilterTypes {
 
 export const VEHICLE_TYPE_ENUMS: VehicleTypeFilterTypes = {
   bike: { label: "bike", size: 1 },
-  "sedan / suv": { label: "sedan / suv", size: 2},
+  "sedan / suv": { label: "sedan / suv", size: 2 },
   "pickup truck": { label: "pickup truck", size: 3 },
   "boat / RV": { label: "boat / RV", size: 4 },
-  "commercial truck / trailer": { label: "commercial truck / trailer", size: 5 },
+  "commercial truck / trailer": {
+    label: "commercial truck / trailer",
+    size: 5,
+  },
 };
 
 export interface DimensionFilterTypes {
@@ -92,6 +95,16 @@ export interface FilterTypes {
   length: number;
   width: number;
   spaces: number;
+}
+
+export interface addressFields {
+  street: string;
+  lat: string;
+  lng: string;
+  city: string;
+  state: string;
+  zip: string;
+  country: string;
 }
 
 export interface Listing {

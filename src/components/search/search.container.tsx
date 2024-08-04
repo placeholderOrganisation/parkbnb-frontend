@@ -9,6 +9,7 @@ import CitySearchSuggestionList from "./city-search-suggestions.component";
 import { setSearchQuery, filterSearchResults } from "../../redux/search-slice";
 import { callAnalytics } from "../../utils/amplitude-utils";
 import { deleteURIParam } from "../../utils/browser-utils";
+import { fetchSearchSuggestions } from "../../utils/search-utils";
 
 interface SearchContainerProps {
   handleEndAdornmentClick: () => void;
@@ -28,25 +29,12 @@ const SearchContainer = (props: SearchContainerProps) => {
 
   const handleSearchQueryChange = (value: string) => {
     if (value && value.length > 0) {
-      let suggestion: Listing[] = searchResults.filter((listing) =>
-        listing.address.city.toLowerCase().startsWith(value.toLowerCase())
-      );
+      let suggestion: Listing[] = fetchSearchSuggestions(value, searchResults);
 
       callAnalytics("search query changed", {
         query: value,
         suggestionsLength: suggestion.length,
       });
-
-      // Remove duplicates
-      suggestion = suggestion.reduce((unique: Listing[], item: Listing) => {
-        return unique.findIndex(
-          (uItem) =>
-            uItem.address.city.toLowerCase() === item.address.city.toLowerCase()
-        ) >= 0
-          ? unique
-          : [...unique, item];
-      }, []);
-
       setSuggestions(suggestion.slice(0, 5));
       if (value.length > 2 || suggestion.length > 0) {
         setIsSuggestionListOpen(true);
@@ -86,10 +74,12 @@ const SearchContainer = (props: SearchContainerProps) => {
   };
 
   useEffect(() => {
-    if (searchQuery !== value) {
+    if (searchQuery !== value && searchResults.length > 0) {
       setValue(searchQuery);
+      handleSearchQueryChange(searchQuery);
+      setIsSuggestionListOpen(false);
     }
-  }, [searchQuery]);
+  }, [searchQuery, searchResults]);
 
   return (
     <Box

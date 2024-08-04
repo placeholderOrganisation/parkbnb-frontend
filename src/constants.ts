@@ -24,12 +24,33 @@ export const footerLists = [
     list: "parking",
     rows: [
       {
-        label: "Register your parking",
+        label: "Rent your parking",
         link: "/create-listing",
       },
       {
         label: "Search parkings",
         link: "/listings",
+      },
+    ],
+  },
+  {
+    list: "topCities",
+    rows: [
+      {
+        label: "Brampton",
+        link: "/listings?city=Brampton",
+      },
+      {
+        label: "Toronto",
+        link: "/listings?city=Toronto",
+      },
+      {
+        label: "Mississauga",
+        link: "/listings?city=Mississauga",
+      },
+      {
+        label: "Vaughan",
+        link: "/listings?city=Vaughan",
       },
     ],
   },

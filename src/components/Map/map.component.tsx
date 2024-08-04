@@ -17,7 +17,10 @@ import { getURIParams } from "../../utils/browser-utils";
 import { getListingFromListingOnMapResultsGivenId } from "../../utils/parking-utils";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/global-store";
-import { userLocationLatitudeInitialState, userLocationLongitudeInitialState } from "../../redux/search-slice.util";
+import {
+  userLocationLatitudeInitialState,
+  userLocationLongitudeInitialState,
+} from "../../redux/search-slice.util";
 
 const TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN as string;
 
@@ -31,13 +34,12 @@ export const MapComponent = (props: MapComponentProps) => {
   } = props;
 
   const { new_listing } = getURIParams();
-
   const { lat, lng, zoom } = getCityCoords(city);
   const mapRef = useRef<MapRef | undefined>();
 
   useEffect(() => {
     mapRef.current?.flyTo({ center: [lng, lat], duration: 1000, zoom: zoom });
-  }, [city]);
+  }, [city, mapRef.current]);
 
   useEffect(() => {
     if (new_listing) {
@@ -56,7 +58,10 @@ export const MapComponent = (props: MapComponentProps) => {
 
   useEffect(() => {
     if (!userLocation) return;
-    if (userLocation.latitude !== userLocationLatitudeInitialState && userLocation.longitude !== userLocationLongitudeInitialState) {
+    if (
+      userLocation.latitude !== userLocationLatitudeInitialState &&
+      userLocation.longitude !== userLocationLongitudeInitialState
+    ) {
       mapRef.current?.flyTo({
         center: [userLocation.longitude, userLocation.latitude],
         duration: 1000,
@@ -64,6 +69,18 @@ export const MapComponent = (props: MapComponentProps) => {
       });
     }
   }, [userLocation]);
+
+  const { lat: latInRedux, lng: lngInRedux, zoom: zoomInRedux } = useSelector(
+    (state: RootState) => state.map
+  );
+
+  useEffect(() => {
+    mapRef.current?.flyTo({
+      center: [lngInRedux, latInRedux],
+      duration: 1000,
+      zoom: zoomInRedux,
+    });
+  }, [latInRedux, lngInRedux, zoomInRedux, mapRef.current]);
 
   const listingsRenderedInMap: FeatureCollection = {
     type: "FeatureCollection",

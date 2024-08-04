@@ -175,3 +175,19 @@ export interface FiltersContainerProps {
   handleApplyFilters: () => void;
   handleResetFilters: () => void;
 }
+
+interface LatLong {
+  lat: number;
+  lng: number;
+}
+
+export interface AutocompleteResponse {
+  text: string;
+  place_name: string;
+  center: LatLong;
+}
+
+export interface AutocompleteUtilFunctionResponse {
+  results?: AutocompleteResponse[];
+  success: boolean;
+}

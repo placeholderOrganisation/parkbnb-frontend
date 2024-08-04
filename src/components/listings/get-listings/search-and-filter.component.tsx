@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { isDesktop } from "../../../utils/display-utils";
-import SearchContainer from "../../search/search.container";
+import SearchContainer from "../../search_v2/search-v2.container";
 import DesktopFiltersContainer from "../../filters/filter-containers/filter-container.desktop";
 import MobileFiltersContainer from "../../filters/filter-containers/filter-container.mobile";
 import {

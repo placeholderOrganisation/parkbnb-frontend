@@ -1,4 +1,5 @@
 import { addressFields, Listing } from "../types/global.types";
+import { handleAutocomplete } from "./geo-coding.utils";
 
 export const fetchSearchSuggestions = (query: string, listings: Listing[]) => {
   let cityResults = listings.filter((listing) =>
@@ -17,6 +18,27 @@ export const fetchSearchSuggestions = (query: string, listings: Listing[]) => {
 
   // return [...cityResults, ...addressResults, ...postalCodeResults];
   return cityResults;
+};
+
+export const fetchSearchSuggestionsV2 = async (query: string) => {
+  const results = await handleAutocomplete(query);
+
+  // let cityResults = listings.filter((listing) =>
+  //   listing.address.city.toLowerCase().includes(query.toLowerCase())
+  // );
+
+  // cityResults = removeDuplicates(cityResults, "city");
+
+  // let addressResults = listings.filter((listing) =>
+  //   listing.address.street.toLowerCase().includes(query.toLowerCase())
+  // );
+
+  // let postalCodeResults = listings.filter((listing) =>
+  //   listing.address.zip.toLowerCase().includes(query.toLowerCase())
+  // );
+
+  // return [...cityResults, ...addressResults, ...postalCodeResults];
+  return results;
 };
 
 export const removeDuplicates = (

@@ -33,11 +33,11 @@ const ParkingCardList = (props: ParkingCardListProps) => {
     (state: RootState) => state.search.searchResults
   );
 
-  const filteredSearchResultsBasedOnCity = searchResults.filter(
+  const filteredSearchResultsBasedOnCity = searchResults?.filter(
     (result) => result.address.city.toLowerCase() === city.toLowerCase()
   );
 
-  const sortedAndFilteredSearchResults = filteredSearchResultsBasedOnCity.sort(
+  const sortedAndFilteredSearchResults = filteredSearchResultsBasedOnCity?.sort(
     (a, b) => {
       return dayjs(a.listed_on).isBefore(dayjs(b.listed_on)) ? 1 : -1;
     }
@@ -69,6 +69,7 @@ const ParkingCardList = (props: ParkingCardListProps) => {
         "&::-webkit-scrollbar": {
           display: "none", // Chrome, Safari and Opera
         },
+        width: "100%",
       }}
     >
       {!sortedAndFilteredSearchResults ||

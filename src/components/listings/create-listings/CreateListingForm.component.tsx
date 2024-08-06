@@ -3,7 +3,6 @@ import {
   Box,
   Container,
   Paper,
-  Button,
   Typography,
   MobileStepper,
 } from "@mui/material";
@@ -17,6 +16,7 @@ import { RootState } from "../../../redux/global-store";
 import BottomDrawer from "../../drawers/BottomDrawer";
 import PublishListing from "./publish-listing.component";
 import { callAnalytics } from "../../../utils/amplitude-utils";
+import RoundedButton from "../../custom-mui/rounded-button.component";
 
 const getStepContent = (step: number) => {
   switch (step) {
@@ -101,18 +101,25 @@ const CreateListingForm = () => {
               {getStepContent(activeStep)}
               <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                 {activeStep !== 0 && (
-                  <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
+                  <RoundedButton
+                    otherSx={{ mt: 3, ml: 1 }}
+                    otherProps={{
+                      onClick: handleBack,
+                    }}
+                  >
                     Back
-                  </Button>
+                  </RoundedButton>
                 )}
-                <Button
-                  variant="contained"
-                  onClick={handleNext}
-                  sx={{ mt: 3, ml: 1 }}
-                  disabled={!isCurrentStepValid()}
+                <RoundedButton
+                  otherProps={{
+                    variant: "contained",
+                    onClick: handleNext,
+                    disabled: !isCurrentStepValid(),
+                  }}
+                  otherSx={{ mt: 3, ml: 1 }}
                 >
                   {activeStep === steps.length - 1 ? "Submit" : "Next"}
-                </Button>
+                </RoundedButton>
               </Box>
             </>
           </Paper>

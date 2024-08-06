@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AppBar, Box, Toolbar, IconButton, Button, Stack } from "@mui/material";
+import { AppBar, Box, Toolbar, IconButton, Stack } from "@mui/material";
 
 import logo from "/rentaparking.png";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { COMPANY_NAME } from "../../constants";
 import UserProfile from "./user-profile.component";
 import UserImage from "./user-image.component";
+import RoundedButton from "../custom-mui/rounded-button.component";
 
 interface NavbarButtonProps {
   variant: "contained" | "outlined";
@@ -27,9 +28,15 @@ interface NavbarMobileFooterProps {
 const NavbarButton = (props: NavbarButtonProps) => {
   const { variant, children, handleOnClick } = props;
   return (
-    <Button variant={variant} color="primary" onClick={handleOnClick}>
+    <RoundedButton
+      otherProps={{
+        variant: variant,
+        color: "primary",
+        onClick: handleOnClick,
+      }}
+    >
       {children}
-    </Button>
+    </RoundedButton>
   );
 };
 

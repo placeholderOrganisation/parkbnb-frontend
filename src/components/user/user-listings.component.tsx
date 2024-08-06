@@ -1,10 +1,11 @@
-import { Button, Container, Grid, Stack, Typography } from "@mui/material";
+import { Container, Grid, Stack, Typography } from "@mui/material";
 import { Listing } from "../../types/global.types";
 import ParkingCard from "../parking-card/parking-card.component";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { isDesktop } from "../../utils/display-utils";
 import { openInNewTab } from "../../utils/browser-utils";
 import { useNavigate } from "react-router-dom";
+import RoundedButton from "../custom-mui/rounded-button.component";
 
 interface UserListingsComponentProps {
   userListings: Listing[];
@@ -38,16 +39,18 @@ const UserListingsComponent = (props: UserListingsComponentProps) => {
           <Typography variant="body1" component="p">
             Get started by creating a listing.
           </Typography>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => navigate("/create-listing")}
-            sx={{
+          <RoundedButton
+            otherProps={{
+              variant: "contained",
+              color: "primary",
+              onClick: () => navigate("/create-listing"),
+            }}
+            otherSx={{
               width: ["50%", "20%"],
             }}
           >
             Create Listing
-          </Button>
+          </RoundedButton>
         </Stack>
       </Container>
     );

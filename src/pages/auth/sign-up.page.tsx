@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import {
-  Button,
   CssBaseline,
   TextField,
   Link,
@@ -18,6 +17,7 @@ import SocialAuth from "../../components/auth/social-auth";
 import { callAnalytics } from "../../utils/amplitude-utils";
 import SnackBar from "../../components/custom-mui/snackbars/snackbar";
 import Footer from "../../components/footer/footer.component";
+import RoundedButton from "../../components/custom-mui/rounded-button.component";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -141,14 +141,16 @@ const SignUp = () => {
                 />
               </Grid>
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+            <RoundedButton
+              otherProps={{
+                type: "submit",
+                fullWidth: true,
+                variant: "contained",
+              }}
+              otherSx={{ mt: 3, mb: 2 }}
             >
               Sign Up
-            </Button>
+            </RoundedButton>
           </Box>
         </Box>
         <Copyright sx={{ my: 2 }} />

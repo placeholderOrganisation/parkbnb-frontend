@@ -1,5 +1,5 @@
 import EditListingOptionModal from "../edit-listing-option.modal";
-import { Button, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import DoNotGoBackLoader from "../../../custom-mui/loading-screens/do-not-go-back.loader";
 import { RootState } from "../../../../redux/global-store";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +8,7 @@ import { handleMarkParkingAsRented } from "../../../../utils/parking-utils";
 import { setUserSelectedListing } from "../../../../redux/search-slice";
 import { useNavigate } from "react-router-dom";
 import { callAnalytics } from "../../../../utils/amplitude-utils";
+import RoundedButton from "../../../custom-mui/rounded-button.component";
 
 interface RentedOptionModalProps {
   loadingInModal: boolean;
@@ -92,12 +93,22 @@ const RentedOptionModal = (props: RentedOptionModalProps) => {
             </Typography>
           </Stack>
           <Stack direction="row" spacing={1}>
-            <Button variant="contained" onClick={handleConfirmRented}>
+            <RoundedButton
+              otherProps={{
+                variant: "contained",
+                onClick: handleConfirmRented,
+              }}
+            >
               Yes
-            </Button>
-            <Button onClick={handleModalClose} variant="outlined">
+            </RoundedButton>
+            <RoundedButton
+              otherProps={{
+                variant: "outlined",
+                onClick: handleModalClose,
+              }}
+            >
               Cancel
-            </Button>
+            </RoundedButton>
           </Stack>
         </Stack>
       )}

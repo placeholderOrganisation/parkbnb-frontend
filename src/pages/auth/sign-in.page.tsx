@@ -1,6 +1,5 @@
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import {
-  Button,
   CssBaseline,
   TextField,
   FormControlLabel,
@@ -20,6 +19,7 @@ import { callAnalytics } from "../../utils/amplitude-utils";
 import { useEffect, useState } from "react";
 import SnackBar from "../../components/custom-mui/snackbars/snackbar";
 import Footer from "../../components/footer/footer.component";
+import RoundedButton from "../../components/custom-mui/rounded-button.component";
 
 const SignIn = () => {
   const dispatch = useDispatch();
@@ -118,14 +118,16 @@ const SignIn = () => {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+            <RoundedButton
+              otherProps={{
+                type: "submit",
+                fullWidth: true,
+                variant: "contained",
+              }}
+              otherSx={{ mt: 3, mb: 2 }}
             >
               Sign in
-            </Button>
+            </RoundedButton>
           </Box>
         </Box>
         <Copyright sx={{ my: 2 }} />

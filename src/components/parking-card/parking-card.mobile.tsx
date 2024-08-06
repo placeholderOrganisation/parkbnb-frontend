@@ -1,5 +1,4 @@
 import {
-  Button,
   // Avatar,
   Card,
   CardHeader,
@@ -21,6 +20,7 @@ import VerifiedIcon from "@mui/icons-material/Verified";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
+import RoundedButton from "../custom-mui/rounded-button.component";
 
 const Amenities = (props: {
   parking: Listing;
@@ -74,17 +74,16 @@ const Amenities = (props: {
           </Typography>
           {fromParkingCardContainer ? (
             <Stack direction="row" spacing={0.5}>
-              <Button
-                variant="contained"
-                sx={{
-                  borderRadius: 4,
+              <RoundedButton
+                otherProps={{
+                  variant: "contained",
                 }}
               >
                 <Typography variant="subtitle2" sx={{ pr: 1 }}>
                   View Details
                 </Typography>
                 <ArrowForwardIcon fontSize="small" />
-              </Button>
+              </RoundedButton>
             </Stack>
           ) : null}
         </Stack>

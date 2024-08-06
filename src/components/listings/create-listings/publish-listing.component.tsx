@@ -97,7 +97,7 @@ const PublishListing = (props: PublishListingProps) => {
           callAnalytics("listing_created", {
             listing: listingData,
           });
-          navigate(`/?new_listing=${response.data._id}`);
+          navigate(`/listings?new_listing=${response.data._id}`);
         } else {
           callAnalytics("api_failure_create_listing");
         }

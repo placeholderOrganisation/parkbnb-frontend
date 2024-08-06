@@ -1,4 +1,4 @@
-import { Stack, Typography, Button, Box, TextField } from "@mui/material";
+import { Stack, Typography, Box, TextField } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { ChangeEvent, useState } from "react";
 import { setUserContactNumber } from "../../../../redux/user-slice";
@@ -6,6 +6,7 @@ import {
   formatPhoneNumber,
   isContactNumberValid,
 } from "../../../../utils/user-utils";
+import RoundedButton from "../../../custom-mui/rounded-button.component";
 
 const contactNumberFieldErrorText = "Please enter a valid contact number";
 
@@ -75,14 +76,16 @@ const PublishListingMissingContacInfoError = () => {
           zIndex: 1000,
         }}
       >
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleClick}
-          fullWidth
+        <RoundedButton
+          otherProps={{
+            variant: "contained",
+            color: "primary",
+            onClick: handleClick,
+            fullWidth: true,
+          }}
         >
           Create your listing
-        </Button>
+        </RoundedButton>
       </Box>
     </Stack>
   );

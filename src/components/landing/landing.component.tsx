@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Card,
   CardActions,
   CardContent,
@@ -16,6 +15,7 @@ import { isDesktop } from "../../utils/display-utils";
 import AboutUsCard from "./about-us.card";
 import CitySearchCard from "./city-search.card";
 import ParkingCardList from "./parking-card.list";
+import RoundedButton from "../custom-mui/rounded-button.component";
 
 const aboutUsCards = [
   {
@@ -89,18 +89,16 @@ const Landing = () => {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button
-                  // @ts-ignore - buttonVariant is not a valid prop for Button
-                  variant={card.buttonVariant}
-                  color="primary"
-                  fullWidth
-                  onClick={card.actionHandler}
-                  sx={{
-                    borderRadius: 5,
+                <RoundedButton
+                  otherProps={{
+                    variant: card.buttonVariant,
+                    color: "primary",
+                    fullWidth: true,
+                    onClick: card.actionHandler,
                   }}
                 >
                   {card.action}
-                </Button>
+                </RoundedButton>
               </CardActions>
             </Card>
           </Grid>

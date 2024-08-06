@@ -18,6 +18,10 @@ export const footerLists = [
         label: "Sign in",
         link: "/sign-in",
       },
+      {
+        label: "Blogs",
+        link: "/blogs",
+      },
     ],
   },
   {

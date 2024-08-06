@@ -1,6 +1,5 @@
 export const isDesktop = () => {
-  const navigatorAgent =
-    navigator.userAgent || navigator.vendor;
+  const navigatorAgent = navigator.userAgent || navigator.vendor;
   return !(
     /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series([46])0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(
       navigatorAgent
@@ -9,4 +8,8 @@ export const isDesktop = () => {
       navigatorAgent.substr(0, 4)
     )
   );
+};
+
+export const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
 };

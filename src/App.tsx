@@ -19,6 +19,10 @@ import { Listing } from "./types/global.types";
 import { useDispatch } from "react-redux";
 import { setSearchResults } from "./redux/search-slice";
 
+import BlogsLandingPage from "./pages/blogs/blogs.landing-page";
+import BenefitsOfRentingAGaragePage from "./pages/blogs/benefits-of-renting-a-garage.page";
+import HowToRentYourSpacePage from "./pages/blogs/how-to-rent-your-space.page";
+
 const App = () => {
   const dispatch = useDispatch();
 
@@ -43,6 +47,18 @@ const App = () => {
       <Router>
         <NavbarHeader />
         <Routes>
+          <Route
+            path="/blogs/how-to-rent-your-space"
+            element={<HowToRentYourSpacePage />}
+          />
+          <Route
+            path="/blogs/benefits-of-renting-a-garage"
+            element={<BenefitsOfRentingAGaragePage />}
+          />
+          <Route
+            path="/blogs"
+            element={<BlogsLandingPage />}
+          />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/transition" element={<AuthTransition />} />

@@ -66,7 +66,7 @@ const ListingCardMobileLayout = (props: ListingCardLayoutProps) => {
         <ListingFilters filters={filters} />
         {/* Moved divider into ListingDescription since we conditionally render it */}
         <ListingDescription description={description} />
-        <Box sx={{ pb: 15 }} />
+        <Box sx={{ pb: 30 }} />
       </Stack>
       <CardFooter>
         <PricingBar price={price} />

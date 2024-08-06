@@ -39,8 +39,11 @@ const SignIn = () => {
       dispatch(setUserData(user));
       navigate("/transition");
     } else {
+      const { error } = response;
       setErrorOnSignIn(true);
-      callAnalytics("api_failure_sign_in");
+      callAnalytics("api_failure_sign_in", {
+        error,
+      });
     }
   };
 

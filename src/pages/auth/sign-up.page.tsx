@@ -37,8 +37,11 @@ const SignUp = () => {
       dispatch(setUserData(user));
       navigate("/transition");
     } else {
+      const { error } = response;
       setErrorOnSignup(true);
-      callAnalytics("api_failure_sign_up");
+      callAnalytics("api_failure_sign_up", {
+        error,
+      });
     }
   };
 

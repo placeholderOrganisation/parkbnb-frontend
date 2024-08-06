@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { isDesktop } from "../../../utils/display-utils";
 import SearchContainer from "../../search_v2/search-v2.container";
 import DesktopFiltersContainer from "../../filters/filter-containers/filter-container.desktop";
@@ -22,11 +22,14 @@ import {
   vehicleTypeInitialState,
 } from "../../../redux/search-slice.util";
 import { callAnalytics } from "../../../utils/amplitude-utils";
+import { RootState } from "../../../redux/global-store";
 
 const SearchAndFilter = () => {
   const [isFilterSectionOpen, setIsFilterSectionOpen] = useState(false);
   const dispatch = useDispatch();
   const isDesktopView = isDesktop();
+
+  const { filters } = useSelector((state: RootState) => state.search);
 
   const handleResetFilters = () => {
     callAnalytics("filters_reset");
@@ -44,7 +47,9 @@ const SearchAndFilter = () => {
 
   const handleApplyFilters = () => {
     // filters are already set in redux via individual filter components
-    callAnalytics("filters_applied");
+    callAnalytics("filters_applied", {
+      filters,
+    });
     dispatch(filterSearchResults());
     handleClosingFilterSection();
   };

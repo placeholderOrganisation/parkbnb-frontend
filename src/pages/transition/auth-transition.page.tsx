@@ -17,6 +17,7 @@ import {
   StepThreeState,
   StepTwoState,
 } from "../../types/create-listing-form.types";
+import { callAnalytics } from "../../utils/amplitude-utils";
 
 const AuthTransition = () => {
   useEffect(() => {
@@ -33,7 +34,9 @@ const AuthTransition = () => {
         }
       })
       .catch((error) => {
-        console.error("An error occurred during form submission:", error);
+        callAnalytics("api_failure_social_auth", {
+          error,
+        });
         navigate("/sign-in");
       });
   }, []);

@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import BottomDrawer from "../drawers/BottomDrawer";
@@ -16,6 +16,8 @@ import { callAnalytics } from "../../utils/amplitude-utils";
 import { openInNewTab } from "../../utils/browser-utils";
 import { interestMessageBody } from "../../constants";
 import SnackBar from "../custom-mui/snackbars/snackbar";
+import { isDesktop } from "../../utils/display-utils";
+import RoundedButton from "../custom-mui/rounded-button.component";
 
 interface ShowContactInfoComponentProps {
   contactNumber: string;
@@ -29,6 +31,8 @@ const ShowContactInfoComponent = (props: ShowContactInfoComponentProps) => {
 
   const { listingId } = useParams<{ listingId: string }>();
   const redirectDestinationAfterAuth = `/listing/${listingId}`;
+
+  const isDesktopView = isDesktop();
 
   const isAuthed = useSelector((state: RootState) => state.user.isAuthed);
   const hasUserAuthenticatedInPastFiveMins = hasUserAuthenticatedInThisSession();
@@ -51,14 +55,34 @@ const ShowContactInfoComponent = (props: ShowContactInfoComponentProps) => {
     setIsErrorDrawerOpen(true);
   };
 
-  const handleContactHostClick = () => {
+  const handleSmsOptionClick = () => {
     const currentUrl = window.location.href;
     callAnalytics("contact_host_clicked", {
       listingId,
+      channel: "sms",
     });
     openInNewTab(
       `sms:${contactNumber}?&body=${interestMessageBody} ${currentUrl}`
     );
+  };
+
+  const handleWhatsappOptionClick = () => {
+    const sanitizedContactNumberForWhatsapp = contactNumber.replace("-", "");
+    callAnalytics("contact_host_clicked", {
+      listingId,
+      channel: "whatsapp",
+    });
+    openInNewTab(
+      `https://wa.me/${sanitizedContactNumberForWhatsapp}?text=${interestMessageBody}`
+    );
+  };
+
+  const handleCallOptionClick = () => {
+    callAnalytics("contact_host_clicked", {
+      listingId,
+      channel: "call",
+    });
+    openInNewTab(`tel:${contactNumber}`);
   };
 
   const handleCloseSnackBar = () => {
@@ -82,42 +106,64 @@ const ShowContactInfoComponent = (props: ShowContactInfoComponentProps) => {
 
   if (showContactInfo) {
     return (
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        <Typography variant="subtitle1">Contact number</Typography>
-
-        <Typography
-          variant="subtitle1"
-          sx={{
-            fontWeight: "bold",
-            ml: 0.5,
-            cursor: "pointer",
-          }}
-          onClick={handleContactHostClick}
-        >
-          {contactNumber}
-        </Typography>
-      </Box>
+      <>
+        <Stack spacing={1}>
+          <Stack
+            direction="row"
+            spacing={1}
+            sx={{
+              justifyContent: "center",
+            }}
+          >
+            <RoundedButton
+              otherProps={{
+                fullWidth: true,
+                variant: "contained",
+                onClick: handleSmsOptionClick,
+              }}
+            >
+              SMS
+            </RoundedButton>
+            <RoundedButton
+              otherProps={{
+                fullWidth: true,
+                variant: "contained",
+                onClick: handleWhatsappOptionClick,
+              }}
+            >
+              Whatsapp
+            </RoundedButton>
+          </Stack>
+          <RoundedButton
+            otherProps={{
+              variant: "outlined",
+              onClick: handleCallOptionClick,
+            }}
+          >
+            Call {contactNumber}
+          </RoundedButton>
+        </Stack>
+      </>
     );
   }
+
+  const label = isDesktopView
+    ? "Sign in to view contact info"
+    : "Sign in to view contact info";
 
   return (
     <>
       <Box>
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{
-            width: "100%",
+        <RoundedButton
+          otherProps={{
+            fullWidth: true,
+            variant: "contained",
+            color: "primary",
+            onClick: handleClick,
           }}
-          onClick={handleClick}
         >
-          Contact host
-        </Button>
+          {label}
+        </RoundedButton>
       </Box>
       <BottomDrawer
         open={isErrorDrawerOpen}

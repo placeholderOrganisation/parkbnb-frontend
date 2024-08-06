@@ -1,7 +1,8 @@
-import { Stack, Typography, Button, Box } from "@mui/material";
+import { Stack, Typography, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { setRedirectDestinationAfterAuthInSessionStorage } from "../../../../utils/auth-utils";
 import SocialAuth from "../../../auth/social-auth";
+import RoundedButton from "../../../custom-mui/rounded-button.component";
 
 interface PublishListingUnAuthedErrorProps {
   redirectDestinationAfterAuth: string;
@@ -56,14 +57,16 @@ const PublishListingUnAuthedError = (
           location="unauth_drawer"
           prepAuthRedirect={updateAuthRedirectLink}
         />
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleClick}
-          fullWidth
+        <RoundedButton
+          otherProps={{
+            variant: "contained",
+            color: "primary",
+            onClick: handleClick,
+            fullWidth: true,
+          }}
         >
           Sign in via email
-        </Button>
+        </RoundedButton>
       </Box>
     </Stack>
   );

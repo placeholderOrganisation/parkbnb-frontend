@@ -71,7 +71,7 @@ export const handleSignIn = async (
 };
 
 export const handleSocialSignIn = async (provider: String) => {
-  window.open(`${baseURL}/v1/auth/${provider}`, "_self");
+  window.open(`${baseURL}/v1/auth/${provider}`);
 };
 
 export const handleCheckIfUserIsAuthenticated = async () => {
@@ -102,13 +102,15 @@ export const getNumberOfListingsViewedThisSession = () => {
 };
 
 export const hasUserSeenErrorSnackBar = () => {
-  const hasSeenErrorSnackBar = getItemFromSessionStorage("has_seen_error_snackbar");
+  const hasSeenErrorSnackBar = getItemFromSessionStorage(
+    "has_seen_error_snackbar"
+  );
   return Boolean(hasSeenErrorSnackBar);
-}
+};
 
 export const setHasUserSeenErrorSnackBar = () => {
   setItemInSessionStorage("has_seen_error_snackbar", "true", true);
-}
+};
 
 export const incrementNumberOfListingsViewedThisSession = () => {
   const numberOfListingsViewed = getNumberOfListingsViewedThisSession();

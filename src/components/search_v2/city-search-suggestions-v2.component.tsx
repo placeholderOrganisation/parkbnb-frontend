@@ -16,6 +16,7 @@ import NoSearchResultSuggestion from "./no-result-suggestions-v2.component";
 
 interface CitySearchSuggestionsProps {
   searchQuery: string;
+  showNearMe?: boolean;
   suggestions: AutocompleteResponse[];
   handleSuggestionClick: (suggestion: AutocompleteResponse) => void;
   handleCloseSuggestionList: (
@@ -26,6 +27,7 @@ interface CitySearchSuggestionsProps {
 const CitySearchSuggestionList = (props: CitySearchSuggestionsProps) => {
   const {
     searchQuery,
+    showNearMe = true,
     suggestions = [],
     handleSuggestionClick,
     handleCloseSuggestionList,
@@ -100,9 +102,11 @@ const CitySearchSuggestionList = (props: CitySearchSuggestionsProps) => {
         </InputAdornment>
       </Stack>
       <List>
-        <NearMeSuggestion
-          handleCloseSuggestionList={handleCloseSuggestionList}
-        />
+        {showNearMe && (
+          <NearMeSuggestion
+            handleCloseSuggestionList={handleCloseSuggestionList}
+          />
+        )}
         {SuggestionsComponent}
       </List>
     </>

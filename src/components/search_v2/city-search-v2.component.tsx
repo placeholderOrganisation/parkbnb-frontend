@@ -6,10 +6,16 @@ interface CitySearchProps {
   handleEndAdornmentClick: (value: boolean) => void;
   value: string;
   handleSearchQueryChange: (value: string) => void;
+  showFilters?: boolean;
 }
 
 const CitySearch = (props: CitySearchProps) => {
-  const { handleEndAdornmentClick, value, handleSearchQueryChange } = props;
+  const {
+    handleEndAdornmentClick,
+    value,
+    handleSearchQueryChange,
+    showFilters = true,
+  } = props;
   return (
     <TextField
       value={value}
@@ -39,26 +45,28 @@ const CitySearch = (props: CitySearchProps) => {
               </InputAdornment>
             )}
             {/* open filter drawer with divider icon */}
-            <InputAdornment
-              position="end"
-              sx={{
-                cursor: "pointer",
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                handleEndAdornmentClick(true);
-              }}
-            >
-              <Divider
-                orientation="vertical"
-                // flexItem
+            {showFilters && (
+              <InputAdornment
+                position="end"
                 sx={{
-                  height: 40,
-                  mx: 1,
+                  cursor: "pointer",
                 }}
-              />
-              <TuneIcon />
-            </InputAdornment>
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleEndAdornmentClick(true);
+                }}
+              >
+                <Divider
+                  orientation="vertical"
+                  // flexItem
+                  sx={{
+                    height: 40,
+                    mx: 1,
+                  }}
+                />
+                <TuneIcon />
+              </InputAdornment>
+            )}
           </>
         ),
       }}

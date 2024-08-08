@@ -3,6 +3,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import { Button, Divider, Stack, Typography } from "@mui/material";
 import { handleSocialSignIn as handleSocialSignInUtilFunc } from "../../utils/auth-utils";
 import { callAnalytics } from "../../utils/amplitude-utils";
+import { useEffect, useState } from "react";
 
 interface SocialAuthProps {
   location?: string;
@@ -11,13 +12,24 @@ interface SocialAuthProps {
 
 const SocialAuth = (props: SocialAuthProps) => {
   const { location, prepAuthRedirect = () => {} } = props;
+
+  const [provider, setProvider] = useState("");
+  const [startSocialAuth, setStartSocialAuth] = useState(false);
+
+  useEffect(() => {
+    if (startSocialAuth) {
+      callAnalytics("api_complete_social_auth", {
+        location,
+      });
+      prepAuthRedirect();
+      handleSocialSignInUtilFunc(provider);
+      setStartSocialAuth(false);
+    }
+  }, [startSocialAuth, provider]);
+
   const handleSocialSignIn = async (provider: string) => {
-    callAnalytics("api_start_social_auth", {
-      strategy: provider,
-      location,
-    });
-    prepAuthRedirect();
-    handleSocialSignInUtilFunc(provider);
+    setProvider(provider);
+    setStartSocialAuth(true);
   };
 
   return (

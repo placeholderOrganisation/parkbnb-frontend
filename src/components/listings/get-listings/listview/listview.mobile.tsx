@@ -147,9 +147,9 @@ export default function Listviewmobile(props: ListviewPageLayoutProps & Props) {
                   onClick={(e) => {
                     handleListingCardOpen(e, listing._id);
                   }}
+                  key={listing._id}
                 >
                   <ParkingCard
-                    key={listing._id}
                     parking={listing}
                     showIcon
                     icon={<OpenInNewIcon />}

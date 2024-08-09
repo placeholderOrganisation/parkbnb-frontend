@@ -12,7 +12,7 @@ import { getCityCoords, getListingCoords } from "../../utils/map-utils";
 import { FeatureCollection } from "geojson";
 import { NAVBAR_HEIGHT_MOBILE } from "../navbar/navbar-header.component";
 import { useEffect, useRef } from "react";
-import { highlightedLayerStyle, layerStyle } from "./layer-styling";
+import { highlightedLayerStyle, iconLayerStyle } from "./layer-styling";
 import { getURIParams } from "../../utils/browser-utils";
 import { getListingFromListingOnMapResultsGivenId } from "../../utils/parking-utils";
 import { useSelector } from "react-redux";
@@ -120,6 +120,39 @@ export const MapComponent = (props: MapComponentProps) => {
     handleListingClick(listingId);
   };
 
+  const handleMapLoad = () => {
+    const map = mapRef.current?.getMap();
+    if (!map) return;
+
+    const loadImage = async () => {
+      const response = await fetch(
+        `${import.meta.env.VITE_REACT_APP_URL}/map-icon.png`
+      );
+      const imageBlob = await response.blob();
+      const image = URL.createObjectURL(imageBlob);
+
+      map.loadImage(image, (error, loadedImage) => {
+        if (error) throw error;
+        if (!loadedImage) return;
+        map.addImage("custom-icon", loadedImage, {
+          stretchX: [
+            [25, 55],
+            [85, 115],
+          ],
+          stretchY: [[25, 100]],
+          content: [25, 25, 115, 100],
+          pixelRatio: 5,
+        });
+      });
+    };
+
+    if (map.isStyleLoaded()) {
+      loadImage();
+    } else {
+      map.on("style.load", loadImage);
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -131,6 +164,7 @@ export const MapComponent = (props: MapComponentProps) => {
         // @ts-expect-error
         ref={mapRef}
         reuseMaps
+        onLoad={handleMapLoad}
         onMoveEnd={moveEndHandler}
         onClick={clickHandler}
         initialViewState={{
@@ -143,7 +177,7 @@ export const MapComponent = (props: MapComponentProps) => {
         interactiveLayerIds={["listingsRenderedInMap", "currentUserSelection"]}
       >
         <Source type="geojson" data={listingsRenderedInMap}>
-          <Layer {...layerStyle} />
+          <Layer {...iconLayerStyle} />
         </Source>
         <Source type="geojson" data={currentUserSelection}>
           <Layer {...highlightedLayerStyle} />

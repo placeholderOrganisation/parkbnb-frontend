@@ -10,41 +10,42 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '20'
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20"
 
-    - name: Install dependencies
-      run: yarn
+      - name: Install dependencies
+        run: yarn
 
-    - name: Build the project
-      env:
-        MODE: production
-        VITE_REACT_APP_CLIENT_URL: ${{ secrets.VITE_REACT_APP_CLIENT_URL_PARKBNB }}
-        VITE_MAPBOX_ACCESS_TOKEN: ${{ secrets.VITE_MAPBOX_ACCESS_TOKEN_PARKBNB }}
-        VITE_AMPLITUDE_KEY: ${{ secrets.VITE_AMPLITUDE_KEY_PARKBNB }}
-      run: yarn build
+      - name: Build the project
+        env:
+          MODE: production
+          VITE_REACT_APP_CLIENT_URL: ${{ secrets.VITE_REACT_APP_CLIENT_URL_PARKBNB }}
+          VITE_MAPBOX_ACCESS_TOKEN: ${{ secrets.VITE_MAPBOX_ACCESS_TOKEN_PARKBNB }}
+          VITE_AMPLITUDE_KEY: ${{ secrets.VITE_AMPLITUDE_KEY_PARKBNB }}
+          VITE_REACT_APP_URL: ${{ secrets.VITE_REACT_APP_URL_PARKBNB }}
+        run: yarn build
 
-    - name: move files to dist
-      run: cp sitemap.xml dist/
+      - name: move files to dist
+        run: cp sitemap.xml dist/
 
-    - name: Set up SSH
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.PARKBNB_GH_ACTION_SSHKEY_V2 }}
-      run: |
-        mkdir -p ~/.ssh
-        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H ${{ secrets.PARKBNB_MACHINE_IP }} >> ~/.ssh/known_hosts
+      - name: Set up SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.PARKBNB_GH_ACTION_SSHKEY_V2 }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.PARKBNB_MACHINE_IP }} >> ~/.ssh/known_hosts
 
-    - name: Copy build files to server
-      run: |
-        scp -r dist/* root@${{ secrets.PARKBNB_MACHINE_IP }}:/var/www/netflix/client/
+      - name: Copy build files to server
+        run: |
+          scp -r dist/* root@${{ secrets.PARKBNB_MACHINE_IP }}:/var/www/netflix/client/
 
-    - name: Restart Nginx on server
-      run: |
-        ssh root@${{ secrets.PARKBNB_MACHINE_IP }} "systemctl restart nginx"
+      - name: Restart Nginx on server
+        run: |
+          ssh root@${{ secrets.PARKBNB_MACHINE_IP }} "systemctl restart nginx"

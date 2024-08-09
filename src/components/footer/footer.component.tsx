@@ -85,7 +85,7 @@ const Footer = () => {
               }}
             >
               <Box sx={{ width: "130px" }}>
-                <Typography variant="h5">Orgainzation</Typography>
+                <Typography variant="h5">Organization</Typography>
                 <StyledList list={organizationList.rows} />
               </Box>
 

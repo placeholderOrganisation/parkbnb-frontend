@@ -1,5 +1,36 @@
 import { SymbolLayer } from "mapbox-gl";
 import { CircleLayer } from "mapbox-gl";
+import { LayerProps } from "react-map-gl";
+
+export const clusterLayer: LayerProps = {
+  id: "clusters",
+  type: "circle",
+  filter: ["has", "point_count"],
+  paint: {
+    "circle-color": [
+      "step",
+      ["get", "point_count"],
+      "#42a5f5",
+      100,
+      "#42a5f5",
+      750,
+      "#42a5f5",
+    ],
+    "circle-radius": ["step", ["get", "point_count"], 20, 100, 30, 750, 40],
+  },
+};
+
+export const clusterCountLayer: LayerProps = {
+  id: "cluster-count",
+  type: "symbol",
+  source: "earthquakes",
+  filter: ["has", "point_count"],
+  layout: {
+    "text-field": "{point_count_abbreviated}",
+    "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+    "text-size": 12,
+  },
+};
 
 // @ts-ignore
 export const layerStyle: CircleLayer = {
@@ -17,6 +48,7 @@ export const layerStyle: CircleLayer = {
 export const iconLayerStyle: SymbolLayer = {
   id: "listingsRenderedInMap",
   type: "symbol",
+  filter: ["!", ["has", "point_count"]],
   layout: {
     "text-field": ["concat", "$", ["get", "monthly", ["get", "price"]]],
     "text-size": 12,
@@ -37,6 +69,7 @@ export const iconLayerStyle: SymbolLayer = {
 export const highlightedLayerStyle: CircleLayer = {
   id: "currentUserSelection",
   type: "circle",
+  filter: ["!", ["has", "point_count"]],
   paint: {
     "circle-color": "#4264fb",
     "circle-radius": 16,

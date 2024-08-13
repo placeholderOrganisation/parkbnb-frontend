@@ -9,7 +9,7 @@ import Map, {
 
 import { ListingOnMap, MapComponentProps } from "../../types/global.types";
 import { Box } from "@mui/material";
-import { getCityCoords, getListingCoords } from "../../utils/map-utils";
+import { getListingCoords } from "../../utils/map-utils";
 import { FeatureCollection } from "geojson";
 import { NAVBAR_HEIGHT_MOBILE } from "../navbar/navbar-header.component";
 import { useEffect, useRef } from "react";
@@ -23,10 +23,10 @@ import { getURIParams } from "../../utils/browser-utils";
 import { getListingFromListingOnMapResultsGivenId } from "../../utils/parking-utils";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/global-store";
-import {
-  userLocationLatitudeInitialState,
-  userLocationLongitudeInitialState,
-} from "../../redux/search-slice.util";
+// import {
+//   userLocationLatitudeInitialState,
+//   userLocationLongitudeInitialState,
+// } from "../../redux/search-slice.util";
 import { GeoJSONFeature } from "mapbox-gl";
 import { callAnalytics } from "../../utils/amplitude-utils";
 

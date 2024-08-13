@@ -23,6 +23,7 @@ import { RootState } from "../../redux/global-store";
 import { NAVBAR_HEIGHT_MOBILE } from "../../components/navbar/navbar-header.component";
 import { getURIParams } from "../../utils/browser-utils";
 import { callAnalytics } from "../../utils/amplitude-utils";
+import { setMapCoords } from "../../redux/map-slice";
 
 const GetListing = () => {
   const dispatch = useDispatch();
@@ -95,6 +96,13 @@ const GetListing = () => {
       id
     );
     dispatch(setUserSelectedListing(selectedListing));
+    dispatch(
+      setMapCoords({
+        lat: selectedListing?.address.lat,
+        lng: selectedListing?.address.lng,
+        zoom: 13,
+      })
+    );
     callAnalytics("listing_icon_clicked_in_map", {
       userSelectedListing: selectedListing,
     });

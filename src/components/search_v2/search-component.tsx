@@ -33,23 +33,14 @@ const SearchComponent = (props: SearchComponent) => {
   const [isSuggestionListOpen, setIsSuggestionListOpen] = useState(false);
   const [suggestions, setSuggestions] = useState<AutocompleteResponse[]>([]);
 
-  const handleSearchQueryChange = (
-    value: string,
-    trackWithAmp: boolean = true
-  ) => {
+  const handleSearchQueryChange = (value: string) => {
     setValue(value);
-    if (trackWithAmp) {
-      callAnalytics("search query submitted", {
-        query: value,
-      });
-    }
   };
 
   const handleSuggestionClick = (suggestion: AutocompleteResponse) => {
     callAnalytics("search suggestion clicked", { suggestion });
     handleSearchQueryChange(suggestion.text);
     setIsSuggestionListOpen(false);
-    console.log("suggestions", suggestion);
     dispatch(
       setMapCoords({
         lat: suggestion.center.lat,
@@ -74,7 +65,7 @@ const SearchComponent = (props: SearchComponent) => {
 
   useEffect(() => {
     if (searchQuery !== value && searchResults.length > 0) {
-      handleSearchQueryChange(searchQuery, false);
+      handleSearchQueryChange(searchQuery);
     }
   }, [searchQuery, searchResults]);
 

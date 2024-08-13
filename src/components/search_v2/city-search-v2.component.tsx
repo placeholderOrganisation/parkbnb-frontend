@@ -22,7 +22,7 @@ const CitySearch = (props: CitySearchProps) => {
       onChange={(e) => handleSearchQueryChange(e.target.value)}
       id="city-search"
       variant="outlined"
-      label="Search an address"
+      label="Search by address"
       sx={{
         width: "100%",
       }}

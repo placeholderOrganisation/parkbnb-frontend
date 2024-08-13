@@ -7,7 +7,7 @@ const LandingPage = () => {
     <>
       <Box
         sx={{
-          mt: 6,
+          mt: 5,
           mb: { xs: 3, md: 6 },
         }}
       >

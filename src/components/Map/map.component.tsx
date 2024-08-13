@@ -42,7 +42,8 @@ export const MapComponent = (props: MapComponentProps) => {
   } = props;
 
   const { new_listing } = getURIParams();
-  const { lat, lng, zoom } = getCityCoords(city);
+  const { lat, lng, zoom } = useSelector((state: RootState) => state.map);
+
   const mapRef = useRef<MapRef | undefined>();
 
   useEffect(() => {
@@ -60,35 +61,13 @@ export const MapComponent = (props: MapComponentProps) => {
     }
   }, [new_listing, listings]);
 
-  const userLocation = useSelector(
-    (state: RootState) => state.search.userLocation
-  );
-
-  useEffect(() => {
-    if (!userLocation) return;
-    if (
-      userLocation.latitude !== userLocationLatitudeInitialState &&
-      userLocation.longitude !== userLocationLongitudeInitialState
-    ) {
-      mapRef.current?.flyTo({
-        center: [userLocation.longitude, userLocation.latitude],
-        duration: 1000,
-        zoom: 14,
-      });
-    }
-  }, [userLocation]);
-
-  const { lat: latInRedux, lng: lngInRedux, zoom: zoomInRedux } = useSelector(
-    (state: RootState) => state.map
-  );
-
   useEffect(() => {
     mapRef.current?.flyTo({
-      center: [lngInRedux, latInRedux],
+      center: [lng, lat],
       duration: 1000,
-      zoom: zoomInRedux,
+      zoom: zoom,
     });
-  }, [latInRedux, lngInRedux, zoomInRedux, mapRef.current]);
+  }, [lat, lng, zoom, mapRef.current]);
 
   const listingsRenderedInMap: FeatureCollection = {
     type: "FeatureCollection",

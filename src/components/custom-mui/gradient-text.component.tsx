@@ -17,10 +17,11 @@ interface GradientTextProps {
     | "caption"
     | "button"
     | "overline";
+  otherSx?: any;
 }
 
 const GradientText = (props: GradientTextProps) => {
-  const { children, typographyVariant } = props;
+  const { children, typographyVariant, otherSx = {} } = props;
   return (
     <Typography
       component="h1"
@@ -31,6 +32,7 @@ const GradientText = (props: GradientTextProps) => {
         WebkitBackgroundClip: "text",
         WebkitTextFillColor: "transparent",
         display: "inline",
+        ...otherSx,
       }}
     >
       {children}

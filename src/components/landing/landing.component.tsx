@@ -1,21 +1,22 @@
 import {
   Box,
-  Card,
-  CardActions,
-  CardContent,
+  // Card,
+  // CardActions,
+  // CardContent,
   Container,
-  Grid,
+  // Grid,
   Stack,
   Typography,
 } from "@mui/material";
-import { callAnalytics } from "../../utils/amplitude-utils";
-import { useNavigate } from "react-router-dom";
+// import { callAnalytics } from "../../utils/amplitude-utils";
+// import { useNavigate } from "react-router-dom";
 import GradientText from "../custom-mui/gradient-text.component";
 import { isDesktop } from "../../utils/display-utils";
 import AboutUsCard from "./about-us.card";
 import CitySearchCard from "./city-search.card";
 import ParkingCardList from "./parking-card.list";
-import RoundedButton from "../custom-mui/rounded-button.component";
+// import RoundedButton from "../custom-mui/rounded-button.component";
+import LandingSearch from "./landing-search.container";
 
 const aboutUsCards = [
   {
@@ -38,45 +39,57 @@ const aboutUsCards = [
 const cities = ["Toronto", "Brampton", "Mississauga", "Vaughan"];
 
 const Landing = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const isDesktopView = isDesktop();
 
-  const handleFindParkingAction = () => {
-    callAnalytics("find_parking_click");
-    navigate("/listings");
-  };
+  // const handleFindParkingAction = () => {
+  //   callAnalytics("find_parking_click");
+  //   navigate("/listings");
+  // };
 
-  const handleListParkingAction = () => {
-    callAnalytics("list_parking_click");
-    navigate("/create-listing");
-  };
+  // const handleListParkingAction = () => {
+  //   callAnalytics("list_parking_click");
+  //   navigate("/create-listing");
+  // };
 
-  const cards = [
-    {
-      title: "Are you looking for a parking space to rent?",
-      description:
-        "We help renters find parking near their postal code that they can afford.",
-      action: "Find a parking",
-      actionHandler: handleFindParkingAction,
-      buttonVariant: "contained",
-    },
-    {
-      title: "Are you looking to rent your parking space?",
-      description:
-        "We help hosts safely rent out extra parking to like-minded people.",
-      action: "List your parking",
-      actionHandler: handleListParkingAction,
-      buttonVariant: "outlined",
-    },
-  ];
+  // const cards = [
+  //   {
+  //     title: "Browse available parkings",
+  //     description:
+  //       "We help renters find parking near their postal code that they can afford.",
+  //     action: "Find a parking",
+  //     actionHandler: handleFindParkingAction,
+  //     buttonVariant: "contained",
+  //   },
+  //   {
+  //     title: "Rent your parking",
+  //     description:
+  //       "We help hosts safely rent out extra parking to like-minded people.",
+  //     action: "List your parking",
+  //     actionHandler: handleListParkingAction,
+  //     buttonVariant: "outlined",
+  //   },
+  // ];
 
   return (
     <Container maxWidth="md">
       <Stack>
         <GradientText typographyVariant="h3">Rent A Parking</GradientText>
-        <Typography variant="body1">The Parking Rental Website</Typography>
+        <Stack
+          direction="row"
+          sx={{
+            alignItems: "center",
+          }}
+        >
+          <Typography variant="body1">Search</Typography>
+          <GradientText typographyVariant="body1" otherSx={{ mx: 0.5 }}>
+            100+
+          </GradientText>
+          <Typography variant="body1">active parking spots</Typography>
+        </Stack>
       </Stack>
-      <Grid container spacing={2} sx={{ py: 4 }}>
+      <LandingSearch />
+      {/* <Grid container spacing={2} sx={{ py: 4 }}>
         {cards.map((card) => (
           <Grid item xs={12} md={6} key={card.title}>
             <Card sx={{ borderRadius: 4 }}>
@@ -103,7 +116,7 @@ const Landing = () => {
             </Card>
           </Grid>
         ))}
-      </Grid>
+      </Grid> */}
       <Stack spacing={2}>
         <Typography variant="h4">Popular Cities</Typography>
         <Stack direction={isDesktopView ? "row" : "column"} spacing={2}>

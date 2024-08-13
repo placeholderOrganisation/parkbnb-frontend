@@ -105,6 +105,7 @@ const CitySearchSuggestionList = (props: CitySearchSuggestionsProps) => {
         {showNearMe && (
           <NearMeSuggestion
             handleCloseSuggestionList={handleCloseSuggestionList}
+            handleSuggestionClick={handleSuggestionClick}
           />
         )}
         {SuggestionsComponent}

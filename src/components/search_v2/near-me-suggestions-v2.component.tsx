@@ -8,16 +8,19 @@ import {
 } from "@mui/material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import NearMeOutlinedIcon from "@mui/icons-material/NearMeOutlined";
-import { useDispatch } from "react-redux";
-import { setUserLocation } from "../../redux/search-slice";
+// import { useDispatch } from "react-redux";
 import { MouseEvent, useState } from "react";
 import SnackBar from "../custom-mui/snackbars/snackbar";
 import { callAnalytics } from "../../utils/amplitude-utils";
+// import { setMapCoords } from "../../redux/map-slice";
+import { AutocompleteResponse } from "../../types/global.types";
+import { getCityCoords } from "../../utils/map-utils";
 
 interface NearMeSuggestionProps {
   handleCloseSuggestionList: (
     e?: MouseEvent<Element | MouseEvent> | undefined
   ) => void;
+  handleSuggestionClick: (suggestion: AutocompleteResponse) => void;
 }
 
 export const NearMeOptions = {
@@ -27,8 +30,8 @@ export const NearMeOptions = {
 };
 
 const NearMeSuggestion = (props: NearMeSuggestionProps) => {
-  const { handleCloseSuggestionList } = props;
-  const dispatch = useDispatch();
+  const { handleCloseSuggestionList, handleSuggestionClick } = props;
+  // const dispatch = useDispatch();
 
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -40,11 +43,23 @@ const NearMeSuggestion = (props: NearMeSuggestionProps) => {
       crd,
       success: true,
     });
-    dispatch(
-      setUserLocation({ latitude: crd.latitude, longitude: crd.longitude })
-    );
+    // dispatch(
+    //   setMapCoords({
+    //     lat: crd.latitude,
+    //     lng: crd.longitude,
+    //     zoom: 14,
+    //   })
+    // );
     setLoading(false);
     setSuccess(true);
+    handleSuggestionClick({
+      text: "Near me",
+      center: {
+        lat: crd.latitude,
+        lng: crd.longitude,
+      },
+      place_name: "Near me",
+    });
   };
 
   const handleNearMeErrorCallback = (error: any) => {
@@ -52,8 +67,17 @@ const NearMeSuggestion = (props: NearMeSuggestionProps) => {
       error,
       success: false,
     });
+    const { lat, lng } = getCityCoords(null);
     setError(true);
     setLoading(false);
+    handleSuggestionClick({
+      text: "Greater Toronto Area",
+      center: {
+        lat: lat,
+        lng: lng,
+      },
+      place_name: "Greater Toronto Area",
+    });
   };
 
   const handleCloseSuggestionListAndSnackBar = (flag: any) => {

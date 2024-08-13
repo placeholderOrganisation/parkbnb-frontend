@@ -9,7 +9,7 @@ import CitySearchSuggestionList from "./city-search-suggestions-v2.component";
 import { setSearchQuery, filterSearchResults } from "../../redux/search-slice";
 import { callAnalytics } from "../../utils/amplitude-utils";
 import { fetchSearchSuggestionsV2 } from "../../utils/search-utils";
-import { resetMapCoords, setMapCoords } from "../../redux/map-slice";
+import { setMapCoords } from "../../redux/map-slice";
 
 interface SearchComponent {
   handleEndAdornmentClick: () => void;
@@ -82,7 +82,6 @@ const SearchComponent = (props: SearchComponent) => {
     } else {
       dispatch(setSearchQuery(""));
       dispatch(filterSearchResults());
-      dispatch(resetMapCoords());
     }
   }, [value]);
 

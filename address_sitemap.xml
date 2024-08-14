@@ -1,3 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
 <url>
   <loc>https://rentaparking.ca/listings?address=390%20Ashburnham%20Drive</loc>
   <lastmod>2024-08-14T04:47:35+00:00</lastmod>
@@ -255,11 +258,6 @@
 </url>
 <url>
   <loc>https://rentaparking.ca/listings?address=15%20McChesney%20Avenue</loc>
-  <lastmod>2024-08-14T04:47:35+00:00</lastmod>
-  <changefreq>weekly</changefreq>
-</url>
-<url>
-  <loc>https://rentaparking.ca/listings?address=Highway%20599%20&%20Highway%20642</loc>
   <lastmod>2024-08-14T04:47:35+00:00</lastmod>
   <changefreq>weekly</changefreq>
 </url>
@@ -1423,3 +1421,4 @@
   <lastmod>2024-08-14T04:47:35+00:00</lastmod>
   <changefreq>weekly</changefreq>
 </url>
+</urlset>

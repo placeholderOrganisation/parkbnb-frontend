@@ -24,6 +24,7 @@ import { NAVBAR_HEIGHT_MOBILE } from "../../components/navbar/navbar-header.comp
 import { getURIParams } from "../../utils/browser-utils";
 import { callAnalytics } from "../../utils/amplitude-utils";
 import { setMapCoords } from "../../redux/map-slice";
+import { handleAutocomplete } from "../../utils/geo-coding.utils";
 
 const GetListing = () => {
   const dispatch = useDispatch();
@@ -83,11 +84,32 @@ const GetListing = () => {
 
   // fetch URI params and set user selected listing if applicable
   useEffect(() => {
-    const { city } = getURIParams();
+    const { city, address, postalCode } = getURIParams();
     if (city) {
       dispatch(setSearchQuery(city));
       dispatch(filterSearchResults());
     }
+    let query = "";
+    if (address) {
+      query = address;
+    } else if (postalCode) {
+      query = postalCode;
+    }
+    handleAutocomplete(query).then((res) => {
+      const { results } = res;
+      if (!results || results.length === 0) {
+        return;
+      }
+      const firstResult = results[0];
+      dispatch(
+        setMapCoords({
+          lat: firstResult.center.lat,
+          lng: firstResult.center.lng,
+          zoom: 12,
+        })
+      );
+      dispatch(setSearchQuery(firstResult.text));
+    });
   }, [searchResults]);
 
   const handleListingClickInMap = (id: string) => {

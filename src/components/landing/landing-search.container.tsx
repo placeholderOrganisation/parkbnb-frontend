@@ -3,9 +3,15 @@ import SearchComponent from "../search_v2/search-component";
 import { useNavigate } from "react-router-dom";
 
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import { callAnalytics } from "../../utils/amplitude-utils";
 
 const LandingSearch = () => {
   const navigate = useNavigate();
+
+  const handleSearch = () => {
+    callAnalytics("find_parking_click");
+    navigate("/listings");
+  };
 
   return (
     <Stack
@@ -42,9 +48,7 @@ const LandingSearch = () => {
             width: "50px",
             boxShadow: "none",
           }}
-          onClick={() => {
-            navigate("/listings");
-          }}
+          onClick={handleSearch}
         >
           <SearchOutlinedIcon />
         </Button>

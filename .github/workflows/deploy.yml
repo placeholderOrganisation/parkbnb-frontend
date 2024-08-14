@@ -31,7 +31,7 @@ jobs:
         run: yarn build
 
       - name: move files to dist
-        run: cp sitemap.xml dist/
+        run: cp *.xml dist/
 
       - name: Set up SSH
         env:

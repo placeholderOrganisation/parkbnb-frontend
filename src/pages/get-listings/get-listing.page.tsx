@@ -105,7 +105,7 @@ const GetListing = () => {
         setMapCoords({
           lat: firstResult.center.lat,
           lng: firstResult.center.lng,
-          zoom: 12,
+          zoom: 14,
         })
       );
       dispatch(setSearchQuery(firstResult.text));

@@ -89,7 +89,6 @@ export const MapComponent = (props: MapComponentProps) => {
 
   const moveEndHandler = (e: ViewStateChangeEvent) => {
     const listingsInView = e.target.queryRenderedFeatures({
-      // @ts-ignore
       layers: ["listingsRenderedInMap", "currentUserSelection"],
     });
 
@@ -97,8 +96,8 @@ export const MapComponent = (props: MapComponentProps) => {
       (listing) => listing.properties?._id
     );
 
+    // @ts-ignore
     const clusterIdsInView = e.target.queryRenderedFeatures({
-      // @ts-ignore
       layers: [clusterLayer.id],
     });
 

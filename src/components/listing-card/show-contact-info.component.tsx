@@ -55,12 +55,22 @@ const ShowContactInfoComponent = (props: ShowContactInfoComponentProps) => {
     setIsErrorDrawerOpen(true);
   };
 
+  const trackGoogleConversion = () => {
+    // @ts-ignore
+    window.gtag("event", "conversion", {
+      send_to: "AW-16650672623/Xg5VCPHI-soZEO-z1IM-",
+      value: 1.0,
+      currency: "CAD",
+    });
+  };
+
   const handleSmsOptionClick = () => {
     const currentUrl = window.location.href;
     callAnalytics("contact_host_clicked", {
       listingId,
       channel: "sms",
     });
+    trackGoogleConversion();
     openInNewTab(
       `sms:${contactNumber}?&body=${interestMessageBody} ${currentUrl}`
     );
@@ -72,6 +82,7 @@ const ShowContactInfoComponent = (props: ShowContactInfoComponentProps) => {
       listingId,
       channel: "whatsapp",
     });
+    trackGoogleConversion();
     openInNewTab(
       `https://wa.me/${sanitizedContactNumberForWhatsapp}?text=${interestMessageBody}`
     );
@@ -82,6 +93,7 @@ const ShowContactInfoComponent = (props: ShowContactInfoComponentProps) => {
       listingId,
       channel: "call",
     });
+    trackGoogleConversion();
     openInNewTab(`tel:${contactNumber}`);
   };
 

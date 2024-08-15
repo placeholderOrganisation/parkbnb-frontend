@@ -53,13 +53,24 @@ const CreateListingForm = () => {
     }
   };
 
+  const handleSubmit = () => {
+    setIsSubmitting(true);
+
+    // @ts-ignore
+    window.gtag("event", "conversion", {
+      send_to: "AW-16650672623/ygprCL6h-soZEO-z1IM-",
+      value: 1.0,
+      currency: "CAD",
+    });
+  };
+
   const handleNext = () => {
     if (!isCurrentStepValid()) {
       return;
     }
     if (activeStep === steps.length - 1) {
       // open drawer
-      setIsSubmitting(true);
+      handleSubmit();
       return;
     }
     setActiveStep(activeStep + 1);

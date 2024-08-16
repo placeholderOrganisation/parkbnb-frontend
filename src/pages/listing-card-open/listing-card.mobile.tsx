@@ -11,6 +11,7 @@ import CardFooter from "../../components/listing-card/card-footer.container";
 import ListingFilters from "../../components/listing-card/listing-filters.component";
 import ShareIcon from "../../components/share-icon/share-icon-component";
 import EditListing from "../../components/listing-card/edit-listing/edit-listing.component";
+import NavigateBackToListingsPage from "../../components/listing-card/navigate-back-to-listing.component";
 
 interface ListingCardLayoutProps {
   listing: Listing;
@@ -27,6 +28,16 @@ const ListingCardMobileLayout = (props: ListingCardLayoutProps) => {
   return (
     <>
       <Box sx={{ position: "relative" }}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: 16,
+            left: 16,
+            zIndex: 1,
+          }}
+        >
+          <NavigateBackToListingsPage circularBorder />
+        </Box>
         <Box
           sx={{
             position: "absolute",

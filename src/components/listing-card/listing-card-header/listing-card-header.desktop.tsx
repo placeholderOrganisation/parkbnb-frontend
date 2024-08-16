@@ -2,12 +2,14 @@ import { Box, Stack, Typography } from "@mui/material";
 import { ListingCardHeaderLayoutProps } from "../listing-card-header.component";
 import ShareIcon from "../../share-icon/share-icon-component";
 import EditListing from "../edit-listing/edit-listing.component";
+import ListingBreadCrumbs from "../listings-breadcrumb.component";
 
 const ListingCardHeaderDesktop = (props: ListingCardHeaderLayoutProps) => {
   const { parsedHeading, subheading, shouldShowEditListingOption } = props;
 
   return (
     <Stack spacing={0.5}>
+      <ListingBreadCrumbs />
       <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
         <Typography variant="h2">{parsedHeading}</Typography>
         <Box

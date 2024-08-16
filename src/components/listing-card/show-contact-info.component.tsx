@@ -10,7 +10,7 @@ import {
   hasUserAuthenticatedInThisSession,
   // hasUserSeenErrorSnackBar,
   incrementNumberOfListingsViewedThisSession,
-  setHasUserSeenErrorSnackBar,
+  // setHasUserSeenErrorSnackBar,
 } from "../../utils/auth-utils";
 import { callAnalytics } from "../../utils/amplitude-utils";
 import { openInNewTab } from "../../utils/browser-utils";
@@ -95,10 +95,10 @@ const ShowContactInfoComponent = (props: ShowContactInfoComponentProps) => {
     openInNewTab(`tel:${contactNumber}`);
   };
 
-  const handleCloseSnackBar = () => {
-    // setShowSnackBar(false);
-    setHasUserSeenErrorSnackBar();
-  };
+  // const handleCloseSnackBar = () => {
+  //   // setShowSnackBar(false);
+  //   setHasUserSeenErrorSnackBar();
+  // };
 
   useEffect(() => {
     if (showContactInfo) {

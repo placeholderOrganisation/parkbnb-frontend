@@ -6,16 +6,16 @@ import PublishListingUnAuthedError from "../listings/create-listings/publish-lis
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/global-store";
 import {
-  getNumberOfListingsViewedThisSession,
+  // getNumberOfListingsViewedThisSession,
   hasUserAuthenticatedInThisSession,
-  hasUserSeenErrorSnackBar,
+  // hasUserSeenErrorSnackBar,
   incrementNumberOfListingsViewedThisSession,
   setHasUserSeenErrorSnackBar,
 } from "../../utils/auth-utils";
 import { callAnalytics } from "../../utils/amplitude-utils";
 import { openInNewTab } from "../../utils/browser-utils";
 import { interestMessageBody } from "../../constants";
-import SnackBar from "../custom-mui/snackbars/snackbar";
+// import SnackBar from "../custom-mui/snackbars/snackbar";
 import { isDesktop } from "../../utils/display-utils";
 import RoundedButton from "../custom-mui/rounded-button.component";
 
@@ -36,16 +36,14 @@ const ShowContactInfoComponent = (props: ShowContactInfoComponentProps) => {
 
   const isAuthed = useSelector((state: RootState) => state.user.isAuthed);
   const hasUserAuthenticatedInPastFiveMins = hasUserAuthenticatedInThisSession();
-  const numberOfListingsViewedInCookie = getNumberOfListingsViewedThisSession();
-  const hasUserSeenErrorSnackBarThisSession = hasUserSeenErrorSnackBar();
-  const showContactInfo =
-    isAuthed ||
-    hasUserAuthenticatedInPastFiveMins ||
-    numberOfListingsViewedInCookie <= 1;
+  // const numberOfListingsViewedInCookie = getNumberOfListingsViewedThisSession();
+  // const hasUserSeenErrorSnackBarThisSession = hasUserSeenErrorSnackBar();
+  const showContactInfo = isAuthed || hasUserAuthenticatedInPastFiveMins;
+  // || numberOfListingsViewedInCookie <= 1;
   const [isErrorDrawerOpen, setIsErrorDrawerOpen] = useState(false);
-  const [showSnackBar, setShowSnackBar] = useState(
-    numberOfListingsViewedInCookie >= 1 && !hasUserSeenErrorSnackBarThisSession
-  );
+  // const [showSnackBar, setShowSnackBar] = useState(
+  //   numberOfListingsViewedInCookie >= 1 && !hasUserSeenErrorSnackBarThisSession
+  // );
 
   // button is only rendered when user is not authed
   const handleClick = () => {
@@ -98,7 +96,7 @@ const ShowContactInfoComponent = (props: ShowContactInfoComponentProps) => {
   };
 
   const handleCloseSnackBar = () => {
-    setShowSnackBar(false);
+    // setShowSnackBar(false);
     setHasUserSeenErrorSnackBar();
   };
 
@@ -188,12 +186,12 @@ const ShowContactInfoComponent = (props: ShowContactInfoComponentProps) => {
           errorMessage={errorMessage}
         />
       </BottomDrawer>
-      <SnackBar
+      {/* <SnackBar
         open={showSnackBar}
         message={"Please sign in to view contact information"}
         severity="error"
         handleClose={handleCloseSnackBar}
-      />
+      /> */}
     </>
   );
 };

@@ -63,7 +63,7 @@ export const footerLists = [
 export const seoContent = {
   landingPage: {
     pageTitle:
-      "Rent A Parking® | Parking spot for rent | Your Parking Marketplace | Car, Boat, RV & Truck Trailer Parking for Rent | Daily/Monthly/Hourly Parking Options",
+      "Rent A Parking® | Your Parking Marketplace | Parking spots for rent | Car, Boat, RV & Truck Trailer Parking for Rent | Daily/Monthly/Hourly Parking Options",
     pageDescription:
       "Parking Space for Rent (Condo/Apartment/House, Driveway, Garage, Outdoor  Yards ) for Car, Van, RV, Truck Trailer & Boats. We have Daily and Monthly Parking Rental options. We are present in all major cities of Canada",
     pageImage: `https://${parkingAppDomain}/logo-black.png`,
@@ -71,7 +71,7 @@ export const seoContent = {
   },
   listingsPage: {
     pageTitle:
-      "Rent A Parking® | Top 5 Cheapest Parking Spots Near Your Area | Your Parking Marketplace",
+      "10 Best Monthly Parking Spots Near Your Area | Rent A Parking® | Your Parking Marketplace",
     pageDescription:
       "Find the cheapest parking on Rent A Parking. Parking reimagined. Rent A Parking offers an easier, safer, cheaper and more convenient parking option. Reserve today!",
     pageImage: `https://${parkingAppDomain}/logo-black.png`,

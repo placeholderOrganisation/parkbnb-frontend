@@ -330,18 +330,18 @@ export const generateSEOForListingPage = (): {
   const uriParams = getURIParams();
   const { city, address, postalCode } = uriParams;
   let pageTitle =
-    "Rent A Parking® | Top 5 Cheapest Parking Spots Near Your Area | Your Parking Marketplace";
+    "10 Best Monthly Parking Spots Near Your Area | Rent A Parking® | Your Parking Marketplace";
   let pageDescription =
     "Find the cheapest parking on Rent A Parking. Parking reimagined. Rent A Parking offers an easier, safer, cheaper and more convenient parking option. Reserve today!";
   if (city) {
-    pageTitle = `Rent A Parking® | Top 5 Cheapest Parking Spots in ${city} | Your Parking Marketplace`;
-    pageDescription = `Find the cheapest parking on Rent A Parking in ${city}. Parking reimagined. Rent A Parking offers an easier, safer, cheaper and more convenient parking option. Reserve today!`;
+    pageTitle = `Rent A Parking® | 10 Best Monthly Parking Spots in ${city} | Your Parking Marketplace`;
+    pageDescription = `Find the cheapest parking on Rent A Parking in ${city}. Parking reimagined. Rent A Parking offers an easier, safer, cheaper and more convenient parking options in ${city}. Reserve today!`;
   } else if (address) {
     pageTitle = `Rent A Parking® | Parking Spot near ${address} | Your Parking Marketplace`;
-    pageDescription = `Find the cheapest parking on Rent A Parking near ${address}. Parking reimagined. Rent A Parking offers an easier, safer, cheaper and more convenient parking option. Reserve today!`;
+    pageDescription = `Find the cheapest parking on Rent A Parking near ${address}. Parking reimagined. Rent A Parking offers an easier, safer, cheaper and more convenient parking options near ${address}. Reserve today!`;
   } else if (postalCode) {
     pageTitle = `Rent A Parking® | Parking Spot near ${postalCode} | Your Parking Marketplace`;
-    pageDescription = `Find the cheapest parking on Rent A Parking near ${postalCode}. Parking reimagined. Rent A Parking offers an easier, safer, cheaper and more convenient parking option. Reserve today!`;
+    pageDescription = `Find the cheapest parking on Rent A Parking near ${postalCode}. Parking reimagined. Rent A Parking offers an easier, safer, cheaper and more convenient parking options near ${postalCode}. Reserve today!`;
   }
   return { pageTitle, pageDescription };
 };

@@ -7,7 +7,9 @@ interface ListingDescriptionProps {
 const ListingDescription = (props: ListingDescriptionProps) => {
   const { description } = props;
   const shouldShowDescription =
-    description && description.split(" ").length > 5;
+    description && description.split(" ").length >= 5;
+
+    console.log('description', description, description.split(" "))
 
   if (!shouldShowDescription) {
     return null;

@@ -5,6 +5,7 @@ import ListingCardMobileLayout from "./listing-card.mobile";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
+  generatePageDescriptionUsingListing,
   handleGetParking,
   isUserListingOwner,
 } from "../../utils/parking-utils";
@@ -17,6 +18,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setFetchedListing as setFetchedListingInRedux } from "../../redux/search-slice";
 import { callAnalytics } from "../../utils/amplitude-utils";
 import { getURIParams } from "../../utils/browser-utils";
+import { seoContent } from "../../constants";
+import Head from "../../components/seo/head.component";
 
 const ListingCard = () => {
   const isDesktopView = isDesktop();
@@ -94,19 +97,31 @@ const ListingCard = () => {
     fetchedListing
   );
 
+  const { listingPage } = seoContent;
+  const { pageTitle, pageCanonicalUrl, pageImage } = listingPage;
+  const pageDescription = generatePageDescriptionUsingListing(fetchedListing);
+
   return (
-    <Box
-      sx={{
-        mt: [0, 6],
-        mb: { xs: 3, md: 6 },
-      }}
-    >
-      <Layout
-        listing={fetchedListing}
-        listingOwner={owner}
-        shouldShowEditListingOption={shouldShowEditListingOption}
+    <>
+      <Head
+        pageTitle={pageTitle}
+        pageImage={fetchedListing.images[0] || pageImage}
+        pageDescription={pageDescription}
+        pageCanonicalUrl={pageCanonicalUrl}
       />
-    </Box>
+      <Box
+        sx={{
+          mt: [0, 6],
+          mb: { xs: 3, md: 6 },
+        }}
+      >
+        <Layout
+          listing={fetchedListing}
+          listingOwner={owner}
+          shouldShowEditListingOption={shouldShowEditListingOption}
+        />
+      </Box>
+    </>
   );
 };
 

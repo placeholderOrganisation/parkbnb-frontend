@@ -13,6 +13,7 @@ import {
 } from "../../redux/search-slice";
 import {
   convertListingObjToListingOnMapObj,
+  generateSEOForListingPage,
   getListingFromListingArrayGivenId,
   handleGetParkings,
   sortAndFilterParkings,
@@ -25,6 +26,8 @@ import { getURIParams } from "../../utils/browser-utils";
 import { callAnalytics } from "../../utils/amplitude-utils";
 import { setMapCoords } from "../../redux/map-slice";
 import { handleAutocomplete } from "../../utils/geo-coding.utils";
+import { seoContent } from "../../constants";
+import Head from "../../components/seo/head.component";
 
 const GetListing = () => {
   const dispatch = useDispatch();
@@ -33,17 +36,27 @@ const GetListing = () => {
     ? GetListingsDesktopLayout
     : GetListingsMobileLayout;
 
+  const { listingsPage: listingsPageHeaderDetails } = seoContent;
+  const {
+    pageTitle,
+    pageDescription,
+    pageImage,
+    pageCanonicalUrl,
+  } = listingsPageHeaderDetails;
+  const {
+    pageTitle: generatedPageTitle,
+    pageDescription: generatedPageDescription,
+  } = generateSEOForListingPage();
+
   const searchResults = useSelector(
     (state: RootState) => state.search.searchResults
   );
   const filteredSearchResults = useSelector(
     (state: RootState) => state.search.filteredSearchResults
   );
-
   const userSelectedListing = useSelector(
     (state: RootState) => state.search.userSelectedListing
   );
-
   const searchQuery = useSelector(
     (state: RootState) => state.search.filters.searchQuery
   );
@@ -139,20 +152,28 @@ const GetListing = () => {
   };
 
   return (
-    <Box
-      sx={{
-        height: `calc(100vh - ${NAVBAR_HEIGHT_MOBILE}px)`,
-        overflow: "hidden",
-      }}
-    >
-      <Layout
-        searchQuery={searchQuery}
-        userSelectedListing={formattedUserSelectedListing}
-        searchResults={formattedfilteredSearchResults}
-        handleListingClickInMap={handleListingClickInMap}
-        handleMoveEndInMap={handleMoveEndInMap}
+    <>
+      <Head
+        pageTitle={generatedPageTitle || pageTitle}
+        pageDescription={generatedPageDescription || pageDescription}
+        pageImage={pageImage}
+        pageCanonicalUrl={pageCanonicalUrl}
       />
-    </Box>
+      <Box
+        sx={{
+          height: `calc(100vh - ${NAVBAR_HEIGHT_MOBILE}px)`,
+          overflow: "hidden",
+        }}
+      >
+        <Layout
+          searchQuery={searchQuery}
+          userSelectedListing={formattedUserSelectedListing}
+          searchResults={formattedfilteredSearchResults}
+          handleListingClickInMap={handleListingClickInMap}
+          handleMoveEndInMap={handleMoveEndInMap}
+        />
+      </Box>
+    </>
   );
 };
 

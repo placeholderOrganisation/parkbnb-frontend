@@ -22,6 +22,7 @@ import {
   StepTwoState,
 } from "../types/create-listing-form.types";
 import { getItemFromCookies } from "./storage-utils";
+import { getURIParams } from "./browser-utils";
 
 export const getListingFromListingOnMapResultsGivenId = (
   listingOnMaps: ListingOnMap[],
@@ -320,6 +321,40 @@ export const isUserListingOwner = (
   }
 
   return userId === listing.owner_id;
+};
+
+export const generateSEOForListingPage = (): {
+  pageTitle: string;
+  pageDescription: string;
+} => {
+  const uriParams = getURIParams();
+  const { city, address, postalCode } = uriParams;
+  let pageTitle =
+    "Rent A Parking® | Top 5 Cheapest Parking Spots Near Your Area | Your Parking Marketplace";
+  let pageDescription =
+    "Find the cheapest parking on Rent A Parking. Parking reimagined. Rent A Parking offers an easier, safer, cheaper and more convenient parking option. Reserve today!";
+  if (city) {
+    pageTitle = `Rent A Parking® | Top 5 Cheapest Parking Spots in ${city} | Your Parking Marketplace`;
+    pageDescription = `Find the cheapest parking on Rent A Parking in ${city}. Parking reimagined. Rent A Parking offers an easier, safer, cheaper and more convenient parking option. Reserve today!`;
+  } else if (address) {
+    pageTitle = `Rent A Parking® | Parking Spot near ${address} | Your Parking Marketplace`;
+    pageDescription = `Find the cheapest parking on Rent A Parking near ${address}. Parking reimagined. Rent A Parking offers an easier, safer, cheaper and more convenient parking option. Reserve today!`;
+  } else if (postalCode) {
+    pageTitle = `Rent A Parking® | Parking Spot near ${postalCode} | Your Parking Marketplace`;
+    pageDescription = `Find the cheapest parking on Rent A Parking near ${postalCode}. Parking reimagined. Rent A Parking offers an easier, safer, cheaper and more convenient parking option. Reserve today!`;
+  }
+  return { pageTitle, pageDescription };
+};
+
+export const generatePageDescriptionUsingListing = (listing: Listing) => {
+  const { address, price, filters } = listing;
+  const { daily, monthly } = price;
+  const { spaces, vehicle_type, storage_type } = filters;
+  const { city, zip } = address;
+
+  const formattedStorageType = parseStorageType(storage_type);
+
+  return `${vehicle_type} Parking in ${city}, ${zip}. ${spaces} spaces available for ${formattedStorageType} parking. $${daily} / day, $${monthly} / month.`;
 };
 
 // api wrappers

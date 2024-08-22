@@ -14,12 +14,13 @@ import { setIsAuthed, setUserData } from "../../redux/user-slice";
 import { HandleSignInResponse, handleSignIn } from "../../utils/auth-utils";
 import SocialAuth from "../../components/auth/social-auth";
 import Copyright from "../../components/auth/copyright";
-import { COMPANY_NAME } from "../../constants";
+import { COMPANY_NAME, seoContent } from "../../constants";
 import { callAnalytics } from "../../utils/amplitude-utils";
 import { useEffect, useState } from "react";
 import SnackBar from "../../components/custom-mui/snackbars/snackbar";
 import Footer from "../../components/footer/footer.component";
 import RoundedButton from "../../components/custom-mui/rounded-button.component";
+import Head from "../../components/seo/head.component";
 
 const SignIn = () => {
   const dispatch = useDispatch();
@@ -51,8 +52,22 @@ const SignIn = () => {
     callAnalytics("sign_in_page_viewed");
   }, []);
 
+  const { signInPage } = seoContent;
+  const {
+    pageTitle,
+    pageDescription,
+    pageImage,
+    pageCanonicalUrl,
+  } = signInPage;
+
   return (
     <>
+      <Head
+        pageTitle={pageTitle}
+        pageDescription={pageDescription}
+        pageImage={pageImage}
+        pageCanonicalUrl={pageCanonicalUrl}
+      />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

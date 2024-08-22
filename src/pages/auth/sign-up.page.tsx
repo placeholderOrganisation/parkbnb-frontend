@@ -18,6 +18,8 @@ import { callAnalytics } from "../../utils/amplitude-utils";
 import SnackBar from "../../components/custom-mui/snackbars/snackbar";
 import Footer from "../../components/footer/footer.component";
 import RoundedButton from "../../components/custom-mui/rounded-button.component";
+import { seoContent } from "../../constants";
+import Head from "../../components/seo/head.component";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -49,8 +51,22 @@ const SignUp = () => {
     callAnalytics("sign_up_page_viewed");
   }, []);
 
+  const { signUpPage } = seoContent;
+  const {
+    pageTitle,
+    pageDescription,
+    pageImage,
+    pageCanonicalUrl,
+  } = signUpPage;
+
   return (
     <>
+      <Head
+        pageTitle={pageTitle}
+        pageDescription={pageDescription}
+        pageImage={pageImage}
+        pageCanonicalUrl={pageCanonicalUrl}
+      />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

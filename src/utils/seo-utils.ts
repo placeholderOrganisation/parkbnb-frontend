@@ -39,7 +39,7 @@ const jsonLdDataForLandingPage = {
 
 const jsonLdDataForCreateListingPage = {
   "@context": "https://schema.org",
-  "@type": "WebPage",
+  "@type": "WebSite",
   name: "Create a Listing - Rent A Parking",
   url: `https://${parkingAppDomain}/create-listing`,
   description:
@@ -53,7 +53,7 @@ const jsonLdDataForCreateListingPage = {
 
 const jsonLdDataForSignInPage = {
   "@context": "https://schema.org",
-  "@type": "WebPage",
+  "@type": "WebSite",
   name: "Sign In - Rent A Parking",
   url: `https://${parkingAppDomain}/sign-in`,
   description:
@@ -77,7 +77,7 @@ const jsonLdDataForSignInPage = {
 
 const jsonLdDataForSignUpPage = {
   "@context": "https://schema.org",
-  "@type": "WebPage",
+  "@type": "WebSite",
   name: "Sign Up - Rent A Parking",
   url: `https://${parkingAppDomain}/sign-up`,
   description:

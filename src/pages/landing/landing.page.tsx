@@ -6,7 +6,7 @@ import { seoContent } from "../../constants";
 
 const LandingPage = () => {
   const { landingPage } = seoContent;
-  const { pageTitle, pageDescription, pageImage, pageCanonicalUrl } = landingPage;
+  const { pageTitle, pageDescription, pageImage, pageCanonicalUrl, pageJsonLdData } = landingPage;
   
   return (
     <>
@@ -15,6 +15,7 @@ const LandingPage = () => {
         pageDescription={pageDescription}
         pageImage={pageImage}
         pageCanonicalUrl={pageCanonicalUrl}
+        pageJsonLdData={pageJsonLdData}
       />
       <Box
         sx={{

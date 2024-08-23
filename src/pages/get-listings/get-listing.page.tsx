@@ -97,7 +97,7 @@ const GetListing = () => {
 
   // fetch URI params and set user selected listing if applicable
   useEffect(() => {
-    const { city, address, postalCode } = getURIParams();
+    const { city, address, postalCode, q } = getURIParams();
     if (city) {
       dispatch(setSearchQuery(city));
       dispatch(filterSearchResults());
@@ -107,6 +107,8 @@ const GetListing = () => {
       query = address;
     } else if (postalCode) {
       query = postalCode;
+    } else if (q) {
+      query = q;
     }
     handleAutocomplete(query).then((res) => {
       const { results } = res;

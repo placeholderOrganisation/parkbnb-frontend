@@ -1,3 +1,4 @@
+import { jsonLdDataForListingPage, parkingAppDomain } from "../constants";
 import { Listing } from "../types/global.types";
 import { getURIParams } from "./browser-utils";
 import { parseStorageType } from "./parking-utils";
@@ -31,7 +32,45 @@ export const generatePageDescriptionUsingListing = (listing: Listing) => {
   const { spaces, vehicle_type, storage_type } = filters;
   const { city, zip } = address;
 
+  const generatedJsonLdData = updateJsonLdDataForListing(listing);
+
+  const formattedStorageType = parseStorageType(storage_type);
+  const pageDescription = `${vehicle_type} Parking in ${city}, ${zip}. ${spaces} spaces available for ${formattedStorageType} parking. $${daily} / day, $${monthly} / month.`;
+
+  return {
+    pageTitle: `Rent A Parking® | ${vehicle_type} Parking in ${city}, ${zip} | Parking Spot Details`,
+    pageDescription,
+    generatedJsonLdData,
+  };
+};
+
+const updateJsonLdDataForListing = (listing: Listing) => {
+  const { address, price, filters, description, _id, images } = listing;
+  const { daily, monthly } = price;
+  const { spaces, vehicle_type, storage_type } = filters;
+  const { city, zip, street, lat, lng } = address;
+
+  const jsonLdForListing = jsonLdDataForListingPage;
   const formattedStorageType = parseStorageType(storage_type);
 
-  return `${vehicle_type} Parking in ${city}, ${zip}. ${spaces} spaces available for ${formattedStorageType} parking. $${daily} / day, $${monthly} / month.`;
+  jsonLdForListing["name"] = `${vehicle_type} Parking in ${city}, ${zip}`;
+  jsonLdForListing["description"] =
+    description ||
+    `${vehicle_type} Parking in ${city}, ${zip}. ${spaces} spaces available for ${formattedStorageType} parking. $${daily} / day, $${monthly} / month.`;
+
+  jsonLdForListing["url"] = `https://${parkingAppDomain}/listing/${_id}`;
+  jsonLdForListing["image"] = (images && images.length > 1 && images[0]) || "";
+
+  jsonLdForListing["offers"]["price"] = monthly.toString();
+  jsonLdForListing["offers"][
+    "url"
+  ] = `https://${parkingAppDomain}/listing/${_id}`;
+
+  jsonLdForListing["address"]["addressLocality"] = city;
+  jsonLdForListing["address"]["postalCode"] = zip;
+  jsonLdForListing["address"]["streetAddress"] = street;
+  jsonLdForListing["geo"]["latitude"] = lat;
+  jsonLdForListing["geo"]["longitude"] = lng;
+
+  return jsonLdForListing;
 };

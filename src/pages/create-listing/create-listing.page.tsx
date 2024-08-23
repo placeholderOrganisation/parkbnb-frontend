@@ -11,6 +11,7 @@ const NewListingForm = () => {
     pageDescription,
     pageImage,
     pageCanonicalUrl,
+    pageJsonLdData,
   } = createListingPage;
   return (
     <>
@@ -19,6 +20,7 @@ const NewListingForm = () => {
         pageDescription={pageDescription}
         pageImage={pageImage}
         pageCanonicalUrl={pageCanonicalUrl}
+        pageJsonLdData={pageJsonLdData}
       />
       <Box
         sx={{

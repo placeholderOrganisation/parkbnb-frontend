@@ -99,15 +99,20 @@ const ListingCard = () => {
 
   const { listingPage } = seoContent;
   const { pageTitle, pageCanonicalUrl, pageImage } = listingPage;
-  const pageDescription = generatePageDescriptionUsingListing(fetchedListing);
+  const {
+    pageTitle: generatedPageTitle,
+    pageDescription: generatePageDescription,
+    generatedJsonLdData,
+  } = generatePageDescriptionUsingListing(fetchedListing);
 
   return (
     <>
       <Head
-        pageTitle={pageTitle}
+        pageTitle={generatedPageTitle || pageTitle}
         pageImage={fetchedListing.images[0] || pageImage}
-        pageDescription={pageDescription}
+        pageDescription={generatePageDescription}
         pageCanonicalUrl={pageCanonicalUrl}
+        pageJsonLdData={generatedJsonLdData}
       />
       <Box
         sx={{

@@ -65,7 +65,7 @@ export const seoContent = {
     pageTitle:
       "Rent A Parking® | Your Parking Marketplace | Parking spots for rent | Car, Boat, RV & Truck Trailer Parking for Rent | Daily/Monthly/Hourly Parking Options",
     pageDescription:
-      "Parking Space for Rent (Condo/Apartment/House, Driveway, Garage, Outdoor  Yards ) for Car, Van, RV, Truck Trailer & Boats. We have Daily and Monthly Parking Rental options. We are present in all major cities of Canada",
+      "Find affordable parking in your neighborhood. Save money as a renter, earn as a host. Trusted by communities across Canada.",
     pageImage: `https://${parkingAppDomain}/logo-black.png`,
     pageCanonicalUrl: `https://${parkingAppDomain}`,
   },

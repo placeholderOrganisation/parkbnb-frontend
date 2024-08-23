@@ -22,7 +22,6 @@ import {
   StepTwoState,
 } from "../types/create-listing-form.types";
 import { getItemFromCookies } from "./storage-utils";
-import { getURIParams } from "./browser-utils";
 
 export const getListingFromListingOnMapResultsGivenId = (
   listingOnMaps: ListingOnMap[],

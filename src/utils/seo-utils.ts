@@ -1,3 +1,4 @@
+import { url } from "inspector";
 import { parkingAppDomain } from "../constants";
 import { Listing } from "../types/global.types";
 import { getURIParams } from "./browser-utils";
@@ -5,37 +6,20 @@ import { parseStorageType } from "./parking-utils";
 
 export const jsonLdDataForListingPage = {
   "@context": "https://schema.org",
-  "@type": "ParkingFacility", // or "Place"
-  name: "Parking Space in Downtown Toronto",
-  description:
-    "Affordable parking space available in downtown Toronto. Close to public transport and major attractions.",
-  url: "https://rentaparking.ca/listing/12345",
-  image: "https://rentaparking.ca/images/parking-downtown-toronto.jpg",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "123 Main St",
-    addressLocality: "Toronto",
-    addressRegion: "ON",
-    postalCode: "M5H 2N2",
-    addressCountry: "CA",
-  },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: "43.6532",
-    longitude: "-79.3832",
-  },
+  "@type": "Product",
+  name: `Parking Space Near Your Area`,
+  description: `Parking space in Your Area, priced at 50 CAD.`,
+  image: "listing.images[0]", // Assuming you have at least one image
+  url: "https://rentaparking.ca/listing/:id",
   offers: {
     "@type": "Offer",
-    price: "100",
+    url: `https://rentaparking.ca/listing/:id`,
     priceCurrency: "CAD",
-    availability: "https://schema.org/InStock",
-    url: "https://rentaparking.ca/listing/12345",
-  },
-  publisher: {
-    "@type": "Organization",
-    name: "Rent A Parking",
-    url: "https://rentaparking.ca",
-    logo: "https://rentaparking.ca/logo-black.png",
+    price: "50",
+    itemCondition: "https://schema.org/NewCondition",
+    availability: true
+      ? "https://schema.org/InStock"
+      : "https://schema.org/OutOfStock",
   },
 };
 
@@ -237,29 +221,23 @@ const updateJsonLdDataForIndividualListing = (listing: Listing) => {
   const { address, price, filters, description, _id, images } = listing;
   const { daily, monthly } = price;
   const { spaces, vehicle_type, storage_type } = filters;
-  const { city, zip, street, lat, lng } = address;
+  const { city, zip } = address;
 
   const jsonLdForListing = jsonLdDataForListingPage;
   const formattedStorageType = parseStorageType(storage_type);
 
-  jsonLdForListing["name"] = `${vehicle_type} Parking in ${city}, ${zip}`;
+  jsonLdForListing["name"] = `Parking in ${city}, ${zip} for ${vehicle_type}`;
   jsonLdForListing["description"] =
     description ||
     `${vehicle_type} Parking in ${city}, ${zip}. ${spaces} spaces available for ${formattedStorageType} parking. $${daily} / day, $${monthly} / month.`;
 
+  jsonLdForListing["image"] = (images && images.length > 0 && images[0]) || "https://res.cloudinary.com/dvkw3ivfp/image/upload/v1713666013/default-fallback-image_fs8zd7.png";
   jsonLdForListing["url"] = `https://${parkingAppDomain}/listing/${_id}`;
-  jsonLdForListing["image"] = (images && images.length > 1 && images[0]) || "";
 
   jsonLdForListing["offers"]["price"] = monthly.toString();
   jsonLdForListing["offers"][
     "url"
   ] = `https://${parkingAppDomain}/listing/${_id}`;
-
-  jsonLdForListing["address"]["addressLocality"] = city;
-  jsonLdForListing["address"]["postalCode"] = zip;
-  jsonLdForListing["address"]["streetAddress"] = street;
-  jsonLdForListing["geo"]["latitude"] = lat;
-  jsonLdForListing["geo"]["longitude"] = lng;
 
   return jsonLdForListing;
 };
@@ -270,33 +248,21 @@ const updateJsonLdDataForIndividualListing = (listing: Listing) => {
  * @returns
  */
 export const generateJsonLdForListingsPage = (listings: Listing[]) => {
-  const availableListings = listings
+  const itemListElement = listings
     .filter((listing) => listing.is_available)
     .map((listing, index) => ({
       "@type": "ListItem",
       position: index + 1,
-      item: {
-        "@type": "Offer",
-        url: `https://rentaparking.ca/listing/${listing._id}`,
-        description: `Parking space in ${listing.address.city}, priced at ${listing.price.monthly} CAD.`,
-      },
+      item: updateJsonLdDataForIndividualListing(listing),
     }));
 
   return {
     "@context": "https://schema.org",
-    "@type": "CollectionPage",
+    "@type": "ItemList",
     name: "Available Parking Listings - Rent A Parking",
-    url: "https://rentaparking.ca/listings",
     description:
       "Explore over 90+ available parking listings. Find affordable parking spaces across Canada.",
-    about: {
-      "@type": "ItemList",
-      itemListElement: availableListings,
-    },
-    potentialAction: {
-      "@type": "SearchAction",
-      target: `https://${parkingAppDomain}/listings?q={search_term}`,
-      "query-input": "required name=search_term",
-    },
+    url: "https://rentaparking.ca/listings",
+    itemListElement: itemListElement,
   };
 };

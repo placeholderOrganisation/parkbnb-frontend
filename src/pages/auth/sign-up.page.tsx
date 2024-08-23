@@ -57,6 +57,7 @@ const SignUp = () => {
     pageDescription,
     pageImage,
     pageCanonicalUrl,
+    pageJsonLdData,
   } = signUpPage;
 
   return (
@@ -66,6 +67,7 @@ const SignUp = () => {
         pageDescription={pageDescription}
         pageImage={pageImage}
         pageCanonicalUrl={pageCanonicalUrl}
+        pageJsonLdData={pageJsonLdData}
       />
       <Container component="main" maxWidth="xs">
         <CssBaseline />

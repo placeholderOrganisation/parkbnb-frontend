@@ -59,6 +59,7 @@ const SignIn = () => {
     pageDescription,
     pageImage,
     pageCanonicalUrl,
+    pageJsonLdData
   } = signInPage;
 
   return (
@@ -68,6 +69,7 @@ const SignIn = () => {
         pageDescription={pageDescription}
         pageImage={pageImage}
         pageCanonicalUrl={pageCanonicalUrl}
+        pageJsonLdData={pageJsonLdData}
       />
       <Container component="main" maxWidth="xs">
         <CssBaseline />

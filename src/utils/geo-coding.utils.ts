@@ -30,6 +30,9 @@ export const handleAutocomplete = async (
   address: string
 ): Promise<HandleAutocompleteResponse> => {
   try {
+    if (!address) {
+      return { error: "Address is required", success: false };
+    }
     const response = await autocompleteAddress(address);
     return { results: response.results, success: true };
   } catch (error) {

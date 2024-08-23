@@ -17,9 +17,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setFetchedListing as setFetchedListingInRedux } from "../../redux/search-slice";
 import { callAnalytics } from "../../utils/amplitude-utils";
 import { getURIParams } from "../../utils/browser-utils";
-import { seoContent } from "../../constants";
 import Head from "../../components/seo/head.component";
-import { generatePageDescriptionUsingListing } from "../../utils/seo-utils";
+import { generatePageDescriptionUsingListing, seoContent } from "../../utils/seo-utils";
 
 const ListingCard = () => {
   const isDesktopView = isDesktop();

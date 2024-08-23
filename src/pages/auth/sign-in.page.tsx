@@ -14,13 +14,14 @@ import { setIsAuthed, setUserData } from "../../redux/user-slice";
 import { HandleSignInResponse, handleSignIn } from "../../utils/auth-utils";
 import SocialAuth from "../../components/auth/social-auth";
 import Copyright from "../../components/auth/copyright";
-import { COMPANY_NAME, seoContent } from "../../constants";
+import { COMPANY_NAME } from "../../constants";
 import { callAnalytics } from "../../utils/amplitude-utils";
 import { useEffect, useState } from "react";
 import SnackBar from "../../components/custom-mui/snackbars/snackbar";
 import Footer from "../../components/footer/footer.component";
 import RoundedButton from "../../components/custom-mui/rounded-button.component";
 import Head from "../../components/seo/head.component";
+import { seoContent } from "../../utils/seo-utils";
 
 const SignIn = () => {
   const dispatch = useDispatch();

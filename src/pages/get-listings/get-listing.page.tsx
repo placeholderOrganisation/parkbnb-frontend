@@ -25,9 +25,8 @@ import { getURIParams } from "../../utils/browser-utils";
 import { callAnalytics } from "../../utils/amplitude-utils";
 import { setMapCoords } from "../../redux/map-slice";
 import { handleAutocomplete } from "../../utils/geo-coding.utils";
-import { seoContent } from "../../constants";
 import Head from "../../components/seo/head.component";
-import { generateSEOForListingPage } from "../../utils/seo-utils";
+import { generateSEOForListingPage, seoContent } from "../../utils/seo-utils";
 
 const GetListing = () => {
   const dispatch = useDispatch();

@@ -18,8 +18,8 @@ import { callAnalytics } from "../../utils/amplitude-utils";
 import SnackBar from "../../components/custom-mui/snackbars/snackbar";
 import Footer from "../../components/footer/footer.component";
 import RoundedButton from "../../components/custom-mui/rounded-button.component";
-import { seoContent } from "../../constants";
 import Head from "../../components/seo/head.component";
+import { seoContent } from "../../utils/seo-utils";
 
 const SignUp = () => {
   const dispatch = useDispatch();

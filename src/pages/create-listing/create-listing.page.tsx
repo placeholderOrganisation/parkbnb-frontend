@@ -2,7 +2,8 @@ import { Box } from "@mui/material";
 import CreateListingForm from "../../components/listings/create-listings/CreateListingForm.component";
 import Footer from "../../components/footer/footer.component";
 import Head from "../../components/seo/head.component";
-import { seoContent } from "../../constants";
+import { seoContent } from "../../utils/seo-utils";
+
 
 const NewListingForm = () => {
   const { createListingPage } = seoContent;

@@ -2,7 +2,8 @@ import { Box } from "@mui/material";
 import Footer from "../../components/footer/footer.component";
 import Landing from "../../components/landing/landing.component";
 import Head from "../../components/seo/head.component";
-import { seoContent } from "../../constants";
+import { seoContent } from "../../utils/seo-utils";
+
 
 const LandingPage = () => {
   const { landingPage } = seoContent;

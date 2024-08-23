@@ -123,10 +123,10 @@ export const seoContent = {
 };
 
 /**
- * Generate SEO for the home page
+ * Generate SEO for /listings page
  * @returns
  */
-export const generateSEOForListingPage = (): {
+export const generateSEOForListingsPage = (): {
   pageTitle: string;
   pageDescription: string;
 } => {
@@ -154,13 +154,13 @@ export const generateSEOForListingPage = (): {
  * @param listing
  * @returns
  */
-export const generatePageDescriptionUsingListing = (listing: Listing) => {
+export const generateSEOForIndividualListing = (listing: Listing) => {
   const { address, price, filters } = listing;
   const { daily, monthly } = price;
   const { spaces, vehicle_type, storage_type } = filters;
   const { city, zip } = address;
 
-  const generatedJsonLdData = updateJsonLdDataForListing(listing);
+  const generatedJsonLdData = updateJsonLdDataForIndividualListing(listing);
 
   const formattedStorageType = parseStorageType(storage_type);
   const pageDescription = `${vehicle_type} Parking in ${city}, ${zip}. ${spaces} spaces available for ${formattedStorageType} parking. $${daily} / day, $${monthly} / month.`;
@@ -177,7 +177,7 @@ export const generatePageDescriptionUsingListing = (listing: Listing) => {
  * @param listing
  * @returns
  */
-const updateJsonLdDataForListing = (listing: Listing) => {
+const updateJsonLdDataForIndividualListing = (listing: Listing) => {
   const { address, price, filters, description, _id, images } = listing;
   const { daily, monthly } = price;
   const { spaces, vehicle_type, storage_type } = filters;

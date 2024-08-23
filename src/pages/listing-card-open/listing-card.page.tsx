@@ -18,7 +18,7 @@ import { setFetchedListing as setFetchedListingInRedux } from "../../redux/searc
 import { callAnalytics } from "../../utils/amplitude-utils";
 import { getURIParams } from "../../utils/browser-utils";
 import Head from "../../components/seo/head.component";
-import { generatePageDescriptionUsingListing, seoContent } from "../../utils/seo-utils";
+import { generateSEOForIndividualListing, seoContent } from "../../utils/seo-utils";
 
 const ListingCard = () => {
   const isDesktopView = isDesktop();
@@ -102,7 +102,7 @@ const ListingCard = () => {
     pageTitle: generatedPageTitle,
     pageDescription: generatePageDescription,
     generatedJsonLdData,
-  } = generatePageDescriptionUsingListing(fetchedListing);
+  } = generateSEOForIndividualListing(fetchedListing);
 
   return (
     <>

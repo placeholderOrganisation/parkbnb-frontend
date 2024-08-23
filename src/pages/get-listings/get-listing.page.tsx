@@ -26,7 +26,7 @@ import { callAnalytics } from "../../utils/amplitude-utils";
 import { setMapCoords } from "../../redux/map-slice";
 import { handleAutocomplete } from "../../utils/geo-coding.utils";
 import Head from "../../components/seo/head.component";
-import { generateSEOForListingPage, seoContent } from "../../utils/seo-utils";
+import { generateSEOForListingsPage, seoContent } from "../../utils/seo-utils";
 
 const GetListing = () => {
   const dispatch = useDispatch();
@@ -45,7 +45,7 @@ const GetListing = () => {
   const {
     pageTitle: generatedPageTitle,
     pageDescription: generatedPageDescription,
-  } = generateSEOForListingPage();
+  } = generateSEOForListingsPage();
 
   const searchResults = useSelector(
     (state: RootState) => state.search.searchResults

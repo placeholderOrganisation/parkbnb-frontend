@@ -35,18 +35,6 @@ const GetListing = () => {
     ? GetListingsDesktopLayout
     : GetListingsMobileLayout;
 
-  const { listingsPage: listingsPageHeaderDetails } = seoContent;
-  const {
-    pageTitle,
-    pageDescription,
-    pageImage,
-    pageCanonicalUrl,
-  } = listingsPageHeaderDetails;
-  const {
-    pageTitle: generatedPageTitle,
-    pageDescription: generatedPageDescription,
-  } = generateSEOForListingsPage();
-
   const searchResults = useSelector(
     (state: RootState) => state.search.searchResults
   );
@@ -152,6 +140,19 @@ const GetListing = () => {
     dispatch(setListingsRenderedInMap(sortedListings));
   };
 
+  const { listingsPage: listingsPageHeaderDetails } = seoContent;
+  const {
+    pageTitle,
+    pageDescription,
+    pageImage,
+    pageCanonicalUrl,
+  } = listingsPageHeaderDetails;
+  const {
+    pageTitle: generatedPageTitle,
+    pageDescription: generatedPageDescription,
+    pageJsonLdData: generatedJsonLdData,
+  } = generateSEOForListingsPage(searchResults);
+
   return (
     <>
       <Head
@@ -159,6 +160,7 @@ const GetListing = () => {
         pageDescription={generatedPageDescription || pageDescription}
         pageImage={pageImage}
         pageCanonicalUrl={pageCanonicalUrl}
+        pageJsonLdData={generatedJsonLdData}
       />
       <Box
         sx={{

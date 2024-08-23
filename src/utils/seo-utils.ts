@@ -67,6 +67,54 @@ const jsonLdDataForCreateListingPage = {
   },
 };
 
+const jsonLdDataForSignInPage = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Sign In - Rent A Parking",
+  url: `https://${parkingAppDomain}/sign-in`,
+  description:
+    "Easily manage your listings, create a listing, and get access to more features by signing in to Rent A Parking.",
+  potentialAction: [
+    {
+      "@type": "LoginAction",
+      target: `https://${parkingAppDomain}/sign-in`,
+      result: "User signed in",
+    },
+    {
+      "@type": "AuthorizeAction",
+      target: [
+        `https://${parkingAppDomain}/api/v1/auth/facebook`,
+        `https://${parkingAppDomain}/api/v1/auth/google`,
+      ],
+      name: "Sign in with Google or Facebook",
+    },
+  ],
+};
+
+const jsonLdDataForSignUpPage = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Sign Up - Rent A Parking",
+  url: `https://${parkingAppDomain}/sign-up`,
+  description:
+    "Easily manage your listings, create a listing, and get access to more features by signing in to Rent A Parking.",
+  potentialAction: [
+    {
+      "@type": "RegisterAction",
+      target: `https://${parkingAppDomain}/sign-up`,
+      result: "User signed up",
+    },
+    {
+      "@type": "AuthorizeAction",
+      target: [
+        `https://${parkingAppDomain}/api/v1/auth/facebook`,
+        `https://${parkingAppDomain}/api/v1/auth/google`,
+      ],
+      name: "Sign up with Google or Facebook",
+    },
+  ],
+};
+
 export const seoContent = {
   landingPage: {
     pageTitle:
@@ -85,7 +133,7 @@ export const seoContent = {
     pageImage: `https://${parkingAppDomain}/logo-black.png`,
     pageCanonicalUrl: `https://${parkingAppDomain}/listings`,
   },
-  listingPage: {
+  LCO: {
     pageTitle: "Rent A Parking® | Parking Spot Details",
     pageDescription: null,
     pageImage: `https://${parkingAppDomain}/logo-black.png`,
@@ -105,6 +153,7 @@ export const seoContent = {
       "Find affordable parking in your neighborhood. Save money as a renter, earn as a host. Trusted by communities across Canada.",
     pageImage: `https://${parkingAppDomain}/logo-black.png`,
     pageCanonicalUrl: `https://${parkingAppDomain}/sign-up`,
+    pageJsonLdData: jsonLdDataForSignUpPage,
   },
   signInPage: {
     pageTitle: "Sign In | Rent A Parking®",
@@ -112,6 +161,7 @@ export const seoContent = {
       "Find affordable parking in your neighborhood. Save money as a renter, earn as a host. Trusted by communities across Canada.",
     pageImage: `https://${parkingAppDomain}/logo-black.png`,
     pageCanonicalUrl: `https://${parkingAppDomain}/sign-in`,
+    pageJsonLdData: jsonLdDataForSignInPage,
   },
   blogsPage: {
     pageTitle: "Blogs | Rent A Parking®",
@@ -126,9 +176,12 @@ export const seoContent = {
  * Generate SEO for /listings page
  * @returns
  */
-export const generateSEOForListingsPage = (): {
+export const generateSEOForListingsPage = (
+  listings: Listing[] | []
+): {
   pageTitle: string;
   pageDescription: string;
+  pageJsonLdData: any;
 } => {
   const uriParams = getURIParams();
   const { city, address, postalCode } = uriParams;
@@ -146,11 +199,14 @@ export const generateSEOForListingsPage = (): {
     pageTitle = `Rent A Parking® | Parking Spot near ${postalCode} | Your Parking Marketplace`;
     pageDescription = `Find the cheapest parking on Rent A Parking near ${postalCode}. Parking reimagined. Rent A Parking offers an easier, safer, cheaper and more convenient parking options near ${postalCode}. Reserve today!`;
   }
-  return { pageTitle, pageDescription };
+
+  const pageJsonLdData = generateJsonLdForListingsPage(listings);
+
+  return { pageTitle, pageDescription, pageJsonLdData };
 };
 
 /**
- * Generate SEO for the individual listing page
+ * Generate SEO for LCO
  * @param listing
  * @returns
  */
@@ -173,7 +229,7 @@ export const generateSEOForIndividualListing = (listing: Listing) => {
 };
 
 /**
- * Update the JSON-LD default data for the listing page based on the listing data
+ * Update the JSON-LD default data for LCO based on the listing data
  * @param listing
  * @returns
  */
@@ -206,4 +262,41 @@ const updateJsonLdDataForIndividualListing = (listing: Listing) => {
   jsonLdForListing["geo"]["longitude"] = lng;
 
   return jsonLdForListing;
+};
+
+/**
+ * Generate ItemList JSON-LD for each listing in /listings page
+ * @param listings
+ * @returns
+ */
+export const generateJsonLdForListingsPage = (listings: Listing[]) => {
+  const availableListings = listings
+    .filter((listing) => listing.is_available)
+    .map((listing, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "Offer",
+        url: `https://rentaparking.ca/listing/${listing._id}`,
+        description: `Parking space in ${listing.address.city}, priced at ${listing.price.monthly} CAD.`,
+      },
+    }));
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Available Parking Listings - Rent A Parking",
+    url: "https://rentaparking.ca/listings",
+    description:
+      "Explore over 90+ available parking listings. Find affordable parking spaces across Canada.",
+    about: {
+      "@type": "ItemList",
+      itemListElement: availableListings,
+    },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `https://${parkingAppDomain}/listings?q={search_term}`,
+      "query-input": "required name=search_term",
+    },
+  };
 };

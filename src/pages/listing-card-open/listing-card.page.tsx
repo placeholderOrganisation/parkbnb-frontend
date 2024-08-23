@@ -5,7 +5,6 @@ import ListingCardMobileLayout from "./listing-card.mobile";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
-  generatePageDescriptionUsingListing,
   handleGetParking,
   isUserListingOwner,
 } from "../../utils/parking-utils";
@@ -20,6 +19,7 @@ import { callAnalytics } from "../../utils/amplitude-utils";
 import { getURIParams } from "../../utils/browser-utils";
 import { seoContent } from "../../constants";
 import Head from "../../components/seo/head.component";
+import { generatePageDescriptionUsingListing } from "../../utils/seo-utils";
 
 const ListingCard = () => {
   const isDesktopView = isDesktop();

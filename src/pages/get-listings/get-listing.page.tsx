@@ -13,7 +13,6 @@ import {
 } from "../../redux/search-slice";
 import {
   convertListingObjToListingOnMapObj,
-  generateSEOForListingPage,
   getListingFromListingArrayGivenId,
   handleGetParkings,
   sortAndFilterParkings,
@@ -28,6 +27,7 @@ import { setMapCoords } from "../../redux/map-slice";
 import { handleAutocomplete } from "../../utils/geo-coding.utils";
 import { seoContent } from "../../constants";
 import Head from "../../components/seo/head.component";
+import { generateSEOForListingPage } from "../../utils/seo-utils";
 
 const GetListing = () => {
   const dispatch = useDispatch();

@@ -1,4 +1,3 @@
-import { url } from "inspector";
 import { parkingAppDomain } from "../constants";
 import { Listing } from "../types/global.types";
 import { getURIParams } from "./browser-utils";
@@ -8,6 +7,7 @@ export const jsonLdDataForListingPage = {
   "@context": "https://schema.org",
   "@type": "Product",
   name: `Parking Space Near Your Area`,
+  title: `Parking Space Near Your Area`,
   description: `Parking space in Your Area, priced at 50 CAD.`,
   image: "listing.images[0]", // Assuming you have at least one image
   url: "https://rentaparking.ca/listing/:id",
@@ -168,20 +168,23 @@ export const generateSEOForListingsPage = (
   pageJsonLdData: any;
 } => {
   const uriParams = getURIParams();
-  const { city, address, postalCode } = uriParams;
+  const { city, address, postalCode, q } = uriParams;
   let pageTitle =
-    "10 Best Monthly Parking Spots Near Your Area | Rent A Parking® | Your Parking Marketplace";
-  let pageDescription =
-    "Find the cheapest parking on Rent A Parking. Parking reimagined. Rent A Parking offers an easier, safer, cheaper and more convenient parking option. Reserve today!";
+    "10 Best Monthly Parking Near Your Area | Rent A Parking® | Your Parking Marketplace";
+  let pageDescription = generateDescriptionForListingsPage(listings);
   if (city) {
-    pageTitle = `Rent A Parking® | 10 Best Monthly Parking Spots in ${city} | Your Parking Marketplace`;
-    pageDescription = `Find the cheapest parking on Rent A Parking in ${city}. Parking reimagined. Rent A Parking offers an easier, safer, cheaper and more convenient parking options in ${city}. Reserve today!`;
+    const capitalizedCity = capitalizedString(city);
+    pageTitle = `10 Best Monthly Parking in ${capitalizedCity} |  Rent A Parking® | Your Parking Marketplace`;
+    pageDescription = `Monthly parkings in ${capitalizedCity} · ${pageDescription}`;
   } else if (address) {
-    pageTitle = `Rent A Parking® | Parking Spot near ${address} | Your Parking Marketplace`;
-    pageDescription = `Find the cheapest parking on Rent A Parking near ${address}. Parking reimagined. Rent A Parking offers an easier, safer, cheaper and more convenient parking options near ${address}. Reserve today!`;
+    pageTitle = `Parking Spot near ${address} | Rent A Parking® | Your Parking Marketplace`;
+    pageDescription = `Monthly parkings near ${address} · ${pageDescription}`;
   } else if (postalCode) {
-    pageTitle = `Rent A Parking® | Parking Spot near ${postalCode} | Your Parking Marketplace`;
-    pageDescription = `Find the cheapest parking on Rent A Parking near ${postalCode}. Parking reimagined. Rent A Parking offers an easier, safer, cheaper and more convenient parking options near ${postalCode}. Reserve today!`;
+    pageTitle = `Parking Spot near ${postalCode} | Rent A Parking® | Your Parking Marketplace`;
+    pageDescription = `Monthly parkings near ${postalCode} · ${pageDescription}`;
+  } else if (q) {
+    pageTitle = `Parking Spot near ${q} | Rent A Parking® | Your Parking Marketplace`;
+    pageDescription = `Monthly parkings near ${q} · ${pageDescription}`;
   }
 
   const pageJsonLdData = generateJsonLdForListingsPage(listings);
@@ -195,18 +198,17 @@ export const generateSEOForListingsPage = (
  * @returns
  */
 export const generateSEOForIndividualListing = (listing: Listing) => {
-  const { address, price, filters } = listing;
+  const { address, price } = listing;
   const { daily, monthly } = price;
-  const { spaces, vehicle_type, storage_type } = filters;
-  const { city, zip } = address;
+  const { city } = address;
 
+  const capitalizedCity = capitalizedString(city);
   const generatedJsonLdData = updateJsonLdDataForIndividualListing(listing);
 
-  const formattedStorageType = parseStorageType(storage_type);
-  const pageDescription = `${vehicle_type} Parking in ${city}, ${zip}. ${spaces} spaces available for ${formattedStorageType} parking. $${daily} / day, $${monthly} / month.`;
+  const pageDescription = generatePageDescriptionUsingListing(listing);
 
   return {
-    pageTitle: `Rent A Parking® | ${vehicle_type} Parking in ${city}, ${zip} | Parking Spot Details`,
+    pageTitle: `$${daily}/day, $${monthly}/month parking in ${capitalizedCity} | Parking Spot Details | Rent A Parking® `,
     pageDescription,
     generatedJsonLdData,
   };
@@ -223,15 +225,28 @@ const updateJsonLdDataForIndividualListing = (listing: Listing) => {
   const { spaces, vehicle_type, storage_type } = filters;
   const { city, zip } = address;
 
-  const jsonLdForListing = jsonLdDataForListingPage;
-  const formattedStorageType = parseStorageType(storage_type);
+  const capitalizedCity = capitalizedString(city);
+  const capitalizedVehicleType = capitalizedString(vehicle_type);
 
-  jsonLdForListing["name"] = `Parking in ${city}, ${zip} for ${vehicle_type}`;
+  const jsonLdForListing = {
+    ...jsonLdDataForListingPage, // Shallow copy of the jsonLdDataForListingPage
+    offers: { ...jsonLdDataForListingPage.offers }, // Deep copy for offers to avoid reference issues
+  };
+
+  let parsedHeading = `${spaces} ${storage_type} parking in ${capitalizedCity}, $${monthly} / month`;
+  if (spaces > 1) {
+    parsedHeading = `${spaces} ${storage_type} parking in ${capitalizedCity}, $${monthly} / month`;
+  }
+
+  jsonLdForListing["name"] = parsedHeading;
+  jsonLdForListing["title"] = parsedHeading;
   jsonLdForListing["description"] =
     description ||
-    `${vehicle_type} Parking in ${city}, ${zip}. ${spaces} spaces available for ${formattedStorageType} parking. $${daily} / day, $${monthly} / month.`;
+    `${capitalizedVehicleType} parking in ${capitalizedCity}, ${zip} - $${daily} / day, $${monthly} / month.`;
 
-  jsonLdForListing["image"] = (images && images.length > 0 && images[0]) || "https://res.cloudinary.com/dvkw3ivfp/image/upload/v1713666013/default-fallback-image_fs8zd7.png";
+  jsonLdForListing["image"] =
+    (images && images.length > 0 && images[0]) ||
+    "https://res.cloudinary.com/dvkw3ivfp/image/upload/v1713666013/default-fallback-image_fs8zd7.png";
   jsonLdForListing["url"] = `https://${parkingAppDomain}/listing/${_id}`;
 
   jsonLdForListing["offers"]["price"] = monthly.toString();
@@ -240,6 +255,19 @@ const updateJsonLdDataForIndividualListing = (listing: Listing) => {
   ] = `https://${parkingAppDomain}/listing/${_id}`;
 
   return jsonLdForListing;
+};
+
+const generatePageDescriptionUsingListing = (listing: Listing) => {
+  const { address, price, filters } = listing;
+  const { monthly } = price;
+  const { storage_type } = filters;
+  const { city, zip, street } = address;
+
+  const capitalizedCity = capitalizedString(city);
+  const parsedStorageType = parseStorageType(storage_type);
+  const capitalizedStorageType = capitalizedString(parsedStorageType);
+
+  return `${capitalizedStorageType} in ${capitalizedCity}, ${zip} near ${street} for $${monthly} / month.`;
 };
 
 /**
@@ -265,4 +293,23 @@ export const generateJsonLdForListingsPage = (listings: Listing[]) => {
     url: "https://rentaparking.ca/listings",
     itemListElement: itemListElement,
   };
+};
+
+const generateDescriptionForListingsPage = (listings: Listing[]): string => {
+  const descriptions = listings
+    .filter((listing) => listing.is_available)
+    .map((listing) => ({
+      description: generatePageDescriptionUsingListing(listing),
+    }));
+
+  const description = descriptions
+    .map((listing) => listing.description)
+    .join("· ");
+
+  return description;
+};
+
+const capitalizedString = (str: string) => {
+  if (!str) return "";
+  return str.charAt(0).toUpperCase() + str.slice(1);
 };

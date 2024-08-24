@@ -26,7 +26,7 @@ import { callAnalytics } from "../../utils/amplitude-utils";
 import { setMapCoords } from "../../redux/map-slice";
 import { handleAutocomplete } from "../../utils/geo-coding.utils";
 import Head from "../../components/seo/head.component";
-import { generateSEOForListingsPage, seoContent } from "../../utils/seo-utils";
+import { generateSEOForListingsPage } from "../../utils/seo-utils";
 
 const GetListing = () => {
   const dispatch = useDispatch();
@@ -84,6 +84,9 @@ const GetListing = () => {
 
   // fetch URI params and set user selected listing if applicable
   useEffect(() => {
+    if (searchResults.length === 0) {
+      return;
+    }
     const { city, address, postalCode, q } = getURIParams();
     if (city) {
       dispatch(setSearchQuery(city));
@@ -140,27 +143,22 @@ const GetListing = () => {
     dispatch(setListingsRenderedInMap(sortedListings));
   };
 
-  const { listingsPage: listingsPageHeaderDetails } = seoContent;
   const {
     pageTitle,
     pageDescription,
+    pageJsonLdData,
     pageImage,
     pageCanonicalUrl,
-  } = listingsPageHeaderDetails;
-  const {
-    pageTitle: generatedPageTitle,
-    pageDescription: generatedPageDescription,
-    pageJsonLdData: generatedJsonLdData,
   } = generateSEOForListingsPage(searchResults);
 
   return (
     <>
       <Head
-        pageTitle={generatedPageTitle || pageTitle}
-        pageDescription={generatedPageDescription || pageDescription}
+        pageTitle={pageTitle}
+        pageDescription={pageDescription}
         pageImage={pageImage}
         pageCanonicalUrl={pageCanonicalUrl}
-        pageJsonLdData={generatedJsonLdData}
+        pageJsonLdData={pageJsonLdData}
       />
       <Box
         sx={{

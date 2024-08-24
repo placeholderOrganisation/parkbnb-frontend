@@ -22,22 +22,6 @@ export const fetchSearchSuggestions = (query: string, listings: Listing[]) => {
 
 export const fetchSearchSuggestionsV2 = async (query: string) => {
   const results = await handleAutocomplete(query);
-
-  // let cityResults = listings.filter((listing) =>
-  //   listing.address.city.toLowerCase().includes(query.toLowerCase())
-  // );
-
-  // cityResults = removeDuplicates(cityResults, "city");
-
-  // let addressResults = listings.filter((listing) =>
-  //   listing.address.street.toLowerCase().includes(query.toLowerCase())
-  // );
-
-  // let postalCodeResults = listings.filter((listing) =>
-  //   listing.address.zip.toLowerCase().includes(query.toLowerCase())
-  // );
-
-  // return [...cityResults, ...addressResults, ...postalCodeResults];
   return results;
 };
 

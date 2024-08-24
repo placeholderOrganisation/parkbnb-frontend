@@ -18,10 +18,7 @@ import { setFetchedListing as setFetchedListingInRedux } from "../../redux/searc
 import { callAnalytics } from "../../utils/amplitude-utils";
 import { getURIParams } from "../../utils/browser-utils";
 import Head from "../../components/seo/head.component";
-import {
-  generateSEOForIndividualListing,
-  seoContent,
-} from "../../utils/seo-utils";
+import { generateSEOForIndividualListing } from "../../utils/seo-utils";
 
 const ListingCard = () => {
   const isDesktopView = isDesktop();
@@ -99,22 +96,22 @@ const ListingCard = () => {
     fetchedListing
   );
 
-  const { LCO } = seoContent;
-  const { pageTitle, pageCanonicalUrl, pageImage } = LCO;
   const {
-    pageTitle: generatedPageTitle,
-    pageDescription: generatePageDescription,
-    generatedJsonLdData,
+    pageTitle,
+    pageDescription,
+    pageCanonicalUrl,
+    pageImage,
+    pageJsonLdData,
   } = generateSEOForIndividualListing(fetchedListing);
 
   return (
     <>
       <Head
-        pageTitle={generatedPageTitle || pageTitle}
-        pageImage={fetchedListing.images[0] || pageImage}
-        pageDescription={generatePageDescription}
+        pageTitle={pageTitle}
+        pageImage={pageImage}
+        pageDescription={pageDescription}
         pageCanonicalUrl={pageCanonicalUrl}
-        pageJsonLdData={generatedJsonLdData}
+        pageJsonLdData={pageJsonLdData}
       />
       <Box
         sx={{

@@ -77,11 +77,16 @@ const SearchComponent = (props: SearchComponent) => {
       }
       setSuggestions(suggestion.results);
     };
-    if (value) {
-      getSuggestions(value);
-    } else {
-      dispatch(setSearchQuery(""));
-      dispatch(filterSearchResults());
+    if (searchResults.length === 0) {
+      return;
+    }
+    if (isSuggestionListOpen) {
+      if (value.length > 0) {
+        getSuggestions(value);
+      } else {
+        dispatch(setSearchQuery(""));
+        dispatch(filterSearchResults());
+      }
     }
   }, [value]);
 
@@ -89,6 +94,7 @@ const SearchComponent = (props: SearchComponent) => {
     <Box onClick={onCitySearchFocus}>
       <CitySearch
         value={value}
+        shouldShowClearIcon={isSuggestionListOpen && value.length > 0}
         handleEndAdornmentClick={handleEndAdornmentClick}
         handleSearchQueryChange={handleSearchQueryChange}
         showFilters={showFilters}

@@ -7,6 +7,7 @@ interface CitySearchProps {
   value: string;
   handleSearchQueryChange: (value: string) => void;
   showFilters?: boolean;
+  shouldShowClearIcon: boolean;
 }
 
 const CitySearch = (props: CitySearchProps) => {
@@ -15,6 +16,7 @@ const CitySearch = (props: CitySearchProps) => {
     value,
     handleSearchQueryChange,
     showFilters = true,
+    shouldShowClearIcon,
   } = props;
   return (
     <TextField
@@ -30,7 +32,7 @@ const CitySearch = (props: CitySearchProps) => {
         endAdornment: (
           <>
             {/* X icon */}
-            {value && (
+            {shouldShowClearIcon && (
               <InputAdornment
                 position="end"
                 onClick={(e) => {

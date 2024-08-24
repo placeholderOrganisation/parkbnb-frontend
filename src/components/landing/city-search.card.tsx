@@ -9,21 +9,7 @@ import {
 import PlaceIcon from "@mui/icons-material/Place";
 import { openInNewTab } from "../../utils/browser-utils";
 import { callAnalytics } from "../../utils/amplitude-utils";
-
-const getImgForCity = (city: string) => {
-  switch (city) {
-    case "Brampton":
-      return "https://www.teamarora.com/wp-content/uploads/2022/06/Brampton-downtown.jpg";
-    case "Toronto":
-      return "https://media.cntraveler.com/photos/5b2be6938b842c3b35c5d30c/16:9/w_1280,c_limit/Toronto_getty-Images_748610951.jpg";
-    case "Mississauga":
-      return "https://www.ontarioconstructionnews.com/wp-content/uploads/2023/11/mississauga.jpg";
-    case "Vaughan":
-      return "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Vaughan_Metropolitan_Centre_aerial_view_2022.jpg/800px-Vaughan_Metropolitan_Centre_aerial_view_2022.jpg";
-    default:
-      return "https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg";
-  }
-};
+import { getImgForCity } from "../../utils/seo-utils";
 
 interface CitySearchCardProps {
   city: string;

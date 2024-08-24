@@ -556,12 +556,45 @@ export const generateJsonLdForListingsPage = (
       item: updateJsonLdDataForIndividualListing(listing),
     }));
 
-  const jsonLdDataForListingsPage = updateJsonLdDataForListingsPage(
-    pageTitle,
-    pageDescription,
-    pageCanonicalUrl,
-    pageImage
-  );
+  const jsonLdForListingsPage = {
+    ...jsonLdDataForListingsPage, // Shallow copy of the defaultJsonLdDataForListing
+  };
+
+  jsonLdForListingsPage["name"] = pageTitle;
+  jsonLdForListingsPage["description"] = pageDescription;
+  jsonLdForListingsPage["url"] = pageCanonicalUrl;
+
+  const breadCrumbObject = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    name: "Breadcrumb List For Listings Page - Rent A Parking",
+    description: "Breadcrumb list for the listings page of Rent A Parking",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        item: {
+          "@id": `https://${parkingAppDomain}`,
+          name: "Home",
+        },
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        item: {
+          "@id": `https://${parkingAppDomain}/listings`,
+          name: "Listings",
+        },
+      },
+    ],
+  };
+
+  const imageObject = {
+    "@context": "https://schema.org",
+    "@type": "ImageObject",
+    contentUrl: pageImage,
+    creditText: "Rent A Parking",
+  };
 
   return [
     {
@@ -573,61 +606,9 @@ export const generateJsonLdForListingsPage = (
       url: `https://${parkingAppDomain}/listings`,
       itemListElement: itemListElement,
     },
-    jsonLdDataForListingsPage,
-  ];
-};
-
-/**
- * Update the JSON-LD default data for LCO based on the listing data
- * @param listing
- * @returns
- */
-const updateJsonLdDataForListingsPage = (
-  pageTitle: string,
-  pageDescription: string,
-  pageCanonicalUrl: string,
-  pageImage: string
-) => {
-  const jsonLdForListingsPage = {
-    ...jsonLdDataForListingsPage, // Shallow copy of the defaultJsonLdDataForListing
-  };
-
-  jsonLdForListingsPage["name"] = pageTitle;
-  jsonLdForListingsPage["description"] = pageDescription;
-  jsonLdForListingsPage["url"] = pageCanonicalUrl;
-
-  return [
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      name: "Breadcrumb List For Listings Page - Rent A Parking",
-      description: "Breadcrumb list for the listings page of Rent A Parking",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          item: {
-            "@id": `https://${parkingAppDomain}`,
-            name: "Home",
-          },
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          item: {
-            "@id": `https://${parkingAppDomain}/listings`,
-            name: "Listings",
-          },
-        },
-      ],
-    },
+    breadCrumbObject,
+    imageObject,
     jsonLdForListingsPage,
-    {
-      "@context": "https://schema.org",
-      "@type": "ImageObject",
-      contentUrl: pageImage,
-      creditText: "Rent A Parking",
-    },
   ];
 };
 

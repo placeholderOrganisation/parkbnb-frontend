@@ -596,7 +596,7 @@ const updateJsonLdDataForListingsPage = (
   jsonLdForListingsPage["description"] = pageDescription;
   jsonLdForListingsPage["url"] = pageCanonicalUrl;
 
-  [
+  return [
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
@@ -629,8 +629,6 @@ const updateJsonLdDataForListingsPage = (
       creditText: "Rent A Parking",
     },
   ];
-
-  return jsonLdForListingsPage;
 };
 
 const generateListingDescriptionsForListingsPage = (

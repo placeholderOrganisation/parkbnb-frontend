@@ -594,6 +594,13 @@ export const generateJsonLdForListingsPage = (
     "@type": "ImageObject",
     contentUrl: pageImage,
     creditText: "Rent A Parking",
+    creator: {
+      "@type": "Organization",
+      name: "Rent A Parking",
+    },
+    copyrightNotice: "Rent A Parking",
+    license: `https://${parkingAppDomain}`,
+    acquireLicensePage: `https://${parkingAppDomain}`,
   };
 
   return [
@@ -635,14 +642,18 @@ const generateImageForListingsPage = (): string => {
 };
 
 export const getImgForCity = (city: string) => {
-  switch (city) {
-    case "Brampton":
+  if (!city)
+    return "https://res.cloudinary.com/dvkw3ivfp/image/upload/v1713666013/default-fallback-image_fs8zd7.png";
+
+  const cityLowerCased = city.toLowerCase();
+  switch (cityLowerCased) {
+    case "brampton":
       return "https://www.teamarora.com/wp-content/uploads/2022/06/Brampton-downtown.jpg";
-    case "Toronto":
+    case "toronto":
       return "https://media.cntraveler.com/photos/5b2be6938b842c3b35c5d30c/16:9/w_1280,c_limit/Toronto_getty-Images_748610951.jpg";
-    case "Mississauga":
+    case "mississauga":
       return "https://www.ontarioconstructionnews.com/wp-content/uploads/2023/11/mississauga.jpg";
-    case "Vaughan":
+    case "vaughan":
       return "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Vaughan_Metropolitan_Centre_aerial_view_2022.jpg/800px-Vaughan_Metropolitan_Centre_aerial_view_2022.jpg";
     default:
       return "https://res.cloudinary.com/dvkw3ivfp/image/upload/v1713666013/default-fallback-image_fs8zd7.png";

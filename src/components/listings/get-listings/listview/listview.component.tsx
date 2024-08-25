@@ -94,11 +94,7 @@ const ListviewComponent = () => {
         break;
     }
     setSortedListings(tmpSortedListings);
-  }, [sortOption]);
-
-  useEffect(() => {
-    setSortedListings(listingsRenderedInMap);
-  }, [listingsRenderedInMap]);
+  }, [listingsRenderedInMap, sortOption]);
 
   return isDesktopView ? (
     <ListviewDesktop

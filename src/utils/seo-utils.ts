@@ -524,16 +524,11 @@ const updateJsonLdDataForIndividualListing = (listing: Listing) => {
 };
 
 const generatePageDescriptionUsingListing = (listing: Listing) => {
-  const { address, price, filters } = listing;
+  const { address, price } = listing;
   const { monthly } = price;
-  const { storage_type } = filters;
-  const { city, zip, street } = address;
+  const { zip } = address;
 
-  const capitalizedCity = capitalizedString(city);
-  const parsedStorageType = parseStorageType(storage_type);
-  const capitalizedStorageType = capitalizedString(parsedStorageType);
-
-  return `${capitalizedStorageType} in ${capitalizedCity}, ${zip} near ${street} for $${monthly} / month.`;
+  return `$${monthly} / month parking near ${zip}`;
 };
 
 /**

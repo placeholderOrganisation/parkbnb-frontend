@@ -1,6 +1,7 @@
 import { parkingAppDomain } from "../constants";
 import { Listing } from "../types/global.types";
 import { getURIParams } from "./browser-utils";
+import { formatPostalCode } from "./parking-utils";
 
 const defaultSEOContentForEachPage = {
   landingPage: {
@@ -84,8 +85,8 @@ export const defaultJsonLdDataForListing = {
       bestRating: 5,
     },
     author: {
-      "@type": "Person",
-      name: "Rent A Parking",
+      "@type": "Organization",
+      name: "Rent A Parking®",
     },
   },
   aggregateRating: {
@@ -483,13 +484,13 @@ const generateJsonLdForLCO = (
  * @returns
  */
 const updateJsonLdDataForIndividualListing = (listing: Listing) => {
-  const { address, price, filters, description, _id, images } = listing;
+  const { address, price, filters, _id, images } = listing;
   const { daily, monthly } = price;
-  const { spaces, vehicle_type, storage_type } = filters;
+  const { spaces, storage_type } = filters;
   const { city, zip } = address;
 
   const capitalizedCity = capitalizedString(city);
-  const capitalizedVehicleType = capitalizedString(vehicle_type);
+  const formattedZip = formatPostalCode(zip);
 
   const jsonLdForListing = {
     ...defaultJsonLdDataForListing, // Shallow copy of the defaultJsonLdDataForListing
@@ -503,9 +504,9 @@ const updateJsonLdDataForIndividualListing = (listing: Listing) => {
 
   jsonLdForListing["name"] = parsedHeading;
   jsonLdForListing["title"] = parsedHeading;
-  jsonLdForListing["description"] =
-    description ||
-    `${capitalizedVehicleType} parking in ${capitalizedCity}, ${zip} - $${daily} / day, $${monthly} / month.`;
+  jsonLdForListing[
+    "description"
+  ] = `$${daily}/day, $${monthly}/month parking in ${formattedZip}`;
 
   jsonLdForListing["image"] =
     (images && images.length > 0 && images[0]) ||
@@ -527,7 +528,9 @@ const generatePageDescriptionUsingListing = (listing: Listing) => {
   const { monthly } = price;
   const { zip } = address;
 
-  return `$${monthly} / month parking near ${zip}`;
+  const formattedZip = formatPostalCode(zip);
+
+  return `$${monthly}/month parking near ${formattedZip}`;
 };
 
 /**
@@ -624,7 +627,7 @@ const generateListingDescriptionsForListingsPage = (
 
   const description = descriptions
     .map((listing) => listing.description)
-    .join("· ");
+    .join(" · ");
 
   return description;
 };

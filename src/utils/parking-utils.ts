@@ -322,6 +322,15 @@ export const isUserListingOwner = (
   return userId === listing.owner_id;
 };
 
+export const formatPostalCode = (postalCode: string) => {
+  return postalCode
+    .replace(/\s/g, "")
+    .toUpperCase()
+    .slice(0, 3)
+    .concat("")
+    .concat(postalCode.slice(3));
+};
+
 // api wrappers
 export const handleCreateParking = async (parkingData: Listing) => {
   try {

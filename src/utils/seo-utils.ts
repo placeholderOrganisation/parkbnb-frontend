@@ -1,7 +1,6 @@
 import { parkingAppDomain } from "../constants";
 import { Listing } from "../types/global.types";
 import { getURIParams } from "./browser-utils";
-import { parseStorageType } from "./parking-utils";
 
 const defaultSEOContentForEachPage = {
   landingPage: {

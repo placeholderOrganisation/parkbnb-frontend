@@ -35,18 +35,13 @@ const GetListing = () => {
     ? GetListingsDesktopLayout
     : GetListingsMobileLayout;
 
-  const searchResults = useSelector(
-    (state: RootState) => state.search.searchResults
-  );
-  const filteredSearchResults = useSelector(
-    (state: RootState) => state.search.filteredSearchResults
-  );
-  const userSelectedListing = useSelector(
-    (state: RootState) => state.search.userSelectedListing
-  );
-  const searchQuery = useSelector(
-    (state: RootState) => state.search.filters.searchQuery
-  );
+  const {
+    searchResults,
+    filteredSearchResults,
+    userSelectedListing,
+    listingsRenderedInMap,
+    filters: { searchQuery },
+  } = useSelector((state: RootState) => state.search);
 
   const formattedfilteredSearchResults = filteredSearchResults.map(
     convertListingObjToListingOnMapObj
@@ -149,7 +144,7 @@ const GetListing = () => {
     pageJsonLdData,
     pageImage,
     pageCanonicalUrl,
-  } = generateSEOForListingsPage(searchResults);
+  } = generateSEOForListingsPage(listingsRenderedInMap);
 
   return (
     <>

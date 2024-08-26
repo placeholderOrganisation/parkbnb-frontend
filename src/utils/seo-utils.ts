@@ -7,7 +7,7 @@ const defaultSEOContentForEachPage = {
   landingPage: {
     title: "Rent A Parking® | Your Parking Marketplace",
     description:
-      "Find affordable parking in your neighborhood. Save money as a renter, earn as a host. Trusted by communities across Canada.",
+      "Find affordable monthly parking near you. Save money as a renter, earn as a host. Trusted by communities across Canada.",
     url: `https://${parkingAppDomain}`,
   },
   /**
@@ -17,7 +17,7 @@ const defaultSEOContentForEachPage = {
     title:
       "10 Best Monthly Parking Spots Near Your Area | Rent A Parking® | Your Parking Marketplace",
     description:
-      "Find the cheapest parking on Rent A Parking. Parking reimagined. Rent A Parking offers an easier, safer, cheaper and more convenient parking option. Reserve today!",
+      "Discover convenient and affordable monthly parking near you. Secure your monthly parking today and enjoy hassle-free parking every month.",
     url: `https://${parkingAppDomain}/listings`,
   },
   /**
@@ -37,13 +37,13 @@ const defaultSEOContentForEachPage = {
   signUpPage: {
     title: "Sign Up | Rent A Parking®",
     description:
-      "Find affordable parking in your neighborhood. Save money as a renter, earn as a host. Trusted by communities across Canada.",
+      "Find affordable monthly parking near you. Save money as a renter, earn as a host. Trusted by communities across Canada.",
     url: `https://${parkingAppDomain}/sign-up`,
   },
   signInPage: {
     title: "Sign In | Rent A Parking®",
     description:
-      "Find affordable parking in your neighborhood. Save money as a renter, earn as a host. Trusted by communities across Canada.",
+      "Find affordable monthly parking near you. Save money as a renter, earn as a host. Trusted by communities across Canada.",
     url: `https://${parkingAppDomain}/sign-in`,
   },
   blogsPage: {
@@ -269,10 +269,8 @@ export const seoContent = {
     pageJsonLdData: jsonLdDataForLandingPage,
   },
   listingsPage: {
-    pageTitle:
-      "10 Best Monthly Parking Spots Near Your Area | Rent A Parking® | Your Parking Marketplace",
-    pageDescription:
-      "Find the cheapest parking on Rent A Parking. Parking reimagined. Rent A Parking offers an easier, safer, cheaper and more convenient parking option. Reserve today!",
+    pageTitle: defaultSEOContentForEachPage.listingsPage.title,
+    pageDescription: defaultSEOContentForEachPage.listingsPage.description,
     pageImage: `https://${parkingAppDomain}/logo-black.png`,
     pageCanonicalUrl: `https://${parkingAppDomain}/listings`,
   },
@@ -339,16 +337,16 @@ export const generateSEOForListingsPage = (
   if (city) {
     const capitalizedCity = capitalizedString(city);
     pageTitle = `10 Best Monthly Parking in ${capitalizedCity} |  Rent A Parking® | Your Parking Marketplace`;
-    pageDescription = `Monthly parkings in ${capitalizedCity} · ${listingDescriptions}`;
+    pageDescription = `Daily, Monthly parkings in ${capitalizedCity} · ${listingDescriptions}`;
   } else if (address) {
     pageTitle = `Parking Spot near ${address} | Rent A Parking® | Your Parking Marketplace`;
-    pageDescription = `Monthly parkings near ${address} · ${listingDescriptions}`;
+    pageDescription = `Daily, Monthly parkings near ${address} · ${listingDescriptions}`;
   } else if (postalCode) {
     pageTitle = `Parking Spot near ${postalCode} | Rent A Parking® | Your Parking Marketplace`;
-    pageDescription = `Monthly parkings near ${postalCode} · ${listingDescriptions}`;
+    pageDescription = `Daily, Monthly parkings near ${postalCode} · ${listingDescriptions}`;
   } else if (q) {
     pageTitle = `Parking Spot near ${q} | Rent A Parking® | Your Parking Marketplace`;
-    pageDescription = `Monthly parkings near ${q} · ${listingDescriptions}`;
+    pageDescription = `Daily, Monthly parkings near ${q} · ${listingDescriptions}`;
   }
 
   const pageJsonLdData = generateJsonLdForListingsPage(

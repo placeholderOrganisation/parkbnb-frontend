@@ -9,7 +9,6 @@ import Map, {
 
 import { ListingOnMap, MapComponentProps } from "../../types/global.types";
 import { Box } from "@mui/material";
-import { getListingCoords } from "../../utils/map-utils";
 import { FeatureCollection } from "geojson";
 import { NAVBAR_HEIGHT_MOBILE } from "../navbar/navbar-header.component";
 import { useEffect, useRef } from "react";
@@ -19,14 +18,8 @@ import {
   clusterLayer,
   clusterCountLayer,
 } from "./layer-styling";
-import { getURIParams } from "../../utils/browser-utils";
-import { getListingFromListingOnMapResultsGivenId } from "../../utils/parking-utils";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/global-store";
-// import {
-//   userLocationLatitudeInitialState,
-//   userLocationLongitudeInitialState,
-// } from "../../redux/search-slice.util";
 import { GeoJSONFeature } from "mapbox-gl";
 import { callAnalytics } from "../../utils/amplitude-utils";
 
@@ -40,8 +33,6 @@ export const MapComponent = (props: MapComponentProps) => {
     handleMoveEnd,
     userSelectedListing,
   } = props;
-
-  const { new_listing } = getURIParams();
   const { lat, lng, zoom } = useSelector((state: RootState) => state.map);
 
   const mapRef = useRef<MapRef | undefined>();
@@ -49,17 +40,6 @@ export const MapComponent = (props: MapComponentProps) => {
   useEffect(() => {
     mapRef.current?.flyTo({ center: [lng, lat], duration: 1000, zoom: zoom });
   }, [city, mapRef.current]);
-
-  useEffect(() => {
-    if (new_listing) {
-      const newlyCreatedListing = getListingFromListingOnMapResultsGivenId(
-        listings,
-        new_listing
-      );
-      const { lat, lng, zoom } = getListingCoords(newlyCreatedListing);
-      mapRef.current?.flyTo({ center: [lng, lat], duration: 1000, zoom: zoom });
-    }
-  }, [new_listing, listings]);
 
   useEffect(() => {
     mapRef.current?.flyTo({

@@ -27,6 +27,7 @@ import { setMapCoords } from "../../redux/map-slice";
 import { handleAutocomplete } from "../../utils/geo-coding.utils";
 import Head from "../../components/seo/head.component";
 import { generateSEOForListingsPage } from "../../utils/seo-utils";
+import { getListingCoords } from "../../utils/map-utils";
 
 const GetListing = () => {
   const dispatch = useDispatch();
@@ -53,7 +54,8 @@ const GetListing = () => {
 
   // fetch listings from backend
   useEffect(() => {
-    if (searchResults && searchResults.length > 0) {
+    const { new_listing } = getURIParams();
+    if (searchResults && searchResults.length > 0 && !new_listing) {
       dispatch(filterSearchResults());
       return;
     } else {
@@ -72,8 +74,26 @@ const GetListing = () => {
   // fetch URI params and set user selected listing if applicable
   useEffect(() => {
     const { new_listing } = getURIParams();
+    if (!searchResults || searchResults.length === 0) {
+      return;
+    }
     if (new_listing) {
+      const newlyCreatedListing = getListingFromListingArrayGivenId(
+        searchResults,
+        new_listing
+      );
+      if (!newlyCreatedListing) {
+        return;
+      }
+      const { lat, lng, zoom } = getListingCoords(newlyCreatedListing);
       dispatch(setUserSelectedListingUsingListingId(new_listing));
+      dispatch(
+        setMapCoords({
+          lat,
+          lng,
+          zoom,
+        })
+      );
     }
   }, [searchResults]);
 

@@ -1,36 +1,29 @@
 import { MouseEvent, useEffect, useState } from "react";
 
 import { Box } from "@mui/material";
-import CitySearch from "./city-search-v2.component";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/global-store";
-import { AutocompleteResponse } from "../../types/global.types";
-import CitySearchSuggestionList from "./city-search-suggestions-v2.component";
-import { setSearchQuery, filterSearchResults } from "../../redux/search-slice";
-import { callAnalytics } from "../../utils/amplitude-utils";
-import { fetchSearchSuggestionsV2 } from "../../utils/search-utils";
-import { setMapCoords } from "../../redux/map-slice";
-import { extractAddressFromPlaceName } from "../../utils/geo-coding.utils";
+import { AutocompleteResponse } from "../../../../types/global.types";
+import { callAnalytics } from "../../../../utils/amplitude-utils";
+import { fetchSearchSuggestionsV2 } from "../../../../utils/search-utils";
+import CitySearch from "../../../search_v2/city-search-v2.component";
+import CitySearchSuggestionList from "../../../search_v2/city-search-suggestions-v2.component";
+import { extractAddressFromPlaceName } from "../../../../utils/geo-coding.utils";
 
-interface SearchComponent {
+interface AddressAutocomplete {
   handleEndAdornmentClick: () => void;
+  onSuggestionsClick: (suggestion: AutocompleteResponse) => void;
   showFilters?: boolean;
   showNearMe?: boolean;
 }
 
-const SearchComponent = (props: SearchComponent) => {
+const AddressAutocomplete = (props: AddressAutocomplete) => {
   const {
     handleEndAdornmentClick,
     showFilters = true,
     showNearMe = true,
+    onSuggestionsClick = () => {},
   } = props;
-  const dispatch = useDispatch();
-  const {
-    searchResults,
-    filters: { searchQuery },
-  } = useSelector((state: RootState) => state.search);
 
-  const [value, setValue] = useState(searchQuery || "");
+  const [value, setValue] = useState("");
   const [isSuggestionListOpen, setIsSuggestionListOpen] = useState(false);
   const [suggestions, setSuggestions] = useState<AutocompleteResponse[]>([]);
 
@@ -39,20 +32,14 @@ const SearchComponent = (props: SearchComponent) => {
   };
 
   const handleSuggestionClick = (suggestion: AutocompleteResponse) => {
-    callAnalytics("search suggestion clicked", { suggestion });
+    callAnalytics("address_autocomplete_suggestion_clicked", { suggestion });
     const address = extractAddressFromPlaceName(suggestion.place_name);
     const formattedAddress = address
       ? `${address.street}, ${address.city}`
       : suggestion.text;
+    onSuggestionsClick(suggestion);
     handleSearchQueryChange(formattedAddress);
     setIsSuggestionListOpen(false);
-    dispatch(
-      setMapCoords({
-        lat: suggestion.center.lat,
-        lng: suggestion.center.lng,
-        zoom: 14,
-      })
-    );
   };
 
   const onCitySearchFocus = () => {
@@ -69,12 +56,6 @@ const SearchComponent = (props: SearchComponent) => {
   };
 
   useEffect(() => {
-    if (searchQuery !== value && searchResults.length > 0) {
-      handleSearchQueryChange(searchQuery);
-    }
-  }, [searchQuery, searchResults]);
-
-  useEffect(() => {
     const getSuggestions = async (value: string) => {
       let suggestion = await fetchSearchSuggestionsV2(value);
       if (!suggestion || !suggestion.results) {
@@ -82,16 +63,8 @@ const SearchComponent = (props: SearchComponent) => {
       }
       setSuggestions(suggestion.results);
     };
-    if (searchResults.length === 0) {
-      return;
-    }
-    if (isSuggestionListOpen) {
-      if (value.length > 0) {
-        getSuggestions(value);
-      } else {
-        dispatch(setSearchQuery(""));
-        dispatch(filterSearchResults());
-      }
+    if (isSuggestionListOpen && value.length > 0) {
+      getSuggestions(value);
     }
   }, [value]);
 
@@ -103,7 +76,7 @@ const SearchComponent = (props: SearchComponent) => {
         handleEndAdornmentClick={handleEndAdornmentClick}
         handleSearchQueryChange={handleSearchQueryChange}
         showFilters={showFilters}
-        label="Search by address"
+        label="Enter your address"
       />
       {isSuggestionListOpen && (
         <CitySearchSuggestionList
@@ -120,4 +93,4 @@ const SearchComponent = (props: SearchComponent) => {
   );
 };
 
-export default SearchComponent;
+export default AddressAutocomplete;

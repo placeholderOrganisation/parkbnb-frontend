@@ -7,7 +7,8 @@ import {
   MobileStepper,
 } from "@mui/material";
 import Review from "./Review";
-import AddressForm from "./AddressForm";
+// import AddressForm from "./AddressForm";
+import AddressForm from "./address-form/address-v2.form";
 import FiltersForm from "./FiltersForm";
 import OptionalDetailsForm from "./OptionalDetailsForm";
 import { steps } from "../../../utils/create-listing-form.utils";
@@ -104,7 +105,7 @@ const CreateListingForm = () => {
                 activeStep={activeStep}
                 steps={steps.length}
                 position="static"
-                sx={{ pt: 3, px: 0 }}
+                sx={{ py: 3, px: 0 }}
                 nextButton={null}
                 backButton={null}
                 LinearProgressProps={{ sx: { width: "100%" } }}

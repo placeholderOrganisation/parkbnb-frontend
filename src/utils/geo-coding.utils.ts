@@ -8,6 +8,37 @@ export interface HandleGeocodeResponse {
   error?: any;
 }
 
+export interface Address {
+  street: string;
+  city: string;
+  province: string;
+  postal: string;
+  country: string;
+}
+
+export const extractAddressFromPlaceName = (
+  placeName: string
+): Address | null => {
+  const placeNameParts = placeName.split(",");
+  if (placeNameParts.length === 4) {
+    const street = placeNameParts[0].trim();
+    const city = placeNameParts[1].trim();
+    const provinceAndPostalCode = placeNameParts[2].trim();
+    const province = provinceAndPostalCode.slice(0, -8).trim();
+    const postal = provinceAndPostalCode.slice(-7).trim();
+    const country = placeNameParts[3].trim();
+
+    return {
+      street,
+      city,
+      province,
+      postal,
+      country,
+    };
+  }
+  return null;
+};
+
 export const handleGeocode = async (
   address: string
 ): Promise<HandleGeocodeResponse> => {

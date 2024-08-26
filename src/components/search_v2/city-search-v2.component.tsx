@@ -8,6 +8,7 @@ interface CitySearchProps {
   handleSearchQueryChange: (value: string) => void;
   showFilters?: boolean;
   shouldShowClearIcon: boolean;
+  label: string;
 }
 
 const CitySearch = (props: CitySearchProps) => {
@@ -17,14 +18,15 @@ const CitySearch = (props: CitySearchProps) => {
     handleSearchQueryChange,
     showFilters = true,
     shouldShowClearIcon,
+    label,
   } = props;
   return (
     <TextField
       value={value}
       onChange={(e) => handleSearchQueryChange(e.target.value)}
-      id="city-search"
+      id="address-autocomplete"
       variant="outlined"
-      label="Search by address"
+      label={label}
       sx={{
         width: "100%",
       }}

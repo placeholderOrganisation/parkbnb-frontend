@@ -68,9 +68,9 @@ export default function FiltersForm() {
   return (
     <>
       {/* Checkboxes */}
-      <Stack spacing={1}>
+      <Stack spacing={2}>
         <Typography variant="h6">
-          Select all that apply to your space
+          Set Amenities
         </Typography>
         <AmenitiesFilter
           amenitiesInRedux={amenitiesInRedux}
@@ -90,7 +90,7 @@ export default function FiltersForm() {
             mb: 2,
           }}
         >
-          Tell us more about your space
+          More Information
         </Typography>
         <Stack spacing={3}>
           <StorageTypeFilter

@@ -1,5 +1,5 @@
 import Typography from "@mui/material/Typography";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Stack } from "@mui/material";
 import ImagePicker from "./image-picker/ImagePicker.component";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -36,13 +36,9 @@ export default function OptionalDetailsForm() {
   return (
     <>
       {/* Image Picker Box */}
-      <Box
-        sx={{
-          pt: 5,
-        }}
-      >
-        <Typography variant="h6" gutterBottom>
-          Add description and image to stand out
+      <Box>
+        <Typography variant="h6" sx={{ pb: 2 }}>
+          Add Images
         </Typography>
         <Grid container spacing={3}>
           <Grid item xs={6}>
@@ -54,16 +50,20 @@ export default function OptionalDetailsForm() {
         </Grid>
       </Box>
       {/* Description TextBox */}
-      <Box
+      <Stack
         sx={{
-          pt: 2.5,
+          pt: 5,
         }}
+        spacing={2}
       >
+        <Typography variant="h6" gutterBottom>
+          Add Description
+        </Typography>
         <DescriptionField
           descriptionInRedux={descriptionInRedux}
           handleDescriptionChange={handleDescriptionChange}
         />
-      </Box>
+      </Stack>
     </>
   );
 }

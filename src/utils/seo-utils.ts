@@ -326,7 +326,7 @@ export const generateSEOForListingsPage = (
   const uriParams = getURIParams();
   const { city, address, postalCode, q } = uriParams;
   const pageImage = generateImageForListingsPage();
-  const pageCanonicalUrl = defaultSEOContentForEachPage.listingsPage.url;
+  const pageCanonicalUrl = generateCanonicalUrlForListingsPage();
 
   let pageTitle = defaultSEOContentForEachPage.listingsPage.title;
   let pageDescription = defaultSEOContentForEachPage.listingsPage.description;
@@ -366,6 +366,23 @@ export const generateSEOForListingsPage = (
   };
 };
 
+export const generateCanonicalUrlForListingsPage = (): string => {
+  const uriParams = getURIParams();
+  const { city, address, postalCode, q } = uriParams;
+
+  if (city) {
+    return `https://${parkingAppDomain}/listings?city=${city}`;
+  } else if (address) {
+    return `https://${parkingAppDomain}/listings?address=${address}`;
+  } else if (postalCode) {
+    return `https://${parkingAppDomain}/listings?postalCode=${postalCode}`;
+  } else if (q) {
+    return `https://${parkingAppDomain}/listings?q=${q}`;
+  }
+
+  return defaultSEOContentForEachPage.listingsPage.url;
+};
+
 /**
  * Generate SEO for LCO
  * @param listing
@@ -380,7 +397,7 @@ export const generateSEOForIndividualListing = (
   pageImage: string;
   pageCanonicalUrl: string;
 } => {
-  const { address, price, images } = listing;
+  const { _id, address, price, images } = listing;
   const { daily, monthly } = price;
   const { city } = address;
 
@@ -392,12 +409,13 @@ export const generateSEOForIndividualListing = (
 
   const pageTitle = `$${daily}/day, $${monthly}/month parking in ${capitalizedCity} | Parking Spot Details | Rent A Parking®`;
   const pageDescription = generatePageDescriptionUsingListing(listing);
+  const pageCanonicalUrl = `https://${parkingAppDomain}/listing/${_id}`;
 
   const pageJsonLdData = generateJsonLdForLCO(
     listing,
     pageTitle,
     pageDescription,
-    defaultSEOContentForEachPage.LCO.url,
+    pageCanonicalUrl,
     imageObjectContentUrl
   );
 
@@ -406,7 +424,7 @@ export const generateSEOForIndividualListing = (
     pageDescription,
     pageJsonLdData,
     pageImage: imageObjectContentUrl,
-    pageCanonicalUrl: defaultSEOContentForEachPage.LCO.url,
+    pageCanonicalUrl: pageCanonicalUrl,
   };
 };
 
@@ -454,8 +472,8 @@ const generateJsonLdForLCO = (
         "@type": "ListItem",
         position: 3,
         item: {
-          "@id": `https://${parkingAppDomain}/listing/${listing._id}`,
-          name: `Listing Page`,
+          "@id": pageCanonicalUrl,
+          name: `Listing Details`,
         },
       },
     ],
@@ -617,6 +635,7 @@ export const generateJsonLdForListingsPage = (
 const generateListingDescriptionsForListingsPage = (
   listings: Listing[]
 ): string => {
+  if (!listings || listings.length === 0) return "";
   const descriptions = listings
     .filter((listing) => listing.is_available)
     .map((listing) => ({
@@ -655,7 +674,7 @@ export const getImgForCity = (city: string) => {
   }
 };
 
-const capitalizedString = (str: string) => {
+export const capitalizedString = (str: string) => {
   if (!str) return "";
   return str.charAt(0).toUpperCase() + str.slice(1);
 };

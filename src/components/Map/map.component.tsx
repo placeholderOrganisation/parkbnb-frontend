@@ -76,9 +76,8 @@ export const MapComponent = (props: MapComponentProps) => {
       (listing) => listing.properties?._id
     );
 
-    // @ts-ignore
     const clusterIdsInView = e.target.queryRenderedFeatures({
-      layers: [clusterLayer.id],
+      layers: [clusterLayer.id] as string[],
     });
 
     if (clusterIdsInView.length > 0) {

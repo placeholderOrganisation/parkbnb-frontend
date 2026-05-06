@@ -1,0 +1,67 @@
+user  nginx;
+worker_processes auto;
+
+events { worker_connections 1024; }
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+    sendfile on;
+    keepalive_timeout 65;
+
+    # ── HTTP : 80 ────────────────────────────────────────────────
+    server {
+        listen 80;
+        server_name rentaparking.ca www.rentaparking.ca;
+
+        # Let Certbot read/write its challenge files
+        location /.well-known/acme-challenge/ {
+            root /var/www/certbot;
+        }
+
+        # Everything else → HTTPS
+        location / {
+            return 301 https://$host$request_uri;
+        }
+    }
+
+    # ── HTTPS : 443 ──────────────────────────────────────────────
+    server {
+        listen 443 ssl http2;
+        server_name rentaparking.ca www.rentaparking.ca;
+
+        ssl_certificate      /etc/letsencrypt/live/rentaparking.ca/fullchain.pem;
+        ssl_certificate_key  /etc/letsencrypt/live/rentaparking.ca/privkey.pem;
+        ssl_trusted_certificate /etc/letsencrypt/live/rentaparking.ca/chain.pem;
+
+        # Modern, widely-compatible TLS config (Mozilla “Intermediate”)
+        ssl_protocols TLSv1.2 TLSv1.3;
+        ssl_ciphers   HIGH:!aNULL:!MD5;
+        ssl_prefer_server_ciphers on;
+
+        root  /usr/share/nginx/html;
+        index index.html;
+
+        # Proxy API calls
+        location /api/ {
+            proxy_pass http://backend:3001/;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection 'upgrade';
+            proxy_set_header Host $host;
+            proxy_cache_bypass $http_upgrade;
+        }
+
+        # React router
+        location / {
+            try_files $uri $uri/ /index.html;
+        }
+
+        # Static assets
+        location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg)$ {
+            try_files $uri =404;
+            expires 1y;
+            add_header Cache-Control "public";
+        }
+    }
+}
